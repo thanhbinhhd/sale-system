@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace HapoJC\Http\Controllers\Admin\Auth;
 
-use App\Http\Controllers\Controller;
+use HapoJC\Http\Controllers\Controller;
+use HapoJC\Notifications\AdminResetPasswordNotification;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
 {
@@ -23,8 +25,18 @@ class ForgotPasswordController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @return
      */
+    public function showLinkRequestForm()
+    {
+        return view('admin.auth.forgot_password');
+    }
+
+    public function broker()
+    {
+        return Password::broker('admins');
+    }
+
     public function __construct()
     {
         $this->middleware('guest');
