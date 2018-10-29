@@ -1,9 +1,9 @@
 <?php
 
-namespace HapoJC\Http\Controllers\Admin\Auth;
+namespace App\Http\Controllers\User\Auth;
 
-use HapoJC\User;
-use HapoJC\Http\Controllers\Controller;
+use App\Model\User;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -58,7 +58,7 @@ class RegisterController extends Controller
      * Create a new teacher instance after a valid registration.
      *
      * @param  array  $data
-     * @return \HapoJC\User
+     * @return \App\User
      */
     protected function create(array $data)
     {

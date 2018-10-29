@@ -1,8 +1,8 @@
 <?php
 
-namespace HapoJC\Http\Controllers\Admin\Auth;
+namespace App\Http\Controllers\Admin\Auth;
 
-use HapoJC\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;

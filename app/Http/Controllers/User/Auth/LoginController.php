@@ -1,9 +1,9 @@
 <?php
 
-namespace HapoJC\Http\Controllers\Admin\Auth;
+namespace App\Http\Controllers\User\Auth;
 
-use HapoJC\Http\Controllers\Controller;
-use HapoJC\Http\Requests\admin\LoginRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\admin\LoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

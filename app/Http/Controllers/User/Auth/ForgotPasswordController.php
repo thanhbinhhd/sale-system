@@ -1,9 +1,9 @@
 <?php
 
-namespace HapoJC\Http\Controllers\Admin\Auth;
+namespace App\Http\Controllers\User\Auth;
 
-use HapoJC\Http\Controllers\Controller;
-use HapoJC\Notifications\AdminResetPasswordNotification;
+use App\Http\Controllers\Controller;
+use App\Notifications\AdminResetPasswordNotification;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Password;
 
