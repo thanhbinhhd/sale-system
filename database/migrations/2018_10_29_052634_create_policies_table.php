@@ -17,7 +17,7 @@ class CreatePoliciesTable extends Migration
             $table->increments('id');
             $table->integer('vat');
             $table->integer('admin_id');
-            $table->string('money_type', ['USD', 'VND', 'YEN'])->default('USD');
+            $table->enum('money_type', ['USD', 'VND', 'YEN'])->default('USD');
             $table->timestamps();
         });
     }
