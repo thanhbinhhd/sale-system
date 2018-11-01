@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Http\Middleware\Authenticate;
+use App\Scopes\StatusScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,7 +22,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'password', 'level'
+        'username', 'password', 'level', 'status'
     ];
 
     /**
@@ -32,4 +33,13 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new StatusScope());
+    }
+
+
 }

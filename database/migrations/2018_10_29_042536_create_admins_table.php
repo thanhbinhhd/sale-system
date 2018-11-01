@@ -18,6 +18,7 @@ class CreateAdminsTable extends Migration
             $table->string('name');
             $table->string('username')->unique();
             $table->string('password');
+            $table->string('status')->default(1);
             $table->enum('level', [1, 2])->default(2)->comment('1 is super admin with full permission, 2 is staff');
             $table->rememberToken();
             $table->timestamps();

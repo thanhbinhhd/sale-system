@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\admin\LoginRequest;
+//use App\Http\Requests\admin\LoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -50,13 +50,8 @@ class LoginController extends Controller
         return view('admin.auth.login');
     }
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return
-     *
-     */
-    public function authenticate(LoginRequest $request)
+
+    public function authenticate(Request $request)
     {
         $email = $request->email;
         $password = $request->password;
