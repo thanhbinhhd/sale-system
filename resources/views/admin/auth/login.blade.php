@@ -2,11 +2,11 @@
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            <a href="#"><b>Admin HapoJC</b></a>
+            <a href="#"><b>Admin {{ config("sales.default_system_name") }}</b></a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">Đăng nhập</p>
+            <p class="login-box-msg">Login</p>
             @if ($errors->has('error'))
                 <div class="{{ $errors->has('error') ? ' has-error' : '' }}">
                 <span class="help-block">
@@ -16,12 +16,12 @@
             @endif
             <form action="{{route('admin.post-login')}}" method="POST">
                 {{csrf_field()}}
-                <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
-                    <input type="email" class="form-control" name="email" placeholder="Email">
+                <div class="form-group {{ $errors->has('username') ? ' has-error' : '' }}">
+                    <input type="username" class="form-control" name="username" placeholder="Email">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                    @if ($errors->has('email'))
+                    @if ($errors->has('username'))
                         <span class="help-block">
-                                    <strong>{{ $errors->first('email') }}</strong>
+                                    <strong>{{ $errors->first('username') }}</strong>
                                 </span>
                     @endif
                 </div>
@@ -38,20 +38,20 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox" name="remember_token"> Ghi nhớ
+                                <input type="checkbox" name="remember_token"> Remember me
                             </label>
                         </div>
                     </div>
                     <!-- /.col -->
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Đăng nhập</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
                     </div>
                     <!-- /.col -->
                 </div>
             </form>
             <!-- /.social-auth-links -->
 
-            <a href="{{route('admin.forgot_password')}}">Quên mật khẩu</a><br>
+            <a href="{{route('admin.forgot_password')}}">Forgot password</a><br>
 
         </div>
         <!-- /.login-box-body -->

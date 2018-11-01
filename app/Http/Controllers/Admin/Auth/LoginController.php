@@ -53,10 +53,10 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
-        $email = $request->email;
+        $username = $request->username;
         $password = $request->password;
         $remember = $request->has('remember_token') ? true : false;
-        if (Auth::guard('admin')->attempt(['email' => $email, 'password' => $password], $remember)) {
+        if (Auth::guard('admin')->attempt(['username' => $username, 'password' => $password], $remember)) {
             return redirect()->route('admin.home');
         }
         return redirect()->back()->withErrors(['error' => trans('messages.login_failed')]);
@@ -67,5 +67,10 @@ class LoginController extends Controller
         $this->guard()->logout();
 
         return redirect()->route('admin.login');
+    }
+
+    public function username()
+    {
+        return 'username';
     }
 }

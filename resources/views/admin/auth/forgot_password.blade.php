@@ -4,10 +4,10 @@
 @section('content')
     <div class="register-box">
         <div class="register-logo">
-            <a>HapoJC</a>
+            <a>{{config("sales.default_system_name")}}</a>
         </div>
         <div class="register-box-body">
-            <p class="login-box-msg">Đăng ký tài khoản</p>
+            <p class="login-box-msg">Find Your Password</p>
             @if (session('status'))
                 <div class="alert alert-success">
                     {{ session('status') }}
@@ -28,13 +28,13 @@
                 <div class="row">
                     <div class="col-xs-8 col-xs-offset-2">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">
-                            Khôi phục mật khẩu
+                            Reset Password
                         </button>
                     </div>
                 </div>
             </form>
             <div class="margin-top-50 text-center">
-                <a href="{{ route('admin.login') }}">Quay lại trang đăng nhập</a>
+                <a href="{{ route('admin.login') }}">Back to login screen</a>
             </div>
         </div>
     </div>
