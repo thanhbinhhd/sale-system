@@ -37,14 +37,14 @@ class ResetPasswordController extends Controller
      */
     public function showResetForm(Request $request, $token = null)
     {
-        return view('admin.auth.reset')->with(
+        return view('user.auth.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );
     }
 
     public function broker()
     {
-        return Password::broker('admins');
+        return Password::broker('users');
     }
 
     public function __construct()
@@ -54,6 +54,6 @@ class ResetPasswordController extends Controller
 
     protected function guard()
     {
-        return Auth::guard('admin');
+        return Auth::guard('user');
     }
 }
