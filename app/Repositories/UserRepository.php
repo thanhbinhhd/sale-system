@@ -16,5 +16,12 @@ class UserRepository
 
     }
 
+    public function updateStatus($status, $id){
+        $user = $this->getById($id);
+        $user->status = $status;
+        $this->update($id,$user->toArray());
+        return $status;
+    }
+
 
 }

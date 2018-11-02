@@ -37,8 +37,8 @@ class Admin extends Authenticatable
     public static function boot()
     {
         parent::boot();
-
-        static::addGlobalScope(new StatusScope());
+//
+//        static::addGlobalScope(new StatusScope());
     }
 
 
