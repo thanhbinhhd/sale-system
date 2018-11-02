@@ -20,17 +20,15 @@ Route::get('/', function () {
 Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
         Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
-        Route::post('post-login', ['as' => 'post-login', 'uses' => 'LoginController@authenticate']);
+        Route::post('login', ['as' => 'login', 'uses' => 'LoginController@authenticate']);
         Route::get('forgot-password', ['as' => 'forgot_password', 'uses' => 'ForgotPasswordController@showLinkRequestForm']);
         Route::post('email', ['as' => 'email', 'uses' => 'ForgotPasswordController@sendResetLinkEmail']);
         Route::get('get-reset/{token}', ['as' => 'get-reset', 'uses' => 'ResetPasswordController@showResetForm']);
         Route::post('reset', ['as' => 'reset', 'uses' => 'ResetPasswordController@reset']);
     });
 
-    Route::group(['namespace' => 'Auth', 'middleware' => 'admin'], function () {
-        Route::get('dashboard',['as' => 'home', function(){
-            return view('admin.users');
-        }]);
-        Route::get('logout', ['as' => 'logout', 'uses' => 'LoginController@logout']);
+    Route::group(['middleware' => 'admin'], function () {
+        Route::get('dashboard',['as' => 'home', 'uses' => 'UserController@index']);
+        Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
     });
 });
