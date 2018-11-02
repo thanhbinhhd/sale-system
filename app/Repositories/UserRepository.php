@@ -15,4 +15,6 @@ class UserRepository
         $this->model = $user;
 
     }
+
+
 }
