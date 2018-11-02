@@ -14,7 +14,7 @@
                                 </span>
                 </div>
             @endif
-            <form action="{{route('admin.post-login')}}" method="POST">
+            <form action="{{route('admin.login')}}" method="POST">
                 {{csrf_field()}}
                 <div class="form-group {{ $errors->has('username') ? ' has-error' : '' }}">
                     <input type="username" class="form-control" name="username" placeholder="Username">
