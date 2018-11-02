@@ -17,7 +17,7 @@
             <form action="{{route('admin.post-login')}}" method="POST">
                 {{csrf_field()}}
                 <div class="form-group {{ $errors->has('username') ? ' has-error' : '' }}">
-                    <input type="username" class="form-control" name="username" placeholder="Email">
+                    <input type="username" class="form-control" name="username" placeholder="Username">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('username'))
                         <span class="help-block">

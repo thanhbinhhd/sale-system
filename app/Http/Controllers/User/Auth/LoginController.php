@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\admin\LoginRequest;
+//use App\Http\Requests\user\LoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,37 +32,31 @@ class LoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('admin')->except(['showLoginForm','authenticate']);
+        $this->middleware('user')->except(['showLoginForm','authenticate']);
     }
 
     protected function guard()
     {
-        return Auth::guard('admin');
+        return Auth::guard('user');
     }
 
-    protected $redirectTo = '/admin';
+    protected $redirectTo = '/user';
 
     public function showLoginForm()
     {
-        if (Auth::guard('admin')->check()) {
-            return redirect()->route('admin.home');
+        if (Auth::guard('user')->check()) {
+            return redirect()->route('user.home');
         }
-        return view('admin.auth.login');
+        return view('user.auth.login');
     }
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return
-     *
-     */
-    public function authenticate(LoginRequest $request)
+    public function authenticate(Request $request)
     {
         $email = $request->email;
         $password = $request->password;
         $remember = $request->has('remember_token') ? true : false;
-        if (Auth::guard('admin')->attempt(['email' => $email, 'password' => $password], $remember)) {
-            return redirect()->route('admin.home');
+        if (Auth::guard('user')->attempt(['email' => $email, 'password' => $password], $remember)) {
+            return redirect()->route('user.home');
         }
         return redirect()->back()->withErrors(['error' => trans('messages.login_failed')]);
     }
@@ -71,6 +65,6 @@ class LoginController extends Controller
     {
         $this->guard()->logout();
 
-        return redirect()->route('admin.login');
+        return redirect()->route('user.login');
     }
 }
