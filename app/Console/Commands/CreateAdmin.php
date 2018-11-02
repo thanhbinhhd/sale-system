@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\User;
+use App\Model\Admin;
 use Illuminate\Support\Facades\Validator;
 use RuntimeException;
 use Identicon\Identicon;
@@ -16,7 +16,7 @@ class CreateAdmin extends Command
      *
      * @var string
      */
-    protected $signature = 'blog:admin
+    protected $signature = 'system:admin
                             {user? : The ID of the user}
                             {--delete : Whether the user should be deleted}';
 
@@ -25,7 +25,7 @@ class CreateAdmin extends Command
      *
      * @var string
      */
-    protected $description = 'Create an admin or delete a user for the blog.';
+    protected $description = 'Create an super admin or delete a user for the system.';
 
     /**
      * Create a new command instance.
@@ -42,17 +42,17 @@ class CreateAdmin extends Command
      */
     public function handle()
     {
-        $userId = $this->argument('user');
+        $adminId = $this->argument('user');
         $option = $this->option('delete');
 
-        if ($userId && !$option) {
-            $user = User::findOrFail($userId);
+        if ($adminId && !$option) {
+            $admin = Admin::findOrFail($adminId);
 
-            $this->info('username: ' . $user->name . ', email: ' . $user->email . ', is_admin: ' . $user->is_admin);
+            $this->info('username: ' . $admin->name . ', username: ' . $admin->username . ', is_admin: ' . $admin->is_admin);
 
             return;
-        } else if ($userId && $option) {
-            if (User::withoutGlobalScope(StatusScope::class)->find($userId)->delete()) {
+        } else if ($adminId && $option) {
+            if (User::find($adminId)->delete()) {
                 $this->info('Deleted the user success!');
             } else {
                 $this->error('Sorry, the system had made a mistake! Please check the system.');
@@ -61,12 +61,12 @@ class CreateAdmin extends Command
         }
 
         $name = $this->ask('What is your name?');
-        $email = $this->ask('What is your email?');
+        $username = $this->ask('What is your username?');
         $password = $this->secret('What is the password?(min: 6 character)');
 
         $data = [
             'name'     => $name,
-            'email'    => $email,
+            'username'    => $username,
             'password' => $password,
         ];
 
@@ -86,8 +86,8 @@ class CreateAdmin extends Command
     public function register($data)
     {
         $validator = Validator::make($data, [
-            'name' => 'required|max:255|unique:users',
-            'email' => 'required|email|max:255|unique:users',
+            'name' => 'required|max:255|unique:admins',
+            'username' => 'required|max:255|unique:admins',
             'password' => 'required|min:6',
         ]);
 
@@ -106,13 +106,12 @@ class CreateAdmin extends Command
      */
     public function create($data)
     {
-        return User::create([
+        return Admin::create([
             'name'     => $data['name'],
-            'email'    => $data['email'],
-            'status'   => true,
-            'is_admin' => true,
+            'username'    => $data['username'],
+            'status'   => 1,
+            'level' => 1,
             'password' => bcrypt($data['password']),
-            'avatar'   => (new Identicon())->getImageDataUri($data['name'], 256),
         ]);
     }
 }

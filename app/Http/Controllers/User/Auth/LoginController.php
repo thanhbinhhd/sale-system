@@ -67,4 +67,9 @@ class LoginController extends Controller
 
         return redirect()->route('user.login');
     }
+
+    protected function redirectTo()
+    {
+        return '/path';
+    }
 }
