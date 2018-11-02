@@ -11,7 +11,10 @@ class AdminTransform extends TransformerAbstract
     public function transform(Admin $admin)
     {
         return [
-
+            'username' => $admin->username,
+            'password' => $admin->password,
+            'level' => $admin->level,
+            'status' => $admin->status
         ];
     }
 }
