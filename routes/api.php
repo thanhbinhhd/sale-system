@@ -16,8 +16,3 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function () {
-    Route::group(['middleware' => 'admin'], function () {
-        Route::put('/update-status',"UserController@updateStatus");
-    });
-});

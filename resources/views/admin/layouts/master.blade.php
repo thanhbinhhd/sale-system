@@ -6,7 +6,6 @@
   <title>AdminLTE 2 | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="/admin/css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -28,7 +27,6 @@
     <link rel="stylesheet" href="/admin/css/daterangepicker.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="/admin/css/bootstrap3-wysihtml5.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap.min.css">
     @yield('customcss')
@@ -51,6 +49,7 @@
    @yield('content')
     <!-- /.content -->
   </div>
+
    @include('admin.layouts._footer')
   <!-- Control Sidebar -->
 
@@ -100,10 +99,8 @@
 <script src="/admin/js/demo.js"></script>
 <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-@yield('customscript')
-    <script>
+<script>
     // Basic example
     $(document).ready(function () {
         $('#listtable').DataTable({

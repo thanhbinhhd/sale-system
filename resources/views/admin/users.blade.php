@@ -38,7 +38,7 @@ User Manager
                     <td>{{$user->address}}</td>
                     <td>
                         <label class="switch">
-                            <input class="user-status" type="checkbox" @if ($user->status == 1) checked @endif id="{{$user->id}}">
+                            <input type="checkbox" @if ($user->status == 1) checked @endif>
                             <span class="slider round"></span>
                         </label>
                     </td>
@@ -54,38 +54,4 @@ User Manager
         </table>
     </div>
 
-
-@endsection
-@section('customscript')
-    <script>
-        $(document).ready(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $(".user-status").on("change",function () {
-                var id = $(this).attr('id');
-                var status = ($(this).is(':checked')==1) ? 1 : 0;
-                $.ajax({
-                    type:'PUT',
-                    url: 'update-status',
-                    data:{
-                        id:id,
-                        status:status,
-                    },
-                    success: function (response) {
-                        if(!response.error)
-                        {
-                            toastr.success('Status was changed!');
-                        }
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        toastr.error(xhr.responseJSON.message);
-                    }
-                });
-            })
-        });
-    </script>
 @endsection
