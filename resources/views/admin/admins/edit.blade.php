@@ -12,17 +12,17 @@ Admin Manager
                 <div class="alert alert-warning">{{ $error }}</div>
             @endforeach
         @endif
-        <form method="post" action="./">
+        <form method="post" action="{{route('admin.admin-manager.update', ['id' => $admin->id])}}">
           <legend>Edit Admin/Staff</legend>
           {{ csrf_field()}}
           {{ method_field('PUT') }}
           <div class="form-group">
             <label for="inputUsername">Username</label>
-            <input id="inputUsername" value="@if(old('username')) {{old('username')}} @else {{$admin->username}} @endif" type="username" class="form-control" name="username" placeholder="Username">
+            <input id="inputUsername" value="@if(old('username')) {{old('username')}} @else {{$admin->username}} @endif" type="text" class="form-control" name="username" placeholder="Username">
           </div>
           <div class="form-group">
-            <label for="inputFullrname">Full Name</label>
-            <input id="inputFullrname" value="@if(old('name')) {{old('name')}} @else {{$admin->name}} @endif" type="text" class="form-control" name="name" placeholder="Ha Ja U">
+            <label for="inputFullName">Full Name</label>
+            <input id="inputFullName" value="@if(old('name')) {{old('name')}} @else {{$admin->name}} @endif" type="text" class="form-control" name="name" placeholder="Ha Ja U">
           </div>
           <div class="form-group">
             <label for="inputPassword">Password</label>
@@ -114,10 +114,10 @@ Admin Manager
 <script type="text/javascript">
 $(document).ready(function () {
     $('input[type=radio][name=level]').change(function() {
-        if (this.value == '1') {
+        if (this.value === '1') {
             $("#permissions").hide();
         }
-        else if (this.value == '2') {
+        else if (this.value === '2') {
             $("#permissions").show();
         }
     });
