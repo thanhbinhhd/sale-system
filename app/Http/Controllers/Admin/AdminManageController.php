@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\CreateAdminRequest;
+use App\Http\Requests\Admin\EditAdminRequest;
 use App\Repositories\AdminPermissionRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -104,49 +105,30 @@ class AdminManageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditAdminRequest $request, $id)
     {
-        $newAdmin = Admin::find($id);
-        $newAdminPermisson = AdminPermission::where('admin_id', $id)->first();
-        if($newAdminPermisson == null)
-            $newAdminPermisson = new AdminPermission;
-        //Validate
-        $rules = array(
-            'username'  => 'required',
-            'name'      => 'required',
-        );
-        $validator = Validator::make($request->all(), $rules);
-        // process the create
-        if ($validator->fails()) {
-            return Redirect::back()
-                ->withErrors($validator)
-                ->withInput($request->all());
-        }else{
-            $newAdmin->name = $request->input('name');
-            if($request->input('password'))
-                $newAdmin->password = bcrypt($request->input('password'));
-            $newAdmin->level = $request->input('level');
-            $newAdmin->status = ($request->input('status') or 0);
-            $newAdmin->save();
-            if ($newAdmin->level != 1) { // is staff
-                # code...
-                $newAdminPermisson->admin_id = $newAdmin->id;
-                $newAdminPermisson->can_delete = ($request->input('can_delete') == 1);
-                $newAdminPermisson->can_add = ($request->input('can_add') == 1);
-                $newAdminPermisson->can_update = ($request->input('can_update') == 1);
-                $newAdminPermisson->can_read = ($request->input('can_read') == 1);
-                $newAdminPermisson->can_accept_order = ($request->input('can_accept_order') == 1);
-                $newAdminPermisson->can_reject_order = ($request->input('can_reject_order') == 1);
-                $newAdminPermisson->can_view_order_history = ($request->input('can_view_order_history') == 1);
-                $newAdminPermisson->can_view_user = ($request->input('can_view_user') == 1);
-                $newAdminPermisson->can_block_user = ($request->input('can_block_user') == 1);
-                $newAdminPermisson->can_change_policies = ($request->input('can_change_policies') == 1);
-                $newAdminPermisson->save();
+        $newAdmin = array_merge($request->all(), [
+                'status' => $request->input('status') or 0,
+        ]);
+        $newAdminPermisson = array_merge($request->all(), [
+                    'admin_id' => $id
+                ]);
+        $updatable = ['name', 'password', 'status', 'level'];
+        $newAdmin =  array_filter(array_intersect_key($newAdmin, array_flip($updatable)));
+        $admin = $this->admin->updateColumn($id, $newAdmin);
+        
+        if ($newAdmin['level'] != 1) { // is staff
+            # code...
+            $adminPermission = AdminPermission::where('admin_id', $id)->first();
+            if($adminPermission == null){
+                $this->admin_permission->store($newAdminPermisson);
+            }else{
+                $this->admin_permission->update($adminPermission->id, $newAdminPermisson);
             }
-
-            \Session::flash('message', 'Successfully updated admin "'. $newAdmin->username . '"!');
-            return Redirect::to('/admin/admin-manager');
         }
+
+        \Session::flash('message', 'Successfully updated admin "'. $request->input('username') . '"!');
+        return Redirect::to('/admin/admin-manager');
     }
 
     /**
