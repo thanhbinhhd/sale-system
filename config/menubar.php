@@ -12,15 +12,15 @@ return [
 
     'order' => "Orders manager",
 
-    'admin_manager_path' => "/admin/AdminManager",
+    'admin_manager_path' => "/admin/admin-manager",
 
-    'user_manager_path' => "/admin/UsersManager",
+    'user_manager_path' => "/admin/user-manager",
 
-    'product_manager_path' => "/admin/ProductsManager",
+    'product_manager_path' => "/admin/product-manager",
 
-    'category_manager_path' => "/admin/CategoriesManager",
+    'category_manager_path' => "/admin/categories-manager",
 
-    'order_manager_path' => "/admin/OrdersManager",
+    'order_manager_path' => "/admin/order-manager",
 
     'page_name' => 'Sales System',
 
