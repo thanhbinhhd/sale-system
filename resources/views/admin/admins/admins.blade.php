@@ -6,7 +6,7 @@
 @section('pagename')
 Admin Manager
 @if($currentAdmin->level == 1)
-    <a href="{{config('menubar.admin_manager_path').'/'.'create'}}"><button type="button" class="btn btn-primary">Create New</button></a>
+    <a href="{{route('admin.admin-manager.create')}}"><button type="button" class="btn btn-primary">Create New</button></a>
 @endif
 @endsection
 @section('content')
@@ -48,7 +48,7 @@ Admin Manager
                         </label>
                     </td>
                     <td>
-                        <a href="{{config('menubar.admin_manager_path'). '/' . $admin->id . '/'.'edit'}}"><button type="button" class="btn btn-info">Change</button></a>
+                        <a href="{{route('admin.admin-manager.edit', ['id' => $admin->id])}}"><button type="button" class="btn btn-info">Change</button></a>
                         <button type="button" class="btn btn-danger" data-username="{{$admin->username}}" data-id="{{$admin->id}}" data-toggle="modal" data-target="#askDeleteModal">Delete</button>
                     </td>
                 </tr>
@@ -102,7 +102,7 @@ Admin Manager
             });
                 $.ajax({
                     type:'post',
-                    url: 'AdminManager/' + id,
+                    url: '/admin/admin-manager/' + id,
                     data:{
                         id:id,
                         _method: 'delete'
@@ -131,7 +131,7 @@ Admin Manager
                 var status = ($(this).is(':checked')==1) ? 1 : 0;
                 $.ajax({
                     type:'PUT',
-                    url: 'update-admin-status',
+                    url: '/admin/update-admin-status',
                     data:{
                         id:id,
                         status:status,

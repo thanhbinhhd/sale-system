@@ -12,7 +12,7 @@ Admin Manager
                 <div class="alert alert-warning">{{ $error }}</div>
             @endforeach
         @endif
-        <form method="post" action="store">
+        <form method="post" action="{{route('admin.admin-manager.store')}}">
           <legend>Create new Admin/Staff</legend>
           {{ csrf_field()}}
           <div class="form-group">
@@ -20,8 +20,8 @@ Admin Manager
             <input id="inputUsername" value="{{ old('username')}}" type="username" class="form-control" name="username" placeholder="Username">
           </div>
           <div class="form-group">
-            <label for="inputFullrname">Full Name</label>
-            <input id="inputFullrname" value="{{ old('name') }}" type="text" class="form-control" name="name" placeholder="Ha Ja U">
+            <label for="inputFullName">Full Name</label>
+            <input id="inputFullName" value="{{ old('name') }}" type="text" class="form-control" name="name" placeholder="Ha Ja U">
           </div>
           <div class="form-group">
             <label for="inputPassword">Password</label>
