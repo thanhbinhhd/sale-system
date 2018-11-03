@@ -13,7 +13,7 @@
                     {{ session('status') }}
                 </div>
             @endif
-            <form role="form" method="POST" action="{{ route('admin.email') }}">
+            <form role="form" method="POST" action="{{ route('user.email') }}">
                 {{ csrf_field() }}
                 <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
                     <input type="text" name="email" title="Email"
@@ -34,7 +34,7 @@
                 </div>
             </form>
             <div class="margin-top-50 text-center">
-                <a href="{{ route('admin.login') }}">Back to login screen</a>
+                <a href="{{ route('user.login') }}">Back to login screen</a>
             </div>
         </div>
     </div>

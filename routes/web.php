@@ -39,11 +39,17 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
         Route::get('users/{id}',"UserController@detail");
     });
 });
+Route::group(['namespace' => 'User'], function() {
+    Auth::routes(['verify' => true]);
+});
 
 Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
+
     Route::group(['prefix' => 'user'], function () {
         Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
             Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
+            Route::get('register', ['as' => 'register', 'uses' => 'RegisterController@showRegisterForm']);
+            Route::post('register', ['as' => 'register', 'uses' => 'RegisterController@register']);
             Route::post('login', ['as' => 'login', 'uses' => 'LoginController@authenticate']);
             Route::get('forgot-password', ['as' => 'forgot_password', 'uses' => 'ForgotPasswordController@showLinkRequestForm']);
             Route::post('email', ['as' => 'email', 'uses' => 'ForgotPasswordController@sendResetLinkEmail']);
@@ -57,6 +63,9 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
     });
 
     Route::group(['middleware' => 'user'], function () {
+        Route::group(['middleware' => 'user_verified'], function () {
+
+        });
         Route::get('/',['as' => 'home', function(){
             return view('user.home');
         }]);

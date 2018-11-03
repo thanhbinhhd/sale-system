@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/user/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/user/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/user/css/adminlte.min.css">
     <!-- Ionicons -->
     {{--<link rel="stylesheet" href="/user/css/all.css">--}}
     <link rel="stylesheet" href="{{ mix('user/css/app.css') }}">

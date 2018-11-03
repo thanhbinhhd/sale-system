@@ -2,12 +2,14 @@
 
 namespace App\Model;
 
+use App\Notifications\ResetPasswordNotification;
+use App\Notifications\UserVerifyMail;
 use App\Scopes\StatusScope;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -19,7 +21,7 @@ class User extends Authenticatable
     const ACTIVE = 1;
     const BLOCK = 0;
     protected $fillable = [
-        'name', 'email', 'password', 'email_verified_at',
+        'name', 'email', 'password',
         'phone_number', 'address', 'avatar',
         'status', 'description', 'email_notify_enabled'
     ];
@@ -44,4 +46,26 @@ class User extends Authenticatable
     {
         return $this->hasMany(SocialAccount::class);
     }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new UserVerifyMail());
+    }
+
 }
