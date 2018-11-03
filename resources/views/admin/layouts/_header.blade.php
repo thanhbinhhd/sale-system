@@ -216,7 +216,7 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="/admin/images/avatar.jpg" class="img-circle" style="width: 25px;height: 25px" alt="User Image">
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <span class="hidden-xs">{{Auth::guard('admin')->user()->username}}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -246,7 +246,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="{{route('admin.changePassword')}}" class="btn btn-default btn-flat">Change Password</a>
                             </div>
                             <div class="pull-right">
                                 <a href="{{route('admin.logout')}}" class="btn btn-default btn-flat">Sign out</a>
