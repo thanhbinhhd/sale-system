@@ -26,4 +26,10 @@ class UserController extends Controller
         $this->user->updateStatus($status,$id);
         return response()->json(['data'=>$status], 200);
     }
+
+    public function detail($id){
+        $user = $this->user->getById($id);
+        return response()->json(['data'=>$user]);
+    }
+
 }

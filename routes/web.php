@@ -11,14 +11,6 @@
 |
 */
 
-use App\Http\Middleware\CheckAdminLevel;
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
-
 Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
         Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
@@ -43,23 +35,30 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
         Route::resource('AdminManager', 'AdminManageController')->middleware(CheckAdminLevel::class);
         Route::resource('UsersManager', 'UserController');
         
+        Route::get('users/{id}',"UserController@detail");
     });
 });
 
-Route::group(['namespace' => 'User', 'as' => 'user.', 'prefix' => 'user'], function () {
-    Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
-        Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
-        Route::post('login', ['as' => 'login', 'uses' => 'LoginController@authenticate']);
-        Route::get('forgot-password', ['as' => 'forgot_password', 'uses' => 'ForgotPasswordController@showLinkRequestForm']);
-        Route::post('email', ['as' => 'email', 'uses' => 'ForgotPasswordController@sendResetLinkEmail']);
-        Route::get('get-reset/{token}', ['as' => 'get-reset', 'uses' => 'ResetPasswordController@showResetForm']);
-        Route::post('reset', ['as' => 'reset', 'uses' => 'ResetPasswordController@reset']);
+Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
+    Route::group(['prefix' => 'user'], function () {
+        Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
+            Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
+            Route::post('login', ['as' => 'login', 'uses' => 'LoginController@authenticate']);
+            Route::get('forgot-password', ['as' => 'forgot_password', 'uses' => 'ForgotPasswordController@showLinkRequestForm']);
+            Route::post('email', ['as' => 'email', 'uses' => 'ForgotPasswordController@sendResetLinkEmail']);
+            Route::get('get-reset/{token}', ['as' => 'get-reset', 'uses' => 'ResetPasswordController@showResetForm']);
+            Route::post('reset', ['as' => 'reset', 'uses' => 'ResetPasswordController@reset']);
+            Route::get('oauth/facebook/login', ['as' => 'oauth-facebook-login', 'uses' => 'OAuthController@redirectToProviderFacebook']);
+            Route::get('oauth/facebook/callback', ['as' => 'oauth-facebook-callback', 'uses' => 'OAuthController@handleProviderCallbackFacebook']);
+            Route::get('oauth/google/login', ['as' => 'oauth-google-login', 'uses' => 'OAuthController@redirectToProviderGoogle']);
+            Route::get('oauth/google/callback', ['as' => 'oauth-google-callback', 'uses' => 'OAuthController@handleProviderCallbackGoogle']);
+        });
     });
 
-    Route::group(['namespace' => 'Auth', 'middleware' => 'user'], function () {
-        Route::get('dashboard',['as' => 'home', function(){
+    Route::group(['middleware' => 'user'], function () {
+        Route::get('/',['as' => 'home', function(){
             return view('user.home');
         }]);
-        Route::get('logout', ['as' => 'logout', 'uses' => 'LoginController@logout']);
+        Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
     });
 });
