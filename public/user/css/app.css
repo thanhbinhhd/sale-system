@@ -368,7 +368,7 @@ body {
 
 .form-label-group {
   position: relative;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 .form-label-group input {
@@ -440,6 +440,26 @@ body {
 
 .link-color {
   color: #00acd6;
+}
+
+.full-with {
+  width: 100%;
+}
+
+.link-register {
+  left: 30%;
+  top: -37%;
+  color: #0d6aad;
+  font-size: 16px;
+  background-color: #fff;
+}
+
+.height-30 {
+  height: 30px;
+}
+
+.help-block {
+  color: red;
 }
 
 @media screen and (min-width: 1367px) and (max-width: 1920px) {

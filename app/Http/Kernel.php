@@ -63,5 +63,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\AdminAuth::class,
         'user' => \App\Http\Middleware\UserAuth::class,
         'admin.level' => \App\Http\Middleware\CheckAdminLevel::class,
+        'user_verified' => \App\Http\Middleware\EnsureEmailsVerified::class
     ];
 }

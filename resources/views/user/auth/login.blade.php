@@ -38,11 +38,17 @@
                             <div class="custom-control custom-checkbox mb-3">
                                 <input type="checkbox" name="remember_token" class="custom-control-input" id="customCheck1">
                                 <label class="custom-control-label" for="customCheck1">Remember password</label>
-                                <label class="pull-right link-color cursor-pointer" href="{{route('user.forgot_password')}}"><a>Forgot Password</a></label>
+                                <label class="pull-right link-color cursor-pointer"><a href="{{route('user.forgot_password')}}">Forgot Password</a></label>
                             </div>
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
-                            <hr class="my-4">
+
                         </form>
+
+                        <div class="text-center position-relative full-with height-30">
+                            <label class="cursor-pointer position-absolute link-register"><a class="" href="{{route('user.register')}}">Sign Up New Account</a></label>
+                            <hr class="my-4">
+                        </div>
+
                         <form class="form-signin" action="{{route('user.oauth-google-login')}}" method="GET">
                             <button class="btn btn-lg btn-google btn-block text-uppercase"><i class="fa fa-google mr-2"></i> Sign in with Google</button>
                         </form>

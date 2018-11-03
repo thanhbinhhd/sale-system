@@ -4,6 +4,9 @@ namespace App\Http\Controllers\User\Auth;
 
 use App\Model\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -27,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -36,9 +39,20 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest')->except('showRegisterForm');
     }
 
+    protected function guard()
+    {
+        return Auth::guard('user');
+    }
+
+    public function showRegisterForm() {
+        if (Auth::guard('user')->check()) {
+            return redirect()->route('user.home');
+        }
+        return view('user.auth.register');
+    }
     /**
      * Get a validator for an incoming registration request.
      *

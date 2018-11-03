@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,4 +58,5 @@ class ResetPasswordController extends Controller
     {
         return Auth::guard('user');
     }
+
 }
