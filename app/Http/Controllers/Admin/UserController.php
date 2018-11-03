@@ -17,7 +17,7 @@ class UserController extends Controller
 
     public function index(){
         $users = $this->user->all();
-        return view('admin.user.users', compact('users'));
+        return view('admin.users', compact('users'));
     }
 
     public function updateStatus(Request $request){
