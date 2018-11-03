@@ -22,11 +22,20 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
     });
 
     Route::group(['middleware' => 'admin'], function () {
+        Route::group(['middleware' => 'admin.level', 'prefix' => 'AdminManager'], function(){
+            Route::post('store', 'AdminManageController@store');
+            Route::put('{$id}', 'AdminManageController@update');
+            Route::delete('{$id}', 'AdminManageController@destroy'); 
+        });
+        Route::put('update-admin-status',"AdminManageController@updateStatus");
+        
         Route::get('dashboard',['as' => 'home', 'uses' => 'UserController@index']);
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
         Route::put('update-status',"UserController@updateStatus");
+        Route::resource('AdminManager', 'AdminManageController')->middleware(CheckAdminLevel::class);
+        Route::resource('UsersManager', 'UserController');
+        
         Route::get('users/{id}',"UserController@detail");
-
     });
 });
 

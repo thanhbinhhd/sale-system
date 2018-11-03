@@ -47,7 +47,7 @@ User Manager
                         <button type="button" class="btn btn-primary order-btn" value="{{$user->id}}">Order</button>
                     </td>
                 </tr>
-                @endforeach
+            @endforeach
             </tbody>
         </table>
     </div>
