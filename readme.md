@@ -56,7 +56,12 @@ DB_PASSWORD=--user_password
 #### 4.Step4
 First run laravel project
 ```terminal
-php artisan system:install
 php artisan serve
 npm run dev
+```
+
+### 5.Step 5 setup default data and create super admin
+```
+php artisan system:install
+php artisan system:admin
 ```

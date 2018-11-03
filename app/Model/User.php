@@ -16,6 +16,8 @@ class User extends Authenticatable
      *
      * @var array
      */
+    const ACTIVE = 1;
+    const BLOCK = 0;
     protected $fillable = [
         'name', 'email', 'password', 'email_verified_at',
         'phone_number', 'address', 'avatar',
@@ -36,5 +38,10 @@ class User extends Authenticatable
         parent::boot();
 
         static::addGlobalScope(new StatusScope());
+    }
+
+    public function socialAccount()
+    {
+        return $this->hasMany(SocialAccount::class);
     }
 }
