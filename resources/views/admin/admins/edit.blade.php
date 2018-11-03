@@ -18,7 +18,7 @@ Admin Manager
           {{ method_field('PUT') }}
           <div class="form-group">
             <label for="inputUsername">Username</label>
-            <input id="inputUsername" value="{{old('username')?old('username'):$admin->username}}" type="text" class="form-control" name="username" placeholder="Username">
+            <input readonly="" id="inputUsername" value="{{old('username')?old('username'):$admin->username}}" type="text" class="form-control" name="username" placeholder="Username">
           </div>
           <div class="form-group">
             <label for="inputFullName">Full Name</label>
