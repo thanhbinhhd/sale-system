@@ -17,7 +17,7 @@ Admin Manager
           {{ csrf_field()}}
           <div class="form-group">
             <label for="inputUsername">Username</label>
-            <input id="inputUsername" value="{{ old('username')}}" type="username" class="form-control" name="username" placeholder="Username">
+            <input id="inputUsername" value="{{ old('username') }}" type="username" class="form-control" name="username" placeholder="Username">
           </div>
           <div class="form-group">
             <label for="inputFullName">Full Name</label>

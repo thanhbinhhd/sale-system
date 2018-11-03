@@ -18,11 +18,11 @@ Admin Manager
           {{ method_field('PUT') }}
           <div class="form-group">
             <label for="inputUsername">Username</label>
-            <input id="inputUsername" value="@if(old('username')) {{old('username')}} @else {{$admin->username}} @endif" type="text" class="form-control" name="username" placeholder="Username">
+            <input id="inputUsername" value="{{old('username')?old('username'):$admin->username}}" type="text" class="form-control" name="username" placeholder="Username">
           </div>
           <div class="form-group">
             <label for="inputFullName">Full Name</label>
-            <input id="inputFullName" value="@if(old('name')) {{old('name')}} @else {{$admin->name}} @endif" type="text" class="form-control" name="name" placeholder="Ha Ja U">
+            <input id="inputFullName" value="{{old('name')?old('name'):$admin->name}}" type="text" class="form-control" name="name" placeholder="Ha Ja U">
           </div>
           <div class="form-group">
             <label for="inputPassword">Password</label>
