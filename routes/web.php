@@ -11,6 +11,17 @@
 |
 */
 
+
+
+use App\Http\Middleware\CheckAdminLevel;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+
+
+
 Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
         Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
