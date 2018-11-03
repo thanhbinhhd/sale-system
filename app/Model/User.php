@@ -33,12 +33,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-
-        static::addGlobalScope(new StatusScope());
-    }
+//    public static function boot()
+//    {
+//        parent::boot();
+//
+//        static::addGlobalScope(new StatusScope());
+//    }
 
     public function socialAccount()
     {

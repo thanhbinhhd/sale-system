@@ -43,17 +43,88 @@ User Manager
                         </label>
                     </td>
                     <td>
-                        <a href=""><button type="button" class="btn btn-info">Info</button>
-                        </a>
-                        <a href=""><button type="button" class="btn btn-primary">Order</button>
-                        </a>
+                        <button type="button" class="btn btn-info info-btn" value="{{$user->id}}">Info</button>
+                        <button type="button" class="btn btn-primary order-btn" value="{{$user->id}}">Order</button>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+    <div class="modal fade" id="info-modal" role="dialog">
+        <div class="modal-dialog">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">User Infomation</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <td>ID</td>
+                            <td id="info-id"></td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td id="info-name"></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td id="info-mail"></td>
+                        </tr>
+                        <tr>
+                            <td>Avatar</td>
+                            <td><img src="" id="info-avatar" style="width: 70px;height: 70px;" alt="avatar"></td>
+                        </tr>
+                        <tr>
+                            <td>Phone</td>
+                            <td id="info-phone"></td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td id="info-address"></td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td id="info-status"></td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td id="info-description"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="order-modal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Order list of user</h4>
+                </div>
+                <div class="modal-body">
+                   order list
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 @endsection
 @section('customscript')
@@ -84,6 +155,32 @@ User Manager
                     error: function (xhr, ajaxOptions, thrownError) {
                         toastr.error(xhr.responseJSON.message);
                     }
+                });
+            })
+
+            $(".info-btn").on("click",function () {
+                $("#info-modal").modal("show");
+                $.ajax({
+                    type: 'get',
+                    url: 'users/'+$(this).val(),
+                    success: function (response) {
+                        $user=response.data;
+                        $("#info-id").html($user.id);
+                        $("#info-name").html($user.name);
+                        $("#info-mail").html($user.email);
+                        $("#info-avatar").attr("src",$user.avatar);
+                        $("#info-phone").html($user.phone_number);
+                        $("#info-address").html($user.address);
+                        $("#info-status").html(($user.status==1)?"Active":"Blocked");
+                        $("#info-description").html($user.description);
+                    }
+                });
+            })
+
+            $(".order-btn").on("click",function () {
+                $("#order-modal").modal("show");
+                $.ajax({
+
                 });
             })
         });
