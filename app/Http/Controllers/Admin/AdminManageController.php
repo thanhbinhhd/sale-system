@@ -57,6 +57,7 @@ class AdminManageController extends Controller
                 'status' => 0
             ]);
         }
+        $newAdmin['password'] = bcrypt($newAdmin['password']);
         $admin = $this->admin->store($newAdmin);
         if ($newAdmin['level'] != 1) { // is staff
             # code...
@@ -113,6 +114,9 @@ class AdminManageController extends Controller
         $newAdminPermisson = array_merge($request->all(), [
                     'admin_id' => $id
                 ]);
+        if(!empty($request->input('password'))) {
+            $newAdmin['password'] = bcrypt($request->input('password'));
+        }
         $updatable = ['name', 'password', 'status', 'level'];
         $newAdmin =  array_filter(array_intersect_key($newAdmin, array_flip($updatable)));
         $admin = $this->admin->updateColumn($id, $newAdmin);
