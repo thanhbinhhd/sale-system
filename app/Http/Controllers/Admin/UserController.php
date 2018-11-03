@@ -17,7 +17,7 @@ class UserController extends Controller
 
     public function index(){
         $users = $this->user->all();
-        return view('admin.users', compact('users'));
+        return view('admin.user.users', compact('users'));
     }
 
     public function updateStatus(Request $request){
@@ -26,4 +26,10 @@ class UserController extends Controller
         $this->user->updateStatus($status,$id);
         return response()->json(['data'=>$status], 200);
     }
+
+    public function detail($id){
+        $user = $this->user->getById($id);
+        return response()->json(['data'=>$user]);
+    }
+
 }
