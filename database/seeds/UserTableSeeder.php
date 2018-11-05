@@ -22,5 +22,12 @@ class UserTableSeeder extends Seeder
             'email' => 'quanghm@haposoft.com',
             'password' => bcrypt('123456'),
         ]);
+
+
+        DB::table('users')->insert([
+            'name' => 'TestUser',
+            'email' => 'user@user.com',
+            'password' => bcrypt('123456'),
+        ]);
     }
 }
