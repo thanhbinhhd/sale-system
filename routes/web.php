@@ -11,16 +11,9 @@
 |
 */
 
-
-
-use App\Http\Middleware\CheckAdminLevel;
-
-Route::get('/', function () {
-    return view('welcome');
+Route::get('private-policy', function() {
+    return view('user.private-policy');
 });
-
-
-
 
 Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
@@ -53,10 +46,6 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
     });
 });
 
-Route::get('private-policy', function() {
-    return view('user.private-policy');
-});
-
 
 Route::group(['namespace' => 'User'], function() {
     Auth::routes(['verify' => true]);
@@ -83,19 +72,18 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
 
     Route::group(['middleware' => 'user'], function () {
         Route::group(['middleware' => 'user_verified'], function () {
-
+            Route::get('/cart',['as' => 'cart', function(){
+                return view('user.cart');
+            }]);
+            Route::get('/blog',['as' => 'blog', function(){
+                return view('user.blog');
+            }]);
         });
         Route::get('/',['as' => 'home', function(){
             return view('user.home');
         }]);
         Route::get('/shop',['as' => 'shop', function(){
             return view('user.shop');
-        }]);
-        Route::get('/cart',['as' => 'cart', function(){
-            return view('user.cart');
-        }]);
-        Route::get('/blog',['as' => 'blog', function(){
-            return view('user.blog');
         }]);
         Route::get('/contact',['as' => 'contact', function(){
             return view('user.contact');
