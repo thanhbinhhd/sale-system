@@ -14,4 +14,12 @@ class ProductRepository
     {
         $this->model = $product;
     }
+
+    public function getNew(){
+        return $this->model->where('status',1)->take(8)->get();
+    }
+
+    public function getWithCondition($condition, $order){
+        return $this->model->where('status',1)->orderBy($condition,$order)->take(8)->get();
+    }
 }

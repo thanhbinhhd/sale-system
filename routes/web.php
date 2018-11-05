@@ -79,9 +79,7 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
                 return view('user.blog');
             }]);
         });
-        Route::get('/',['as' => 'home', function(){
-            return view('user.home');
-        }]);
+        Route::get('/',['as' => 'home', 'uses' => 'HomeController@index']);
         Route::get('/shop',['as' => 'shop', function(){
             return view('user.shop');
         }]);
