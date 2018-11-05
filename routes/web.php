@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('private-policy', function() {
+    return view('user.private-policy');
+});
+
 Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
         Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
@@ -38,10 +42,6 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
         
         Route::get('users/{id}',"UserController@detail");
     });
-});
-
-Route::get('private-policy', function() {
-    return view('user.private-policy');
 });
 
 
