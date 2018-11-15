@@ -35,7 +35,7 @@
                                 </span>
                             @endif
 
-                            <div class="custom-control custom-checkbox mb-3">
+                            <div class="custom-control custom-checkbox mb-3 margin-top-10">
                                 <input type="checkbox" name="remember_token" class="custom-control-input" id="customCheck1">
                                 <label class="custom-control-label" for="customCheck1">Remember password</label>
                                 <label class="pull-right link-color cursor-pointer"><a href="{{route('user.forgot_password')}}">Forgot Password</a></label>
@@ -52,9 +52,9 @@
                         <form class="form-signin" action="{{route('user.oauth-google-login')}}" method="GET">
                             <button class="btn btn-lg btn-google btn-block text-uppercase"><i class="fa fa-google mr-2"></i> Sign in with Google</button>
                         </form>
-                        <form class="form-signin margin-top-10" action="{{route('user.oauth-facebook-login')}}" method="GET">
-                            <button class="btn btn-lg btn-facebook btn-block text-uppercase"><i class="fa fa-facebook-f mr-2"></i> Sign in with Facebook</button>
-                        </form>
+                        {{--<form class="form-signin margin-top-10" action="{{route('user.oauth-twitter-login')}}" method="GET">--}}
+                            {{--<button class="btn btn-lg btn-twitter btn-block text-uppercase"><i class="fa fa-twitter mr-2"></i> Sign in with Twitter</button>--}}
+                        {{--</form>--}}
 
                     </div>
                 </div>

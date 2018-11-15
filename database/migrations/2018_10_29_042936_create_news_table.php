@@ -24,7 +24,7 @@ class CreateNewsTable extends Migration
             $table->text('source')->nullable();
             $table->integer('admin_id');
             $table->integer('user_id')->unsigned();
-            $table->integer('category_id')->unsigned();
+            $table->integer('category_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

@@ -63,8 +63,8 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
             Route::post('email', ['as' => 'email', 'uses' => 'ForgotPasswordController@sendResetLinkEmail']);
             Route::get('get-reset/{token}', ['as' => 'get-reset', 'uses' => 'ResetPasswordController@showResetForm']);
             Route::post('reset', ['as' => 'reset', 'uses' => 'ResetPasswordController@reset']);
-            Route::get('oauth/facebook/login', ['as' => 'oauth-facebook-login', 'uses' => 'OAuthController@redirectToProviderFacebook']);
-            Route::get('oauth/facebook/callback', ['as' => 'oauth-facebook-callback', 'uses' => 'OAuthController@handleProviderCallbackFacebook']);
+            //Route::get('oauth/twitter/login', ['as' => 'oauth-twitter-login', 'uses' => 'OAuthController@redirectToProviderTwitter']);
+            //Route::get('oauth/twitter/callback', ['as' => 'oauth-twitter-callback', 'uses' => 'OAuthController@handleProviderCallbackTwitter']);
             Route::get('oauth/google/login', ['as' => 'oauth-google-login', 'uses' => 'OAuthController@redirectToProviderGoogle']);
             Route::get('oauth/google/callback', ['as' => 'oauth-google-callback', 'uses' => 'OAuthController@handleProviderCallbackGoogle']);
         });

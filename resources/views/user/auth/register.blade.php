@@ -13,10 +13,10 @@
                                 </span>
                             </div>
                         @endif
-                        <form class="form-signin" action="{{route('user.register')}}" method="POST">
+                        <form class="form-signin" action="{{route('user.register')}}" method="POST" autocomplete="off">
                             {{csrf_field()}}
                             <div class="form-label-group {{ $errors->has('name') ? ' has-error' : '' }}">
-                                <input type="text" id="inputName" name="name" class="form-control" placeholder="Your Name" required autofocus>
+                                <input type="text" id="inputName" name="name" class="form-control" placeholder="Your Name" autocomplete="false" required autofocus>
                                 <label for="inputName">Your Name</label>
                             </div>
                             @if ($errors->has('name'))
@@ -26,7 +26,7 @@
                             @endif
 
                             <div class="form-label-group {{ $errors->has('email') ? ' has-error' : '' }}">
-                                <input type="email" id="inputEmailRegister" name="email" class="form-control" placeholder="Email address" required>
+                                <input type="email" id="inputEmailRegister" name="email" class="form-control" autocomplete="false" placeholder="Email address" required>
                                 <label for="inputEmailRegister">Email address</label>
                             </div>
                             @if ($errors->has('email'))
@@ -36,7 +36,7 @@
                             @endif
 
                             <div class="form-label-group {{ $errors->has('password') ? ' has-error' : '' }}">
-                                <input type="password" id="inputPasswordRegister" name="password" class="form-control" placeholder="Password" required>
+                                <input type="password" id="inputPasswordRegister" name="password" class="form-control" placeholder="Password" autocomplete="false" required>
                                 <label for="inputPasswordRegister">Password</label>
                             </div>
                             @if ($errors->has('password'))
@@ -46,7 +46,7 @@
                             @endif
 
                             <div class="form-label-group {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                <input type="password" id="inputConfirmPassword" name="password_confirmation" class="form-control" placeholder="Confirm Password" required>
+                                <input type="password" id="inputConfirmPassword" name="password_confirmation" class="form-control" placeholder="Confirm Password" autocomplete="false" required>
                                 <label for="inputConfirmPassword">Confirm Password</label>
                             </div>
                             @if ($errors->has('password_confirmation'))
@@ -63,9 +63,12 @@
                         <form class="form-signin margin-top-10" action="{{route('user.oauth-google-login')}}" method="GET">
                             <button class="btn btn-lg btn-google btn-block text-uppercase"><i class="fa fa-google mr-2"></i> Sign up with Google</button>
                         </form>
-                        <form class="form-signin margin-top-10" action="{{route('user.oauth-facebook-login')}}" method="GET">
-                            <button class="btn btn-lg btn-facebook btn-block text-uppercase"><i class="fa fa-facebook-f mr-2"></i> Sign up with Facebook</button>
-                        </form>
+                        {{--<form class="form-signin margin-top-10" action="{{route('user.oauth-facebook-login')}}" method="GET">--}}
+                            {{--<button class="btn btn-lg btn-facebook btn-block text-uppercase"><i class="fa fa-facebook-f mr-2"></i> Sign up with Facebook</button>--}}
+                        {{--</form>--}}
+                        <div class="float-right margin-top-10">
+                            <span class="link-color"><a href="{{route('user.login')}}">Back to Login</a></span>
+                        </div>
 
                     </div>
                 </div>

@@ -41,5 +41,16 @@ class Admin extends Authenticatable
 //        static::addGlobalScope(new StatusScope());
     }
 
+    public function products() {
+        return $this->belongsToMany(Product::class, 'admin_products', 'admin_id', 'product_id');
+    }
+
+    public function orders() {
+        return $this->hasMany(Order::class, 'admin_id');
+    }
+
+    public function adminPermission() {
+        return $this->hasOne(AdminPermission::class, 'admin_id');
+    }
 
 }

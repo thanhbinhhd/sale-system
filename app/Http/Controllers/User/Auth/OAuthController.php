@@ -63,14 +63,14 @@ class OAuthController extends Controller
         return redirect()->route('user.home');
     }
 
-    public function redirectToProviderFacebook()
+    public function redirectToProviderTwitter()
     {
-        return Socialite::driver('facebook')->stateless()->redirect();
+        return Socialite::driver('twitter')->stateless()->redirect();
     }
 
-    public function handleProviderCallbackFacebook(Request $request)
+    public function handleProviderCallbackTwitter(Request $request)
     {
-        $socialUser = Socialite::driver('facebook')->stateless()->user();
+        $socialUser = Socialite::driver('twitter')->stateless()->user();
 
         $socialAccount = SocialAccount::where('social_id', $socialUser->getId())->first();
         if ($socialAccount) {
@@ -89,7 +89,7 @@ class OAuthController extends Controller
                 $user = $this->createUser($socialUser);
 
                 $user->socialAccount()->create([
-                    'providers' => 'facebook',
+                    'providers' => 'twitter',
                     'social_id' => $socialUser->getId(),
                     'access_token' => $socialUser->token,
                     'refresh_token' => $socialUser->refreshToken,
@@ -97,7 +97,7 @@ class OAuthController extends Controller
             } elseif (User::where('email', $socialUser->getEmail())->where('status', User::ACTIVE)
                 ->where('deleted_at', null)->first()) {
                 $user->socialAccount()->create([
-                    'providers' => 'facebook',
+                    'providers' => 'twitter',
                     'social_id' => $socialUser->getId(),
                     'access_token' => $socialUser->token,
                     'refresh_token' => $socialUser->refreshToken,
