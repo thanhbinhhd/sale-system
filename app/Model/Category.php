@@ -19,4 +19,9 @@ class Category extends Model
     {
         return $this->hasMany(News::class,'category_id');
     }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

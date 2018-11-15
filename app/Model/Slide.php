@@ -10,4 +10,9 @@ class Slide extends Model
     protected $fillable = [
       'title', 'link', 'status'
     ];
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

@@ -12,4 +12,13 @@ class ProductDetail extends Model
         'cam1', 'cam2', 'sim', 'connect', 'pin', 'os',
         'note', 'product_id'
     ];
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function product() {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }
