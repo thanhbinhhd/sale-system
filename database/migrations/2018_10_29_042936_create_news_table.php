@@ -23,8 +23,7 @@ class CreateNewsTable extends Migration
             $table->integer('status')->default(1)->comment('1 is active, 0 is blocked');
             $table->text('source')->nullable();
             $table->integer('admin_id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('category_id')->unsigned();
+            $table->integer('category_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

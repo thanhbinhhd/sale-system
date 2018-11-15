@@ -13,4 +13,8 @@ class AdminPermission extends Model
         'can_change_policies'
     ];
 
+    public function admin() {
+        return $this->belongsTo(Admin::class, 'admin_id');
+    }
+
 }

@@ -17,7 +17,7 @@ class CreateAdmin extends Command
      * @var string
      */
     protected $signature = 'system:admin
-                            {user? : The ID of the user}
+                            {admin? : The ID of the admin}
                             {--delete : Whether the user should be deleted}';
 
     /**
@@ -25,7 +25,7 @@ class CreateAdmin extends Command
      *
      * @var string
      */
-    protected $description = 'Create an super admin or delete a user for the system.';
+    protected $description = 'Create an super admin or delete a admin for the system.';
 
     /**
      * Create a new command instance.
@@ -42,18 +42,18 @@ class CreateAdmin extends Command
      */
     public function handle()
     {
-        $adminId = $this->argument('user');
+        $adminId = $this->argument('admin');
         $option = $this->option('delete');
 
         if ($adminId && !$option) {
             $admin = Admin::findOrFail($adminId);
 
-            $this->info('username: ' . $admin->name . ', username: ' . $admin->username . ', is_admin: ' . $admin->is_admin);
+            $this->info('username: ' . $admin->name . ', username: ' . $admin->username);
 
             return;
         } else if ($adminId && $option) {
-            if (User::find($adminId)->delete()) {
-                $this->info('Deleted the user success!');
+            if (Admin::find($adminId)->delete()) {
+                $this->info('Deleted the admin success!');
             } else {
                 $this->error('Sorry, the system had made a mistake! Please check the system.');
             }
@@ -86,7 +86,7 @@ class CreateAdmin extends Command
     public function register($data)
     {
         $validator = Validator::make($data, [
-            'name' => 'required|max:255|unique:admins',
+            'name' => 'required|max:255',
             'username' => 'required|max:255|unique:admins',
             'password' => 'required|min:6',
         ]);

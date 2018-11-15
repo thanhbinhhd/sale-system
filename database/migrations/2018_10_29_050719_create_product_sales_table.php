@@ -17,6 +17,7 @@ class CreateProductSalesTable extends Migration
             $table->increments('id');
             $table->string('description')->nullable();
             $table->integer('product_id');
+            $table->integer('admin_id');
             $table->integer('promo')->comment('sale percents');
             $table->integer('promo_code')->nullable()->comment('sale code');
             $table->boolean('type')->default(true)->comment('true is public sales, false is private sale');

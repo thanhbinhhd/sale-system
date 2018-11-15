@@ -53,15 +53,37 @@ DB_USERNAME=--user_name
 DB_PASSWORD=--user_password
 ``` 
 
-#### 4.Step4
-First run laravel project
-```terminal
-php artisan serve
-npm run dev
-```
-
-### 5.Step 5 setup default data and create super admin
+#### 4.Step 4 setup default data and create super admin
 ```
 php artisan system:install
 php artisan system:admin
 ```
+
+#### 5. Step 5 setup your mail host: `example with gmail`
+```
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=****@gmail.com
+MAIL_PASSWORD=******
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=******@gmail.com
+MAIL_FROM_NAME=ASTEAM_K60
+```
+
+#### 6. Step 6 setup your google client `example with localhost sites`
+```
+GG_CLIENT_ID=********
+GG_CLIENT_SECRET=*******
+GG_REDIRECT_URL=http://localhost:8000/user/oauth/google/callback
+```
+
+#### 7. Step 7 Update your config and run with default port 8000. You can custom port by option `--port=port_number`
+```terminal
+php artisan config:cache
+php artisan ser
+npm run dev
+```
+
+#### 8. Step 8 open web app
+> Your web app default serve in `http://localhost:8000`
