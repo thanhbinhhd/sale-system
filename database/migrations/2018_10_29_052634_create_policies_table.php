@@ -17,6 +17,9 @@ class CreatePoliciesTable extends Migration
             $table->increments('id');
             $table->integer('vat');
             $table->integer('admin_id');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+            $table->tinyInteger('status')->default(1)->comment('1 is active');
             $table->enum('money_type', ['USD', 'VND', 'YEN'])->default('USD');
             $table->timestamps();
         });
