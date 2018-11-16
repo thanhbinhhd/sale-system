@@ -24,4 +24,8 @@ class Category extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+
+    public function admin() {
+        return $this->belongsTo(Admin::class, 'admin_id');
+    }
 }

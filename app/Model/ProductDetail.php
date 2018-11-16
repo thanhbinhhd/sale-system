@@ -13,11 +13,6 @@ class ProductDetail extends Model
         'note', 'product_id'
     ];
 
-    public function images()
-    {
-        return $this->morphMany(Image::class, 'imageable');
-    }
-
     public function product() {
         return $this->belongsTo(Product::class, 'product_id');
     }
