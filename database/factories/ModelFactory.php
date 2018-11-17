@@ -42,7 +42,8 @@ $factory->define(App\Model\Product::class, function (Faker\Generator $faker) {
         'quantity' => $faker->numberBetween(1, 100),
         'review' => $faker->paragraph,
         'price' => $faker->numberBetween(1, 20000),
-        'number_viewed' => $faker->numberBetween(1, 100)
+        'number_viewed' => $faker->numberBetween(1, 100),
+        'admin_id' => \App\Model\Admin::pluck('id')->random(),
     ];
 });
 

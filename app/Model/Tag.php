@@ -8,6 +8,11 @@ class Tag extends Model
 {
     //
     protected $fillable = [
-        'name', 'description'
+        'name', 'description', 'tagable_id', 'tagable_type'
     ];
+
+    public function tagable()
+    {
+        return $this->morphTo();
+    }
 }

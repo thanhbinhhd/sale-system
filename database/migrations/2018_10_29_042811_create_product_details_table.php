@@ -15,18 +15,8 @@ class CreateProductDetailsTable extends Migration
     {
         Schema::create('product_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('cpu')->nullable();
-            $table->tinyInteger('ram')->nullable();
-            $table->string('screen')->nullable();
-            $table->string('storage')->nullable();
-            $table->string('exten_memory')->nullable();
-            $table->string('cam1')->nullable();
-            $table->string('cam2')->nullable();
-            $table->string('sim')->nullable();
-            $table->string('connect')->nullable();
-            $table->string('pin')->nullable();
-            $table->string('os')->nullable();
-            $table->text('note')->nullable();
+            $table->integer('color')->default(6)->comment('default: black');
+            $table->string('size');
             $table->integer('product_id')->unsigned();
             $table->timestamps();
         });

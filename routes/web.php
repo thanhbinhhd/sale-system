@@ -36,6 +36,12 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
             Route::delete('{$id}', 'AdminManageController@destroy');
         });
         Route::put('update-admin-status',['as' => 'update-admin-status', 'uses' => "AdminManageController@updateStatus"]);
+        Route::put('update-product-status', 'ProductController@updateStatus');
+
+        Route::resource('product-manager', 'ProductController');
+        Route::group(['prefix' => 'product-manager'], function (){
+            Route::delete('{id}', 'ProductController@destroy');
+        });
 
         Route::get('dashboard',['as' => 'home', 'uses' => 'UserController@index']);
         Route::get('user-manager',['as' => 'user-manager', 'uses' => 'UserController@index']);

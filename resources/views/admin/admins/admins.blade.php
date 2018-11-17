@@ -35,7 +35,7 @@ Admin Manager
             </thead>
             <tbody>
             @foreach($admins as $admin)
-                <tr>
+                <tr id="row-{{$admin->id}}">
                     <td>{{$admin->username}}</td>
                     <td>{{$admin->name}}</td>
                     <td>
@@ -111,7 +111,7 @@ Admin Manager
                         if(!response.error)
                         {
                             toastr.success('Deleted!');
-                            location.reload();
+                            $("#row-" + id).remove();
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
