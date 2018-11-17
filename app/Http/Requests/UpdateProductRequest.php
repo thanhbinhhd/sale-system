@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateProductRequest extends FormRequest
+class UpdateProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,7 +22,7 @@ class CreateProductRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
         return [
             //
@@ -31,7 +32,7 @@ class CreateProductRequest extends FormRequest
             'quantity'  => 'numeric',
             'size'      => 'required',
             'color'     => 'required',
-            'image'     => 'required|mimes:jpeg,bmp,png,jpg',
+            'image'     => 'mimes:jpeg,bmp,png,jpg',
             'images.*' => 'mimes:jpg,jpeg,png,bmp'
         ];
     }

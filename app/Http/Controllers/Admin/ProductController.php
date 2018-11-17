@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Model\Category;
 use App\Model\Product;
 use App\Model\Image;
@@ -63,7 +64,7 @@ class ProductController extends Controller
                 ]));
         $avatar = $request->file('image');
         $image_path = $avatar->store('images/'. $product->category->name);
-        $this->product->update($product->id, ['image_path' => $image_path,]);
+        $this->product->update($product->id, ['image_path' => '/storage/' . $image_path,]);
 
         $productDetail = $this->detail->store(array_merge($request->all(),
                 [
@@ -86,7 +87,7 @@ class ProductController extends Controller
             foreach ($files as $photo) {
                 $filename = $photo->store('images/' . $product->category->name);
                 (new ImageRepository(new Image()))->store([ // store many file
-                    'image_url' => $filename,
+                    'image_url' => '/storage/' . $filename,
                     'imageable_id' => $product->id,
                     'imageable_type' => Product::class,
                 ]);
@@ -116,19 +117,64 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = $this->product->getById($id);
+        return view('admin.products.edit', ['product' => $product]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateProductRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
-        //
+        $product = $this->product->getById($id);
+        $this->product->update($id, $request->all());
+
+        if ($request->hasFile('image')){
+            $avatar = $request->file('image');
+            $image_path = $avatar->store('images/'. $product->category->name);
+            $this->product->update($id, ['image_path' => '/storage/' . $image_path,]);
+        }
+
+        if($product->productDetail == null){
+            $this->detail->store(array_merge($request->all(),
+                [
+                    'product_id' => $product->id,
+                ]));
+        }else {
+            $this->detail->update($product->productDetail->id, array_merge($request->all(),
+                [
+                    'product_id' => $product->id,
+                ]));
+        }
+        if ($request->has('tag')) {
+            $product->taggables()->delete();
+            foreach ($request->input('tag') as $tag) {
+                (new TaggableRepository(new Taggable()))->store([
+                    'tag_id' => $tag,
+                    'taggable_id' => $product->id,
+                    'taggable_type' => Product::class
+                ]);
+            }
+        }
+
+        Image::destroy($request->input('todel'));
+
+        if($request->hasFile('images')) {
+            $files = $request->file('images');
+            // duyệt từng ảnh và thực hiện lưu
+            foreach ($files as $photo) {
+                $filename = $photo->store('images/' . $product->category->name);
+                (new ImageRepository(new Image()))->store([ // store many file
+                    'image_url' => '/storage/' . $filename,
+                    'imageable_id' => $product->id,
+                    'imageable_type' => Product::class,
+                ]);
+            }
+        }
+        \Session::flash('message', 'Update product "'. $product->name . '" successfully!');
+        return redirect()->route('admin.product-manager.edit', ['id' => $id]);
     }
 
     /**
