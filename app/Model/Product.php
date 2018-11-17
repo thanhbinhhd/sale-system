@@ -34,4 +34,8 @@ class Product extends Model
         return $this->morphMany(Image::class, 'imageable');
     }
 
+    public function taggables() {
+        return $this->morphMany(Taggable::class, 'taggable');
+    }
+
 }

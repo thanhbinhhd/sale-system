@@ -22,5 +22,7 @@ class UserTableSeeder extends Seeder
             'email' => 'quanghm@haposoft.com',
             'password' => bcrypt('123456'),
         ]);
+
+        factory(\App\Model\User::class, 10)->create();
     }
 }

@@ -28,4 +28,8 @@ class News extends Model
     public function category() {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
+    public function taggables() {
+        return $this->morphMany(Taggable::class, 'taggable');
+    }
 }
