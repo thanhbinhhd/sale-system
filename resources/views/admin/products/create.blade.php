@@ -46,10 +46,6 @@
                 <input id="inputQuantity" value="{{ old('quantity') }}" class="form-control" name="quantity" placeholder="Quantity">
             </div>
             <div class="form-group" style="width: 50%">
-                <label for="inputSale">Sale:</label>
-                <input id="inputSale" value="{{ old('sale') }}" class="form-control" name="sale" placeholder="Sale %">
-            </div>
-            <div class="form-group" style="width: 50%">
                 <label for="">Size</label>
                 <select class="form-control product-status" name="size">
                     @foreach(config('sales.size') as $si)
@@ -72,7 +68,7 @@
                 <label for="inputTag">Tag</label>
                 <select class="form-control" multiple id="inputTag" name="tag[]">
                     @foreach(\App\Model\Tag::all() as $tag)
-                        <option value="{{$tag->name}}">{{$tag->name}}</option>
+                        <option value="{{$tag->id}}">{{$tag->name}}</option>
                         @endforeach
                 </select>
             </div>
@@ -80,6 +76,8 @@
                 <label for="inputDescription">Description:</label>
                 <textarea id="inputDescription"  class="form-control" name="description" placeholder="Description">{{ old('description') }}</textarea>
             </div>
+
+            <img id="preview" src="/admin/images/avatar.jpg" alt="your image" width="200" style="display: none"/>
             <div class="form-group" style="width: 50%">
                 <label for="inputFile">Image:</label>
                 <input id="inputFile" type="file" class="form-control" name="image" />
@@ -99,11 +97,26 @@
 @section('customscript')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
 
-            $(document).ready(function() {
-                $("#inputTag").select2();
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#preview').attr('src', e.target.result).show();
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(document).ready(function () {
+            $("#inputTag").select2();
+            $("#inputFile").change(function() {
+                readURL(this);
             });
         });
+
     </script>
 @endsection

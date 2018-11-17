@@ -32,7 +32,8 @@ class CreateProductRequest extends FormRequest
             'size'      => 'required',
             'color'     => 'required',
             'sale'      => 'integer|digits_between:0,99',
-            'image'    => 'required',
+            'image'     => 'required|mimes:jpeg,bmp,png,jpg',
+            'iamges'    => 'mimes:jpeg,bmp,png,jpg'
         ];
     }
 }

@@ -33,6 +33,9 @@
                 <th class="th-sm">Price
                     <i class="fa fa-sort float-right" aria-hidden="true"></i>
                 </th>
+                <th class="th-sm">Price
+                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                </th>
                 <th class="th-sm">Action
                 </th>
             </tr>
@@ -48,6 +51,7 @@
                         <label class="color-filter color-filter{{$product->productDetail->color}}" ></label>
                         @endif
                     </td>
+                    <td>{{$product->price}}</td>
                     <td>
                         <select class="form-control product-status" data-id="{{$product->id}}">
                             <option value="1" @if($product->status == 1) selected @endif >Active</option>
@@ -56,7 +60,7 @@
                         </select>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-info">Detail</button>
+                        <a href="{{route('admin.product-manager.edit', ['product_manager' => $product->id])}}" type="button" class="btn btn-info">Detail</a>
                         <button type="button" class="btn btn-danger" data-name="{{$product->name}}" data-id="{{$product->id}}" data-toggle="modal" data-target="#askDeleteModal">Delete</button>
                     </td>
                 </tr>

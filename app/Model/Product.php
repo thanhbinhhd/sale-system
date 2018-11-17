@@ -10,7 +10,7 @@ class Product extends Model
     protected $fillable = [
       'name', 'slug', 'description',
         'quantity', 'review', 'price', 'number_viewed',
-        'status', 'category_id', 'admin_id', 'sale'
+        'status', 'category_id', 'admin_id', 'sale', 'image_path'
     ];
 
     public function admins() {
@@ -37,12 +37,7 @@ class Product extends Model
         return $this->morphMany(Image::class, 'imageable');
     }
 
-    public function tags(){
-        return $this->morphToMany(Tag::class, 'tagable');
+    public function taggables() {
+        return $this->morphMany(Taggable::class, 'taggable');
     }
-
-    public function image(){
-        return $this->hasOne(Image::class, 'imageable_id');
-    }
-
 }
