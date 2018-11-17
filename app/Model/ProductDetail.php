@@ -8,9 +8,7 @@ class ProductDetail extends Model
 {
     //
     protected $fillable = [
-        'cpu', 'ram', 'screen', 'storage', 'exten_memory',
-        'cam1', 'cam2', 'sim', 'connect', 'pin', 'os',
-        'note', 'product_id'
+        'size', 'color', 'product_id'
     ];
 
     public function product() {
