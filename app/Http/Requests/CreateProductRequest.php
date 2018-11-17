@@ -27,8 +27,8 @@ class CreateProductRequest extends FormRequest
             //
             'category_id'  => 'required',
             'name'      => 'required',
-            'price'     => 'numeric',
-            'quantity'  => 'numeric',
+            'price'     => 'numeric|min:0',
+            'quantity'  => 'integer|min:0',
             'size'      => 'required',
             'color'     => 'required',
             'image'     => 'required|mimes:jpeg,bmp,png,jpg',

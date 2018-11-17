@@ -14,7 +14,9 @@
 Route::get('private-policy', function() {
     return view('user.private-policy');
 });
-
+Route::get('/shop',['as' => 'shop', function(){
+    return view('user.shop');
+}]);
 Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
         Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
@@ -88,9 +90,7 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         Route::get('/',['as' => 'home', function(){
             return view('user.home');
         }]);
-        Route::get('/shop',['as' => 'shop', function(){
-            return view('user.shop');
-        }]);
+
         Route::get('/contact',['as' => 'contact', function(){
             return view('user.contact');
         }]); Route::get('/about',['as' => 'about', function(){

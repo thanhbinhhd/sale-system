@@ -33,7 +33,10 @@
                 <th class="th-sm">Price
                     <i class="fa fa-sort float-right" aria-hidden="true"></i>
                 </th>
-                <th class="th-sm">Price
+                <th class="th-sm">Created Date
+                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                </th>
+                <th class="th-sm">Status
                     <i class="fa fa-sort float-right" aria-hidden="true"></i>
                 </th>
                 <th class="th-sm">Action
@@ -52,6 +55,7 @@
                         @endif
                     </td>
                     <td>{{$product->price}}</td>
+                    <td>{{$product->created_at}}</td>
                     <td>
                         <select class="form-control product-status" data-id="{{$product->id}}">
                             <option value="1" @if($product->status == 1) selected @endif >Active</option>

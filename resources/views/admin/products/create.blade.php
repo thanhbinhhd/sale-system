@@ -10,6 +10,25 @@
             list-style: none;
         }
         input[type="radio"]:checked+label{ border: solid; }
+        .flex {
+            display: flex;
+            justify-content: flex-start;
+        }
+        .flex input {
+            flex: 1 1 300px;
+            border-left: 0 !important;
+            border: 1px solid #ccc !important;
+        }
+        .flex .currency {
+            font-size: 12px;
+            padding: 0 10px 0 10px;
+            color: #999;
+            border: 1px solid #ccc;
+            border-right: 0;
+            line-height: 2.5;
+            border-radius: 7px 0 0 7px;
+            background: white;
+        }
     </style>
 @endsection
 @section('pagename')
@@ -39,7 +58,10 @@
             </div>
             <div class="form-group" style="width: 50%">
                 <label for="inputPrice">Price:</label>
-                <input id="inputPrice" value="{{ old('price') }}" class="form-control" name="price" placeholder="Price">
+                <div class="flex">
+                    <span class="currency">$</span>
+                    <input id="inputPrice" value="{{ old('price') }}" class="form-control" name="price" placeholder="Price" />
+                </div>
             </div>
             <div class="form-group" style="width: 50%">
                 <label for="inputQuantity">Quantity:</label>
@@ -80,11 +102,13 @@
             <img id="preview" src="/admin/images/avatar.jpg" alt="your image" width="200" style="display: none"/>
             <div class="form-group" style="width: 50%">
                 <label for="inputFile">Image:</label>
-                <input id="inputFile" type="file" class="form-control" name="image" />
+                <input id="inputFile"  accept="image/png, image/jpeg" type="file" class="form-control" name="image" />
+            </div>
+            <div class="form-group" id="other-preview">
             </div>
             <div class="form-group" style="width: 50%">
                 <label for="inputFiles">Other Images:</label>
-                <input id="inputFiles" type="file" class="form-control" name="images[]" multiple />
+                <input id="inputFiles" accept="image/png, image/jpeg" type="file" class="form-control" name="images[]" multiple />
             </div>
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" value="1" @if(old('status')) checked="" @endif id="active" name="status" >
@@ -102,19 +126,30 @@
 
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-
                 reader.onload = function(e) {
                     $('#preview').attr('src', e.target.result).show();
-                }
-
+                };
                 reader.readAsDataURL(input.files[0]);
             }
         }
-
+        function readURLs(input){
+            $('#other-preview').empty();
+            $.each(input.files, function(i, j){
+                console.log(i);
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#other-preview').append('<img src="' + e.target.result +'" style="width: 72px; padding-left: 3px;"/>');
+                };
+                reader.readAsDataURL(input.files[i]);
+            });
+        }
         $(document).ready(function () {
             $("#inputTag").select2();
             $("#inputFile").change(function() {
                 readURL(this);
+            });
+            $("#inputFiles").change(function() {
+                readURLs(this);
             });
         });
 

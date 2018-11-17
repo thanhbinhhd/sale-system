@@ -84,7 +84,7 @@
             <img id="preview" @if ($product->image_path != null) src="{{$product->image_path}}" @else src="/admin/images/avatar.jpg" style="display: none" @endif alt="Product image" width="200" />
             <div class="form-group" style="width: 50%">
                 <label for="inputFile">Image:</label>
-                <input id="inputFile" type="file" class="form-control" name="image" />
+                <input id="inputFile"  accept="image/png, image/jpeg" type="file" class="form-control" name="image" />
             </div>
             <div class="form-group">
             @if ($product->images != null)
@@ -93,11 +93,12 @@
                         <label for="im-{{$image->id}}" ><img src="{{$image->image_url}}" width="72"/></label>
                         <input id="im-{{$image->id}}" type="checkbox" name="todel[]" value="{{$image->id}}">
                 @endforeach
+                    <div class="form-group" id="other-preview"></div>
             @endif
             </div>
             <div class="form-group" style="width: 50%">
                 <label for="inputFiles">Other Images:</label>
-                <input id="inputFiles" type="file" class="form-control" name="images[]" multiple />
+                <input id="inputFiles" type="file"  accept="image/png, image/jpeg" class="form-control" name="images[]" multiple />
             </div>
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" value="1" @if(old('status') or $product->status == 1) checked="" @endif id="active" name="status" >
@@ -124,12 +125,26 @@
             }
         }
 
+        function readURLs(input){
+            $('#other-preview').empty();
+            $.each(input.files, function(i, j){
+                console.log(i);
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#other-preview').append('<img src="' + e.target.result +'" style="width: 72px; padding-left: 3px;"/>');
+                };
+                reader.readAsDataURL(input.files[i]);
+            });
+        }
         $(document).ready(function () {
             $('#inputTag').select2();
             console.log($("#inputTag").val());
             $('#inputTag').val($("#inputTag").val());
             $("#inputFile").change(function() {
                 readURL(this);
+            });
+            $("#inputFiles").change(function() {
+                readURLs(this);
             });
         });
 
