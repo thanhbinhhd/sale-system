@@ -2,34 +2,10 @@
 @section('customcss')
     <link rel="stylesheet" href="/admin/css/toggle-switch.css"/>
     <link rel="stylesheet" type="text/css" href="/admin/css/color-filter.css"/>
+    <link rel="stylesheet" type="text/css" href="/admin/css/product.css"/>
     <link rel="stylesheet" href="/user/css/util.min.css"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
-    <style>
-        ul{
-            list-style: none;
-        }
-        input[type="radio"]:checked+label{ border: solid; }
-        .flex {
-            display: flex;
-            justify-content: flex-start;
-        }
-        .flex input {
-            flex: 1 1 300px;
-            border-left: 0 !important;
-            border: 1px solid #ccc !important;
-        }
-        .flex .currency {
-            font-size: 12px;
-            padding: 0 10px 0 10px;
-            color: #999;
-            border: 1px solid #ccc;
-            border-right: 0;
-            line-height: 2.5;
-            border-radius: 7px 0 0 7px;
-            background: white;
-        }
-    </style>
 @endsection
 @section('pagename')
     Product Manager

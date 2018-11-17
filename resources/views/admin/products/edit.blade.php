@@ -2,6 +2,7 @@
 @section('customcss')
     <link rel="stylesheet" href="/admin/css/toggle-switch.css"/>
     <link rel="stylesheet" type="text/css" href="/admin/css/color-filter.css"/>
+    <link rel="stylesheet" type="text/css" href="/admin/css/product.css"/>
     <link rel="stylesheet" href="/user/css/util.min.css"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
@@ -43,7 +44,10 @@
             </div>
             <div class="form-group" style="width: 50%">
                 <label for="inputPrice">Price:</label>
-                <input id="inputPrice" value="{{ old('price')?old('price'):$product->price }}" class="form-control" name="price" placeholder="Price">
+                <div class="flex">
+                    <span class="currency">$</span>
+                    <input id="inputPrice" value="{{ old('price')?old('price'):$product->price }}" class="form-control" name="price" placeholder="Price" />
+                </div>
             </div>
             <div class="form-group" style="width: 50%">
                 <label for="inputQuantity">Quantity:</label>
