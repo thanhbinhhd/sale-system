@@ -12,6 +12,8 @@ return [
 
     'order' => "Orders manager",
 
+    'slide' => "Slides manager",
+
     'admin_manager_path' => "/admin/admin-manager",
 
     'user_manager_path' => "/admin/user-manager",
@@ -21,6 +23,8 @@ return [
     'category_manager_path' => "/admin/categories-manager",
 
     'order_manager_path' => "/admin/order-manager",
+
+    'slide_manager_path' => "/admin/slide-manager",
 
     'page_name' => 'Sales System',
 

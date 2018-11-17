@@ -10,83 +10,43 @@ class SlideController extends Controller
 {
     protected $slide;
 
-    public function __construct(SlideRepository $slide)
-    {
+    public function __construct(SlideRepository $slide){
         $this->slide = $slide;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+
+    public function index(){
+        $slides = $this->slide->all();
+        return view('admin.slides', compact('slides'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function createSlide(Request $request){
+        $title = $request->get('title');
+        $link = $request->get('link');
+        $status = 1;
+        $slideNew = array("title"=>$title, "link"=>$link, "status"=>$status);
+        $id = $this->slide->store($slideNew)->id;
+        return response()->json(['data'=>$id], 200);
+    }
+    public function updateSlide(Request $request){
+        $id = $request->get('id');
+        $title = $request->get('title');
+        $link = $request->get('link');
+        $updateArray = array("title"=>$title, "link"=>$link);
+        $this->slide->update($id, $updateArray);
+        return response()->json(['data'=>$updateArray], 200);
+    }
+    public function deleteSlide(Request $request){
+        $id = $request->get('id');
+        $this->slide->destroy($id);
+        return response()->json(['data'=>$id], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function updateSlideStatus(Request $request){
+        $status = $request->get('status');
+        $id = $request->get('id');
+        $statusArray = array("status"=>$status);
+        $this->slide->update($id, $statusArray);
+        return response()->json(['data'=>$statusArray], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -42,6 +42,12 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
         Route::put('update-status',"UserController@updateStatus");
 
+        Route::get('slide-manager',['as' => 'slide-manager', 'uses' => 'SlideController@index']);
+        Route::post('create-slide',"SlideController@createSlide");
+        Route::put('update-slide',"SlideController@updateSlide");
+        Route::put('update-slide-status',"SlideController@updateSlideStatus");
+        Route::delete('delete-slide',"SlideController@deleteSlide");
+
         Route::get('users/{id}',"UserController@detail");
     });
 });
