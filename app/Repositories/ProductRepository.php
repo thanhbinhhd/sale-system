@@ -17,7 +17,7 @@ class ProductRepository
     }
 
     public function getNew(){
-        return $this->model->where('status',1)->take(8)->get();
+        return $this->model->where('status', Product::ACTIVE)->take(8)->get();
     }
 
     public function getWithCondition($condition, $order){
