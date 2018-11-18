@@ -39,7 +39,7 @@
                         <h4 class="m-text14 p-b-7">
                             Categories
                         </h4>
-
+                        <div class="pre-scrollable">
                         <ul class="p-b-54">
                             <li class="p-t-4">
                                 <a href="/shop/All" class="s-text13 active1" style="font-size: x-large;">
@@ -48,13 +48,13 @@
                             </li>
                             @foreach (\App\Model\Category::all() as $category)
                             <li class="p-t-4">
-                                <a href="/shop/{{$category->name}}" class="s-text13 active1">
+                                <a href="/shop/{{$category->name}}" @if ($category->name == $categoryName)style="color: #e65540;"@endif class="s-text13 active1">
                                     {{$category->name}}
                                 </a>
                             </li>
                             @endforeach
                         </ul>
-
+                        </div>
                         <!--  -->
                         <h4 class="m-text14 p-b-32">
                             Filters
@@ -84,7 +84,6 @@
                             <div class="m-text15 p-b-12">
                                 Color
                             </div>
-
                             <ul class="flex-w">
                                 @foreach(range(1,7) as $i)
                                 <li class="m-r-10">
@@ -126,16 +125,16 @@
                     <div class="flex-sb-m flex-w p-b-35">
                         <div class="flex-w">
                             <div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-                                <select class="selection-2" name="sorting">
-                                    <option>Default Sorting</option>
-                                    <option>Popularity</option>
-                                    <option>Price: low to high</option>
-                                    <option>Price: high to low</option>
+                                <select id="sle1" class="selection-2" name="sorting">
+                                    <option value="default" >Default Sorting</option>
+                                    <option value="popular">Popularity</option>
+                                    <option value="asc">Price: low to high</option>
+                                    <option value="decs">Price: high to low</option>
                                 </select>
                             </div>
 
                             <div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-                                <select class="selection-2" name="sorting">
+                                <select id="sel2" class="selection-2" name="sorting">
                                     <option>Price</option>
                                     <option>$0.00 - $50.00</option>
                                     <option>$50.00 - $100.00</option>
@@ -148,7 +147,7 @@
                         </div>
 
                         <span class="s-text8 p-t-5 p-b-5">
-							Showing 1–12 of 16 results
+							@if($products != null) Showing {{$products->firstItem()}}–{{$products->lastItem()}} of {{$products->total()}} results @endif
 						</span>
                     </div>
 
@@ -604,11 +603,11 @@
         var filterBar = document.getElementById('filter-bar');
 
         noUiSlider.create(filterBar, {
-            start: [ 50, 200 ],
+            start: [ 0, 200000 ],
             connect: true,
             range: {
-                'min': 50,
-                'max': 200
+                'min': 0,
+                'max': 200000
             }
         });
 
@@ -623,6 +622,16 @@
         filterBar.noUiSlider.on('update', function( values, handle ) {
             skipValues[handle].innerHTML = Math.round(values[handle]) ;
             inputValues[handle].val(Math.round(values[handle]));
+        });
+        $('#sle1').on('change', function () {
+            var url = window.location.href;
+            if(url.indexOf('filter?') === -1)
+                url += '/filter?order=' + $(this).val();
+            else if(document.location.href.indexOf('order=') !== -1)
+                url = url.substring(0, document.location.href.indexOf('order=')) + 'order=' +  $(this).val();
+            else
+                url += '&order=' + $(this).val();
+            location.href = url;
         });
     </script>
 @endsection

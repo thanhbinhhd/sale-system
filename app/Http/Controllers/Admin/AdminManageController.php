@@ -95,7 +95,7 @@ class AdminManageController extends Controller
         $admin = $this->admin->getById($id);
         if ($admin->isAdmin())
             return redirect()->route('admin.admin-manager.index');
-        $adminPermission = AdminPermission::where('admin_id', $id)->first();
+        $adminPermission = $admin->adminPermission()->first();
         if($adminPermission == null)
             $adminPermission = new AdminPermission;
         return view('admin.admins.edit', ['admin' => $admin, 'adminPermission' => $adminPermission]);
