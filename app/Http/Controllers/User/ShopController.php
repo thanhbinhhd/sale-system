@@ -17,7 +17,7 @@ class ShopController extends Controller
 
     protected $category;
     protected $product;
-    const CATEGORY_PAGINATION = 2;
+    const CATEGORY_PAGINATION = 10;
     const ALL = 'All';
     public function __construct(CategoryRepository $category, ProductRepository $product)
     {
