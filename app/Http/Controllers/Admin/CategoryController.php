@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -53,14 +54,18 @@ class CategoryController extends Controller
         $avatar = $request->file('file');
         $name = $request->get('name');
         $image_path = $avatar->storeAs(
-            'images/slides', $name.'.png'
+            'images/categories', $name.'.png'
         );
         return response()->json(['data'=>$name], self::CODE_UPDATE_SUCCESS);
     }
 
     public function changeImageName(Request $request){
-        $oldName = $request->file('oldName');
-        $newName = $request->file('newName');
-        // Storage::copy('images/slides/'.$oldName.'.png', 'images/slides/'.$newName.'.png');
+        $oldName = $request->get('oldName');
+        $newName = $request->get('newName');
+        if($oldName != $newName){
+            Storage::move('images/categories/'.$oldName.'.png', 'images/categories/'.$newName.'.png');
+        }
+        return response()->json(['data'=>$oldName], self::CODE_UPDATE_SUCCESS);
+        
     }
 }

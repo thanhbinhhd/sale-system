@@ -84,7 +84,7 @@ Category Manager
                 </div>
                 <div class="modal-footer">
                       <button type="button" class="btn btn-primary" id="create-category-btn" onclick="createCategory()">Create</button>
-                      <button type="button" class="btn btn-primary" category-id="" id="update-category-btn" onclick="updateCategory()">Update</button>
+                      <button type="button" class="btn btn-primary" category-old-name="" category-id="" id="update-category-btn" onclick="updateCategory()">Update</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -149,6 +149,7 @@ Category Manager
                 $("#category-desc").val(desc);
                 $("#category-image-path").val(imagePath);
                 $("#update-category-btn").attr("category-id", categoryID);
+                $("#update-category-btn").attr("category-old-name", name);
         }
 
         function deleteCategoryClicked() {
@@ -159,7 +160,7 @@ Category Manager
 
         function createCategory() {
           var name = $("#category-name").val();
-          var imagePath = "/storage/images/slides/" + name + ".png";    
+          var imagePath = "/storage/images/categories/" + name + ".png";    
           var desc = $("#category-desc").val();
           var adminID = {{ $currentAdmin->id }};
           var adminName = "{{ $currentAdmin->username }}";
@@ -209,9 +210,10 @@ Category Manager
         
         function updateCategory() {
           var name = $("#category-name").val();
-          var imagePath = "/storage/images/slides/" + name + ".png"; 
+          var imagePath = "/storage/images/categories/" + name + ".png"; 
           var desc = $("#category-desc").val();
           var categoryID = $("#update-category-btn").attr('category-id');
+          var oldName = $("#update-category-btn").attr('category-old-name');
           var adminID = {{ $currentAdmin->id }};
           var adminName = "{{ $currentAdmin->username }}";
           var file_data = $('#category-image-file').prop('files')[0];
@@ -228,7 +230,7 @@ Category Manager
                     },
                     success: function (response) {
                         if(!response.error){
-                            // changeFileName("sento", "asunnna");
+                            changeFileName(oldName, name);
                             toastr.success('Category was changed!');
                             $("#name-" + categoryID).html(name);
                             $("#desc-" + categoryID).html(desc);

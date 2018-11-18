@@ -58,6 +58,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
         Route::put('update-slide',"SlideController@updateSlide");
         Route::put('update-slide-status',"SlideController@updateSlideStatus");
         Route::delete('delete-slide',"SlideController@deleteSlide");
+        Route::post('upload-slide-image',"SlideController@uploadImage");
+        Route::post('change-slide-image-name',"SlideController@changeImageName");
 
         Route::get('category-manager',['as' => 'category-manager', 'uses' => 'CategoryController@index']);
         Route::post('create-category',"CategoryController@createCategory");
