@@ -25,7 +25,7 @@ class CreateProductsTable extends Migration
             $table->text('review')->nullable();
             $table->decimal('price', 13, 2);
             $table->integer('number_viewed')->default(0);
-            $table->string('image_path')->default('/storage/images/img.png');
+            $table->string('image_path')->default('/user/images/item-15.jpg');
             $table->integer('status')->default(0)->comment('1: active, 0: inactive, 2: reject');
         });
     }
