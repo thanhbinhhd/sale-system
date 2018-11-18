@@ -146,12 +146,12 @@
 						fashe@example.com
 					</span>
 
-                <div class="topbar-language rs1-select2">
-                    <select class="selection-1" name="time">
-                        <option>USD</option>
-                        <option>EUR</option>
-                    </select>
-                </div>
+                {{--<div class="topbar-language rs1-select2">--}}
+                    {{--<select class="selection-1" name="time">--}}
+                        {{--<option>USD</option>--}}
+                        {{--<option>EUR</option>--}}
+                    {{--</select>--}}
+                {{--</div>--}}
 
                 <!--  -->
                 <a href="#" class="header-wrapicon1 dis-block m-l-30">

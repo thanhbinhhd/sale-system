@@ -14,5 +14,5 @@ class ProductController extends Controller
     {
         $this->product = $product;
     }
-    //
+
 }

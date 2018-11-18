@@ -14,9 +14,12 @@
 Route::get('private-policy', function() {
     return view('user.private-policy');
 });
-Route::get('/shop',['as' => 'shop', function(){
-    return view('user.shop');
-}]);
+Route::get('/shop/', function (){
+    return redirect(route('shop', ['category' => 'All']));
+});
+
+Route::get('/shop/{category}',['as' => 'shop', 'uses' => 'User\ShopController@show']);
+Route::get('/shop/{category}/filter', ['as' => 'filter', 'uses' => 'User\ShopController@filte']);
 Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
         Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
@@ -49,12 +52,17 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
         Route::get('user-manager',['as' => 'user-manager', 'uses' => 'UserController@index']);
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
         Route::put('update-status',"UserController@updateStatus");
+        
+        Route::get('slide-manager',['as' => 'slide-manager', 'uses' => 'SlideController@index']);
+        Route::post('create-slide',"SlideController@createSlide");
+        Route::put('update-slide',"SlideController@updateSlide");
+        Route::put('update-slide-status',"SlideController@updateSlideStatus");
+        Route::delete('delete-slide',"SlideController@deleteSlide");
 
         Route::get('category-manager',['as' => 'category-manager', 'uses' => 'CategoryController@index']);
         Route::post('create-category',"CategoryController@createCategory");
         Route::put('update-category',"CategoryController@updateCategory");
         Route::delete('delete-category',"CategoryController@deleteCategory");
-
 
         Route::get('users/{id}',"UserController@detail");
     });
