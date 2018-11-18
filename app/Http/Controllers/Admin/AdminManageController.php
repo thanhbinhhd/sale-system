@@ -46,8 +46,8 @@ class AdminManageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CreateAdminRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateAdminRequest $request)
     {
@@ -103,9 +103,8 @@ class AdminManageController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param EditAdminRequest $request
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(EditAdminRequest $request, $id)
@@ -150,6 +149,10 @@ class AdminManageController extends Controller
         return response()->json(['data'=> '0'], 200);
     }
 
+    /** Update status of Admin is active or blocked
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateStatus(Request $request){
         $status = $request->get('status');
         $id=$request->get('id');
