@@ -25,7 +25,7 @@ class ShopController extends Controller
         $this->product = $product;
     }
 
-    /**
+    /** show shop view with category is specified
      * @param $category
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -47,6 +47,11 @@ class ShopController extends Controller
 
     }
 
+    /** filter for shop view
+     * @param $category
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function filte($category, Request $request){
         if($category == self::ALL)
             $products = DB::table('products');
@@ -62,8 +67,6 @@ class ShopController extends Controller
         }
 
         $products = $this->product->filte($products, $request)->paginate(self::CATEGORY_PAGINATION);
-//        var_dump($request->all());
-//        dd(json_decode(json_encode($products), true));
         return view('user.shop', ['products' => $products, 'categoryName' => $category]);
     }
 }

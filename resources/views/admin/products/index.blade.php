@@ -47,7 +47,7 @@
             @foreach($products as $product)
                 <tr id="row-{{$product->id}}">
                     <td>{{$product->name}}</td>
-                    <td>{{$product->creator->name}}</td>
+                    <td>@if($product->creator!=null){{$product->creator->name}}@endif</td>
                     <td>{{$product->category->name}}</td>
                     <td>
                         @if( $product->productDetail != null)
