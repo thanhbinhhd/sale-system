@@ -1,14 +1,15 @@
 # Selling System PHP Framework
-This System build with Laravel 5.7 + VueJs 2.0
+This System build with Laravel 5.7
 
 ## Basic Features
 
 - Manage product + category
 - Statistical tables
-- Categorize articles
+- Order Management
+- User Management
 - Label classification
-- ベトナム語　＋　日本語 
-- Markdown Editor
+- Slide Mangement
+- Staff permission management
 - and more...
 
 ## Server Requirements
@@ -80,9 +81,8 @@ GG_REDIRECT_URL=http://localhost:8000/user/oauth/google/callback
 
 #### 7. Step 7 Update your config and run with default port 8000. You can custom port by option `--port=port_number`
 ```terminal
-php artisan config:cache
-php artisan ser
 npm run dev
+php artisan ser
 ```
 
 #### 8. Step 8 open web app
