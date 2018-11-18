@@ -78,13 +78,13 @@
             <img id="preview" src="/admin/images/avatar.jpg" alt="your image" width="200" style="display: none"/>
             <div class="form-group" style="width: 50%">
                 <label for="inputFile">Image:</label>
-                <input id="inputFile"  accept="image/png, image/jpeg" type="file" class="form-control" name="image" />
+                <input id="inputFile"  accept="image/png, image/jpeg, image/jpg" type="file" class="form-control" name="image" />
             </div>
             <div class="form-group" id="other-preview">
             </div>
             <div class="form-group" style="width: 50%">
                 <label for="inputFiles">Other Images:</label>
-                <input id="inputFiles" accept="image/png, image/jpeg" type="file" class="form-control" name="images[]" multiple />
+                <input id="inputFiles" accept="image/png, image/jpeg, image/jpg" type="file" class="form-control" name="images[]" multiple />
             </div>
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" value="1" @if(old('status')) checked="" @endif id="active" name="status" >

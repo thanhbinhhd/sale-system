@@ -3,6 +3,18 @@
     <link rel="stylesheet" type="text/css" href="/user/css/slick.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/user/css/nouislider.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <style type="text/css">
+        .quantity{
+            color: white;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .fix-height{
+            height: 360px;
+            overflow: hidden;
+        }
+    </style>
     @endsection
 @section('content')
     <section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(/user/images/heading-pages-02.jpg);">
@@ -27,17 +39,33 @@
                         </h4>
 
                         <ul class="p-b-54">
+                            @foreach (\App\Model\Category::all() as $category)
                             <li class="p-t-4">
-                                <a href="#" class="s-text13 active1">
-                                    All
+                                <a href="/shop/{{$category->name}}" class="s-text13 active1">
+                                    {{$category->name}}
                                 </a>
                             </li>
+                            @endforeach
                         </ul>
 
                         <!--  -->
                         <h4 class="m-text14 p-b-32">
                             Filters
                         </h4>
+
+                        <div class="filter-price p-t-22 p-b-50 bo3">
+                            <div class="m-text15 p-b-17">
+                                Tag
+                            </div>
+                            <div>
+                                <select class="form-control" multiple id="inputTag" name="tag[]">
+                                    @foreach(\App\Model\Tag::all() as $tag)
+                                        <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                        </div>
 
                         <div class="filter-price p-t-22 p-b-50 bo3">
                             <div class="m-text15 p-b-17">
@@ -69,37 +97,37 @@
 
                             <ul class="flex-w">
                                 <li class="m-r-10">
-                                    <input class="checkbox-color-filter" id="color-filter1" type="checkbox" name="color-filter1">
+                                    <input class="checkbox-color-filter" id="color-filter1" type="checkbox" name="color[]">
                                     <label class="color-filter color-filter1" for="color-filter1"></label>
                                 </li>
 
                                 <li class="m-r-10">
-                                    <input class="checkbox-color-filter" id="color-filter2" type="checkbox" name="color-filter2">
+                                    <input class="checkbox-color-filter" id="color-filter2" type="checkbox" name="color[]">
                                     <label class="color-filter color-filter2" for="color-filter2"></label>
                                 </li>
 
                                 <li class="m-r-10">
-                                    <input class="checkbox-color-filter" id="color-filter3" type="checkbox" name="color-filter3">
+                                    <input class="checkbox-color-filter" id="color-filter3" type="checkbox" name="color[]">
                                     <label class="color-filter color-filter3" for="color-filter3"></label>
                                 </li>
 
                                 <li class="m-r-10">
-                                    <input class="checkbox-color-filter" id="color-filter4" type="checkbox" name="color-filter4">
+                                    <input class="checkbox-color-filter" id="color-filter4" type="checkbox" name="color[]">
                                     <label class="color-filter color-filter4" for="color-filter4"></label>
                                 </li>
 
                                 <li class="m-r-10">
-                                    <input class="checkbox-color-filter" id="color-filter5" type="checkbox" name="color-filter5">
+                                    <input class="checkbox-color-filter" id="color-filter5" type="checkbox" name="color[]">
                                     <label class="color-filter color-filter5" for="color-filter5"></label>
                                 </li>
 
                                 <li class="m-r-10">
-                                    <input class="checkbox-color-filter" id="color-filter6" type="checkbox" name="color-filter6">
+                                    <input class="checkbox-color-filter" id="color-filter6" type="checkbox" name="color[]">
                                     <label class="color-filter color-filter6" for="color-filter6"></label>
                                 </li>
 
                                 <li class="m-r-10">
-                                    <input class="checkbox-color-filter" id="color-filter7" type="checkbox" name="color-filter7">
+                                    <input class="checkbox-color-filter" id="color-filter7" type="checkbox" name="color[]">
                                     <label class="color-filter color-filter7" for="color-filter7"></label>
                                 </li>
                             </ul>
@@ -148,19 +176,20 @@
 
                     <!-- Product -->
                     <div class="row">
+                        @foreach($products as $product)
                         <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
                             <!-- Block2 -->
                             <div class="block2">
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-                                    <img src="/user/images/item-02.jpg" alt="IMG-PRODUCT">
+                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew fix-height">
+                                    <img src="{{$product->image_path}}" alt="IMG-PRODUCT">
 
                                     <div class="block2-overlay trans-0-4">
                                         <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
                                             <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
                                             <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
                                         </a>
-
                                         <div class="block2-btn-addcart w-size1 trans-0-4">
+                                            <p class="quantity">@if ($product->quantity > 0) Quantity: {{$product->quantity}} @else Out of stock @endif</p>
                                             <!-- Button -->
                                             <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
                                                 Add to Cart
@@ -170,393 +199,394 @@
                                 </div>
 
                                 <div class="block2-txt p-t-20">
-                                    <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                                        Herschel supply co 25l
+                                    <a href="product/{{$product->name}}" class="block2-name dis-block s-text3 p-b-5">
+                                        {{$product->name}}
                                     </a>
 
                                     <span class="block2-price m-text6 p-r-5">
-										$75.00
+										${{$product->price}}
 									</span>
                                 </div>
                             </div>
                         </div>
+                        @endforeach
+                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
+                            {{--<!-- Block2 -->--}}
+                            {{--<div class="block2">--}}
+                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative">--}}
+                                    {{--<img src="/user/images/item-03.jpg" alt="IMG-PRODUCT">--}}
 
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-                            <!-- Block2 -->
-                            <div class="block2">
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                                    <img src="/user/images/item-03.jpg" alt="IMG-PRODUCT">
+                                    {{--<div class="block2-overlay trans-0-4">--}}
+                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
+                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
+                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
+                                        {{--</a>--}}
 
-                                    <div class="block2-overlay trans-0-4">
-                                        <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                                            <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                                            <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                                        </a>
+                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
+                                            {{--<!-- Button -->--}}
+                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
+                                                {{--Add to Cart--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
-                                        <div class="block2-btn-addcart w-size1 trans-0-4">
-                                            <!-- Button -->
-                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                Add to Cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {{--<div class="block2-txt p-t-20">--}}
+                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
+                                        {{--Denim jacket blue--}}
+                                    {{--</a>--}}
 
-                                <div class="block2-txt p-t-20">
-                                    <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                                        Denim jacket blue
-                                    </a>
+                                    {{--<span class="block2-price m-text6 p-r-5">--}}
+										{{--$92.50--}}
+									{{--</span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                                    <span class="block2-price m-text6 p-r-5">
-										$92.50
-									</span>
-                                </div>
-                            </div>
-                        </div>
+                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
+                            {{--<!-- Block2 -->--}}
+                            {{--<div class="block2">--}}
+                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative">--}}
+                                    {{--<img src="/user/images/item-05.jpg" alt="IMG-PRODUCT">--}}
 
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-                            <!-- Block2 -->
-                            <div class="block2">
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                                    <img src="/user/images/item-05.jpg" alt="IMG-PRODUCT">
+                                    {{--<div class="block2-overlay trans-0-4">--}}
+                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
+                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
+                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
+                                        {{--</a>--}}
 
-                                    <div class="block2-overlay trans-0-4">
-                                        <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                                            <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                                            <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                                        </a>
+                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
+                                            {{--<!-- Button -->--}}
+                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
+                                                {{--Add to Cart--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
-                                        <div class="block2-btn-addcart w-size1 trans-0-4">
-                                            <!-- Button -->
-                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                Add to Cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {{--<div class="block2-txt p-t-20">--}}
+                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
+                                        {{--Coach slim easton black--}}
+                                    {{--</a>--}}
 
-                                <div class="block2-txt p-t-20">
-                                    <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                                        Coach slim easton black
-                                    </a>
+                                    {{--<span class="block2-price m-text6 p-r-5">--}}
+										{{--$165.90--}}
+									{{--</span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                                    <span class="block2-price m-text6 p-r-5">
-										$165.90
-									</span>
-                                </div>
-                            </div>
-                        </div>
+                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
+                            {{--<!-- Block2 -->--}}
+                            {{--<div class="block2">--}}
+                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">--}}
+                                    {{--<img src="/user/images/item-07.jpg" alt="IMG-PRODUCT">--}}
 
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-                            <!-- Block2 -->
-                            <div class="block2">
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
-                                    <img src="/user/images/item-07.jpg" alt="IMG-PRODUCT">
+                                    {{--<div class="block2-overlay trans-0-4">--}}
+                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
+                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
+                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
+                                        {{--</a>--}}
 
-                                    <div class="block2-overlay trans-0-4">
-                                        <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                                            <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                                            <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                                        </a>
+                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
+                                            {{--<!-- Button -->--}}
+                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
+                                                {{--Add to Cart--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
-                                        <div class="block2-btn-addcart w-size1 trans-0-4">
-                                            <!-- Button -->
-                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                Add to Cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {{--<div class="block2-txt p-t-20">--}}
+                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
+                                        {{--Frayed denim shorts--}}
+                                    {{--</a>--}}
 
-                                <div class="block2-txt p-t-20">
-                                    <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                                        Frayed denim shorts
-                                    </a>
+                                    {{--<span class="block2-oldprice m-text7 p-r-5">--}}
+										{{--$29.50--}}
+									{{--</span>--}}
 
-                                    <span class="block2-oldprice m-text7 p-r-5">
-										$29.50
-									</span>
+                                    {{--<span class="block2-newprice m-text8 p-r-5">--}}
+										{{--$15.90--}}
+									{{--</span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                                    <span class="block2-newprice m-text8 p-r-5">
-										$15.90
-									</span>
-                                </div>
-                            </div>
-                        </div>
+                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
+                            {{--<!-- Block2 -->--}}
+                            {{--<div class="block2">--}}
+                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">--}}
+                                    {{--<img src="/user/images/item-01.jpg" alt="IMG-PRODUCT">--}}
 
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-                            <!-- Block2 -->
-                            <div class="block2">
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-                                    <img src="/user/images/item-01.jpg" alt="IMG-PRODUCT">
+                                    {{--<div class="block2-overlay trans-0-4">--}}
+                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
+                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
+                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
+                                        {{--</a>--}}
 
-                                    <div class="block2-overlay trans-0-4">
-                                        <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                                            <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                                            <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                                        </a>
+                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
+                                            {{--<!-- Button -->--}}
+                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
+                                                {{--Add to Cart--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
-                                        <div class="block2-btn-addcart w-size1 trans-0-4">
-                                            <!-- Button -->
-                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                Add to Cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {{--<div class="block2-txt p-t-20">--}}
+                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
+                                        {{--Herschel supply co 25l--}}
+                                    {{--</a>--}}
 
-                                <div class="block2-txt p-t-20">
-                                    <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                                        Herschel supply co 25l
-                                    </a>
+                                    {{--<span class="block2-price m-text6 p-r-5">--}}
+										{{--$75.00--}}
+									{{--</span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                                    <span class="block2-price m-text6 p-r-5">
-										$75.00
-									</span>
-                                </div>
-                            </div>
-                        </div>
+                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
+                            {{--<!-- Block2 -->--}}
+                            {{--<div class="block2">--}}
+                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative">--}}
+                                    {{--<img src="/user/images/item-14.jpg" alt="IMG-PRODUCT">--}}
 
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-                            <!-- Block2 -->
-                            <div class="block2">
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                                    <img src="/user/images/item-14.jpg" alt="IMG-PRODUCT">
+                                    {{--<div class="block2-overlay trans-0-4">--}}
+                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
+                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
+                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
+                                        {{--</a>--}}
 
-                                    <div class="block2-overlay trans-0-4">
-                                        <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                                            <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                                            <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                                        </a>
+                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
+                                            {{--<!-- Button -->--}}
+                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
+                                                {{--Add to Cart--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
-                                        <div class="block2-btn-addcart w-size1 trans-0-4">
-                                            <!-- Button -->
-                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                Add to Cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {{--<div class="block2-txt p-t-20">--}}
+                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
+                                        {{--Denim jacket blue--}}
+                                    {{--</a>--}}
 
-                                <div class="block2-txt p-t-20">
-                                    <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                                        Denim jacket blue
-                                    </a>
+                                    {{--<span class="block2-price m-text6 p-r-5">--}}
+										{{--$92.50--}}
+									{{--</span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                                    <span class="block2-price m-text6 p-r-5">
-										$92.50
-									</span>
-                                </div>
-                            </div>
-                        </div>
+                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
+                            {{--<!-- Block2 -->--}}
+                            {{--<div class="block2">--}}
+                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">--}}
+                                    {{--<img src="/user/images/item-06.jpg" alt="IMG-PRODUCT">--}}
 
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-                            <!-- Block2 -->
-                            <div class="block2">
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-                                    <img src="/user/images/item-06.jpg" alt="IMG-PRODUCT">
+                                    {{--<div class="block2-overlay trans-0-4">--}}
+                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
+                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
+                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
+                                        {{--</a>--}}
 
-                                    <div class="block2-overlay trans-0-4">
-                                        <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                                            <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                                            <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                                        </a>
+                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
+                                            {{--<!-- Button -->--}}
+                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
+                                                {{--Add to Cart--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
-                                        <div class="block2-btn-addcart w-size1 trans-0-4">
-                                            <!-- Button -->
-                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                Add to Cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {{--<div class="block2-txt p-t-20">--}}
+                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
+                                        {{--Herschel supply co 25l--}}
+                                    {{--</a>--}}
 
-                                <div class="block2-txt p-t-20">
-                                    <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                                        Herschel supply co 25l
-                                    </a>
+                                    {{--<span class="block2-price m-text6 p-r-5">--}}
+										{{--$75.00--}}
+									{{--</span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                                    <span class="block2-price m-text6 p-r-5">
-										$75.00
-									</span>
-                                </div>
-                            </div>
-                        </div>
+                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
+                            {{--<!-- Block2 -->--}}
+                            {{--<div class="block2">--}}
+                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative">--}}
+                                    {{--<img src="/user/images/item-08.jpg" alt="IMG-PRODUCT">--}}
 
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-                            <!-- Block2 -->
-                            <div class="block2">
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                                    <img src="/user/images/item-08.jpg" alt="IMG-PRODUCT">
+                                    {{--<div class="block2-overlay trans-0-4">--}}
+                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
+                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
+                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
+                                        {{--</a>--}}
 
-                                    <div class="block2-overlay trans-0-4">
-                                        <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                                            <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                                            <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                                        </a>
+                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
+                                            {{--<!-- Button -->--}}
+                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
+                                                {{--Add to Cart--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
-                                        <div class="block2-btn-addcart w-size1 trans-0-4">
-                                            <!-- Button -->
-                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                Add to Cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {{--<div class="block2-txt p-t-20">--}}
+                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
+                                        {{--Denim jacket blue--}}
+                                    {{--</a>--}}
 
-                                <div class="block2-txt p-t-20">
-                                    <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                                        Denim jacket blue
-                                    </a>
+                                    {{--<span class="block2-price m-text6 p-r-5">--}}
+										{{--$92.50--}}
+									{{--</span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                                    <span class="block2-price m-text6 p-r-5">
-										$92.50
-									</span>
-                                </div>
-                            </div>
-                        </div>
+                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
+                            {{--<!-- Block2 -->--}}
+                            {{--<div class="block2">--}}
+                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative">--}}
+                                    {{--<img src="/user/images/item-10.jpg" alt="IMG-PRODUCT">--}}
 
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-                            <!-- Block2 -->
-                            <div class="block2">
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                                    <img src="/user/images/item-10.jpg" alt="IMG-PRODUCT">
+                                    {{--<div class="block2-overlay trans-0-4">--}}
+                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
+                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
+                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
+                                        {{--</a>--}}
 
-                                    <div class="block2-overlay trans-0-4">
-                                        <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                                            <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                                            <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                                        </a>
+                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
+                                            {{--<!-- Button -->--}}
+                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
+                                                {{--Add to Cart--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
-                                        <div class="block2-btn-addcart w-size1 trans-0-4">
-                                            <!-- Button -->
-                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                Add to Cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {{--<div class="block2-txt p-t-20">--}}
+                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
+                                        {{--Coach slim easton black--}}
+                                    {{--</a>--}}
 
-                                <div class="block2-txt p-t-20">
-                                    <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                                        Coach slim easton black
-                                    </a>
+                                    {{--<span class="block2-price m-text6 p-r-5">--}}
+										{{--$165.90--}}
+									{{--</span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                                    <span class="block2-price m-text6 p-r-5">
-										$165.90
-									</span>
-                                </div>
-                            </div>
-                        </div>
+                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
+                            {{--<!-- Block2 -->--}}
+                            {{--<div class="block2">--}}
+                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">--}}
+                                    {{--<img src="/user/images/item-11.jpg" alt="IMG-PRODUCT">--}}
 
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-                            <!-- Block2 -->
-                            <div class="block2">
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
-                                    <img src="/user/images/item-11.jpg" alt="IMG-PRODUCT">
+                                    {{--<div class="block2-overlay trans-0-4">--}}
+                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
+                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
+                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
+                                        {{--</a>--}}
 
-                                    <div class="block2-overlay trans-0-4">
-                                        <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                                            <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                                            <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                                        </a>
+                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
+                                            {{--<!-- Button -->--}}
+                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
+                                                {{--Add to Cart--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
-                                        <div class="block2-btn-addcart w-size1 trans-0-4">
-                                            <!-- Button -->
-                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                Add to Cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {{--<div class="block2-txt p-t-20">--}}
+                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
+                                        {{--Frayed denim shorts--}}
+                                    {{--</a>--}}
 
-                                <div class="block2-txt p-t-20">
-                                    <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                                        Frayed denim shorts
-                                    </a>
+                                    {{--<span class="block2-oldprice m-text7 p-r-5">--}}
+										{{--$29.50--}}
+									{{--</span>--}}
 
-                                    <span class="block2-oldprice m-text7 p-r-5">
-										$29.50
-									</span>
+                                    {{--<span class="block2-newprice m-text8 p-r-5">--}}
+										{{--$15.90--}}
+									{{--</span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                                    <span class="block2-newprice m-text8 p-r-5">
-										$15.90
-									</span>
-                                </div>
-                            </div>
-                        </div>
+                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
+                            {{--<!-- Block2 -->--}}
+                            {{--<div class="block2">--}}
+                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">--}}
+                                    {{--<img src="/user/images/item-12.jpg" alt="IMG-PRODUCT">--}}
 
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-                            <!-- Block2 -->
-                            <div class="block2">
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-                                    <img src="/user/images/item-12.jpg" alt="IMG-PRODUCT">
+                                    {{--<div class="block2-overlay trans-0-4">--}}
+                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
+                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
+                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
+                                        {{--</a>--}}
 
-                                    <div class="block2-overlay trans-0-4">
-                                        <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                                            <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                                            <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                                        </a>
+                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
+                                            {{--<!-- Button -->--}}
+                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
+                                                {{--Add to Cart--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
-                                        <div class="block2-btn-addcart w-size1 trans-0-4">
-                                            <!-- Button -->
-                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                Add to Cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {{--<div class="block2-txt p-t-20">--}}
+                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
+                                        {{--Herschel supply co 25l--}}
+                                    {{--</a>--}}
 
-                                <div class="block2-txt p-t-20">
-                                    <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                                        Herschel supply co 25l
-                                    </a>
+                                    {{--<span class="block2-price m-text6 p-r-5">--}}
+										{{--$75.00--}}
+									{{--</span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                                    <span class="block2-price m-text6 p-r-5">
-										$75.00
-									</span>
-                                </div>
-                            </div>
-                        </div>
+                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
+                            {{--<!-- Block2 -->--}}
+                            {{--<div class="block2">--}}
+                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative">--}}
+                                    {{--<img src="/user/images/item-15.jpg" alt="IMG-PRODUCT">--}}
 
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-                            <!-- Block2 -->
-                            <div class="block2">
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                                    <img src="/user/images/item-15.jpg" alt="IMG-PRODUCT">
+                                    {{--<div class="block2-overlay trans-0-4">--}}
+                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
+                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
+                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
+                                        {{--</a>--}}
 
-                                    <div class="block2-overlay trans-0-4">
-                                        <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                                            <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                                            <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                                        </a>
+                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
+                                            {{--<!-- Button -->--}}
+                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
+                                                {{--Add to Cart--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
-                                        <div class="block2-btn-addcart w-size1 trans-0-4">
-                                            <!-- Button -->
-                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                Add to Cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {{--<div class="block2-txt p-t-20">--}}
+                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
+                                        {{--Denim jacket blue--}}
+                                    {{--</a>--}}
 
-                                <div class="block2-txt p-t-20">
-                                    <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                                        Denim jacket blue
-                                    </a>
-
-                                    <span class="block2-price m-text6 p-r-5">
-										$92.50
-									</span>
-                                </div>
-                            </div>
-                        </div>
+                                    {{--<span class="block2-price m-text6 p-r-5">--}}
+										{{--$92.50--}}
+									{{--</span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                     </div>
 
                     <!-- Pagination -->
                     <div class="pagination flex-m flex-w p-t-26">
-                        <a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
-                        <a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
+                        {{ $products->links()}}
+                        {{--<a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>--}}
+                        {{--<a href="#" class="item-pagination flex-c-m trans-0-4">2</a>--}}
                     </div>
                 </div>
             </div>
@@ -566,6 +596,9 @@
 
 @section('customJs')
     <script type="text/javascript">
+        $(document).ready(function () {
+            $("#inputTag").select2();
+        });
         $('.block2-btn-addcart').each(function(){
             var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
             $(this).on('click', function(){
