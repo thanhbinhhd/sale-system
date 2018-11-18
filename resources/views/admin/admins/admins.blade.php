@@ -39,7 +39,7 @@ Admin Manager
                     <td>{{$admin->username}}</td>
                     <td>{{$admin->name}}</td>
                     <td>
-                        @if ($admin->level == 1) Admin @else Staff @endif
+                        @if ($admin->isAdmin()) Admin @else Staff @endif
                     </td>
                     <td>
                         <label class="switch">
@@ -49,7 +49,7 @@ Admin Manager
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger" data-username="{{$admin->username}}" data-id="{{$admin->id}}" data-toggle="modal" data-target="#askDeleteModal">Delete</button>
-                        @if($admin->level != 1)<a href="{{route('admin.admin-manager.edit', ['id' => $admin->id])}}"><button type="button" class="btn btn-info">Change</button></a>@endif
+                        @if(!$admin->isAdmin())<a href="{{route('admin.admin-manager.edit', ['id' => $admin->id])}}"><button type="button" class="btn btn-info">Change</button></a>@endif
                     </td>
                 </tr>
                 @endforeach

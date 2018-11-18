@@ -105,7 +105,7 @@
                 <input id="inputFiles" type="file"  accept="image/png, image/jpeg, image/jpg" class="form-control" name="images[]" multiple />
             </div>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" value="1" @if(old('status') or $product->status == 1) checked="" @endif id="active" name="status" >
+                <input type="checkbox" class="form-check-input" value="1" @if(old('status') or $product->status == \App\Model\Product::ACTIVE) checked="" @endif id="active" name="status" >
                 <label class="form-check-label" for="active">Active this product</label>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>

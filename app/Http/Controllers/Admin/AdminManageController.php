@@ -91,9 +91,9 @@ class AdminManageController extends Controller
      */
     public function edit($id)
     {
-        
-        $admin = Admin::find($id);
-        if ($admin->level == 1)
+
+        $admin = $this->admin->getById($id);
+        if ($admin->isAdmin())
             return redirect()->route('admin.admin-manager.index');
         $adminPermission = AdminPermission::where('admin_id', $id)->first();
         if($adminPermission == null)
@@ -111,10 +111,10 @@ class AdminManageController extends Controller
     public function update(EditAdminRequest $request, $id)
     {
         $admin = $this->admin->getById($id);
-        if ($admin->level == 1)
+        if ($admin->isAdmin())
             return redirect()->route('admin.admin-manager.index');
         $newAdmin = array_merge($request->all(), [
-                'status' => $request->input('status') or 0,
+                'status' => $request->input('status') or Admin::BLOCKED,
         ]);
         $newAdminPermisson = array_merge($request->all(), [
                     'admin_id' => $id
