@@ -82,6 +82,24 @@ Slide Manager
         </div>
     </div>
 
+    <div class="modal fade" id="slide-delete-modal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Slide Delete</h4>
+                </div>
+                <div class="modal-body">                    
+                    Delete this Slide. You sure?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" slide-id="" id="delete-slide-btn" onclick="deleteSlide()">Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+         </div>
+    </div>
+
 @endsection
 @section('customscript')
     <script>
@@ -137,32 +155,13 @@ Slide Manager
         }
 
         function deleteSlideClicked() {
-              var slideID = this.value;     
-              $.ajax({
-                    type:'DELETE',
-                    url: 'delete-slide',
-                    data:{
-                      id:slideID,
-                    },
-                    success: function (response) {
-                        if(!response.error)
-                        {
-                          toastr.success('Slide was Deleted!');
-                          $('#row-'+response.data).remove();
-                        }
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        toastr.error(xhr.responseJSON.message);
-                    }
-              });
+                $("#slide-delete-modal").modal("show");
+                var slideID = this.value;  
+                $("#delete-slide-btn").attr("slide-id", slideID);  
         }
 
         function createSlide() {
           var title = $("#slide-title").val();
-          if(title === "") {
-            toastr.error("Name can not be empty!");
-            return;
-          }
           var link = $("#slide-link").val();
           $.ajax({
                     type:'POST',
@@ -179,21 +178,22 @@ Slide Manager
                             $("#slide-link").val("");
                             var slideID = response.data;
                             var htmlCreated = '<tr id="row-' + slideID +'"><td id="title-' + slideID + '">' + title + '</td><td id="link-' + slideID + '"><img src="' + link + '" alt="" width="200"></td><td><label class="switch"><input class="slide-status" onChange="changeSlideStatusClicked.call(this)" type="checkbox" checked id="' + slideID + '"><span class="slider round"></span></label></td><td><button type="button" class="btn btn-info slide-update-btn" onClick="updateSlideClicked.call(this)" value="' + slideID + '">Update</button><button type="button" class="btn btn-primary slide-delete-btn" onClick="deleteSlideClicked.call(this)" value="' + slideID + '">Delete</button></td></tr>';
-                            $('#listtable tbody').append(htmlCreated);
+                            $('#listtable tbody').prepend(htmlCreated);
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                        toastr.error(xhr.responseJSON.message);
+                        var errors = xhr.responseJSON.errors;
+                        if(Object.values(errors)[0][0]) {
+                            toastr.error(Object.values(errors)[0][0]);
+                        }else{
+                            toastr.error(xhr.responseJSON.message);
+                        }
                     }
           });
         };
         
         function updateSlide() {
           var title = $("#slide-title").val();
-          if(title === "") {
-            toastr.error("Name can not be empty!");
-            return;
-          }
           var link = $("#slide-link").val();
           var slideID = $("#update-slide-btn").attr('slide-id');
           $.ajax({
@@ -214,9 +214,37 @@ Slide Manager
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                        toastr.error(xhr.responseJSON.message);
+                        var errors = xhr.responseJSON.errors;
+                        if(Object.values(errors)[0][0]) {
+                            toastr.error(Object.values(errors)[0][0]);
+                        }else{
+                            toastr.error(xhr.responseJSON.message);
+                        }
                     }
           });
+        };
+
+        function deleteSlide() {
+            var slideID = $("#delete-slide-btn").attr('slide-id');
+            $.ajax({
+                    type:'DELETE',
+                    url: 'delete-slide',
+                    data:{
+                      id:slideID,
+                    },
+                    success: function (response) {
+                        $("#slide-delete-modal").modal("hide");
+                        if(!response.error)
+                        {
+                          toastr.success('Slide was Deleted!');
+                          $('#row-'+response.data).remove();
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        $("#slide-delete-modal").modal("hide");
+                        toastr.error(xhr.responseJSON.message);
+                    }
+            });
         };
     </script>
 @endsection

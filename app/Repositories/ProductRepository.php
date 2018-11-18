@@ -14,4 +14,11 @@ class ProductRepository
     {
         $this->model = $product;
     }
+
+    public function updateStatus($status, $id){
+        $product = $this->getById($id);
+        $product->status = $status;
+        $this->update($id,$product->toArray());
+        return $status;
+    }
 }

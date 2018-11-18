@@ -14,7 +14,9 @@
 Route::get('private-policy', function() {
     return view('user.private-policy');
 });
-
+Route::get('/shop',['as' => 'shop', function(){
+    return view('user.shop');
+}]);
 Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
         Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
@@ -36,17 +38,28 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
             Route::delete('{$id}', 'AdminManageController@destroy');
         });
         Route::put('update-admin-status',['as' => 'update-admin-status', 'uses' => "AdminManageController@updateStatus"]);
+        Route::put('update-product-status', 'ProductController@updateStatus');
+
+        Route::resource('product-manager', 'ProductController');
+        Route::group(['prefix' => 'product-manager'], function (){
+            Route::delete('{id}', 'ProductController@destroy');
+        });
 
         Route::get('dashboard',['as' => 'home', 'uses' => 'UserController@index']);
         Route::get('user-manager',['as' => 'user-manager', 'uses' => 'UserController@index']);
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
         Route::put('update-status',"UserController@updateStatus");
-
+        
         Route::get('slide-manager',['as' => 'slide-manager', 'uses' => 'SlideController@index']);
         Route::post('create-slide',"SlideController@createSlide");
         Route::put('update-slide',"SlideController@updateSlide");
         Route::put('update-slide-status',"SlideController@updateSlideStatus");
         Route::delete('delete-slide',"SlideController@deleteSlide");
+
+        Route::get('category-manager',['as' => 'category-manager', 'uses' => 'CategoryController@index']);
+        Route::post('create-category',"CategoryController@createCategory");
+        Route::put('update-category',"CategoryController@updateCategory");
+        Route::delete('delete-category',"CategoryController@deleteCategory");
 
         Route::get('users/{id}',"UserController@detail");
     });
@@ -88,9 +101,7 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         Route::get('/',['as' => 'home', function(){
             return view('user.home');
         }]);
-        Route::get('/shop',['as' => 'shop', function(){
-            return view('user.shop');
-        }]);
+
         Route::get('/contact',['as' => 'contact', function(){
             return view('user.contact');
         }]); Route::get('/about',['as' => 'about', function(){

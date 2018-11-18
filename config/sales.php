@@ -6,6 +6,6 @@ return [
 
     "default_team" => "ASK60",
 
-
+    'size' => ['XS',	'S',	'M',	'L',	'XL',	'XXL'],
 
 ];

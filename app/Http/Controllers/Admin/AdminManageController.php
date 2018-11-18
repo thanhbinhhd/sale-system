@@ -104,7 +104,7 @@ class AdminManageController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(EditAdminRequest $request, $id)
     {
@@ -123,12 +123,10 @@ class AdminManageController extends Controller
         
         if ($newAdmin['level'] != 1) { // is staff
             # code...
-            $adminPermission = AdminPermission::where('admin_id', $id)->first();
-            if($adminPermission == null){
-                $this->admin_permission->store($newAdminPermisson);
-            }else{
-                $this->admin_permission->update($adminPermission->id, $newAdminPermisson);
-            }
+            $admin= $this->admin->getById($id);
+            if($admin->AdminPermission != null)
+                $admin->AdminPermission->delete();
+            $this->admin_permission->store($newAdminPermisson);
         }
 
         \Session::flash('message', 'Successfully updated admin "'. $request->input('username') . '"!');
