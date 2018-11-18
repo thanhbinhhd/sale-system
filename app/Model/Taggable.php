@@ -4,15 +4,16 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class Taggable extends Model
 {
     //
     protected $fillable = [
-        'name', 'description', 'tagable_id', 'tagable_type'
+        'tag_id', 'taggable_id', 'taggable_type'
     ];
 
-    public function tagable()
+    public function taggble()
     {
         return $this->morphTo();
     }
+
 }

@@ -11,8 +11,4 @@ class Slide extends Model
       'title', 'link', 'status'
     ];
 
-    public function images()
-    {
-        return $this->morphMany(Image::class, 'imageable');
-    }
 }

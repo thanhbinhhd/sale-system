@@ -8,7 +8,7 @@ class Category extends Model
 {
     //
     protected $fillable = [
-      'name', 'description', 'admin_id'
+      'name', 'description', 'admin_id', 'image_path'
     ];
 
     public function products()
@@ -18,11 +18,6 @@ class Category extends Model
     public function news()
     {
         return $this->hasMany(News::class,'category_id');
-    }
-
-    public function images()
-    {
-        return $this->morphMany(Image::class, 'imageable');
     }
 
     public function admin() {

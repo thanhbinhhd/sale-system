@@ -18,13 +18,15 @@ class CreateProductsTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->integer('category_id');
+            $table->integer('admin_id')->comment('creator');
             $table->string('slug')->nullable();
             $table->string('quantity');
             $table->string('description')->nullable();
             $table->text('review')->nullable();
             $table->decimal('price', 13, 2);
             $table->integer('number_viewed')->default(0);
-            $table->integer('status')->default(1)->comment('1: active, 0: inactive, 2: reject');
+            $table->string('image_path')->default('/storage/images/img.png');
+            $table->integer('status')->default(0)->comment('1: active, 0: inactive, 2: reject');
         });
     }
 
