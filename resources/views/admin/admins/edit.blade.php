@@ -31,15 +31,15 @@ Admin Manager
           <div class="form-group">
             <label>Level</label>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="level" id="radio1" @if(old('level') != '2' or !$admin->isAdmin()) checked="" @endif value="1" >
+              <input class="form-check-input" type="radio" name="level" id="radio1" @if(old('level') != '2' or $admin->isAdmin()) checked="" @endif value="1" >
               <label class="form-check-label" for="radio1">Admin</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="level" id="radio2" @if(old('level') == '2' or $admin->isAdmin()) checked="" @endif  value="2">
+              <input class="form-check-input" type="radio" name="level" id="radio2" @if(old('level') == '2' or !$admin->isAdmin()) checked="" @endif  value="2">
               <label class="form-check-label" for="radio2">Staff</label>
             </div>
           </div>
-          <div class="form-group" id="permissions" @if(old('level') == '1' or !$admin->isAdmin()) style="display: none;" @endif>
+          <div class="form-group" id="permissions" @if(old('level') == '1' or $admin->isAdmin()) style="display: none;" @endif>
             <label>Permissions</label>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="1" @if(old('can_delete') or $adminPermission->can_delete) checked="" @endif name="can_delete" id="can_delete">

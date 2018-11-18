@@ -17,7 +17,7 @@ class ShopController extends Controller
 
     protected $category;
     protected $product;
-    const CATEGORY_PAGINATION = 3;
+    const CATEGORY_PAGINATION = 10;
     const ALL = 'All';
     public function __construct(CategoryRepository $category, ProductRepository $product)
     {
@@ -62,6 +62,8 @@ class ShopController extends Controller
         }
 
         $products = $this->product->filte($products, $request)->paginate(self::CATEGORY_PAGINATION);
+//        var_dump($request->all());
+//        dd(json_decode(json_encode($products), true));
         return view('user.shop', ['products' => $products, 'categoryName' => $category]);
     }
 }
