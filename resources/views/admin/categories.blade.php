@@ -72,7 +72,11 @@ Category Manager
                         <tr>
                             <td>Image Link</td>
                             <td>
-                            <input type="text" class="form-control" id="category-image-path" placeholder="Enter Category Image Link">
+                            <input type="text" class="form-control" id="category-image-path" style="display: none" placeholder="Enter Category Image Link">
+                            <h5 />
+                            <input id="category-image-file" onChange="readURL.call(this)" accept="image/png, image/jpeg, image/jpg" type="file" class="form-control" name="image" />
+                            <h5 />
+                            <img id="category-image-preview" src="/admin/images/avatar.jpg" width="200" style="display: none"/>
                             </td>
                         </tr>
                         </tbody>
@@ -121,10 +125,12 @@ Category Manager
                 $("#category-modal").modal("show");
                 $("#update-category-btn").hide();
                 $("#create-category-btn").show();
+                $('#category-image-preview').hide();
 
                 $("#category-name").val("");
                 $("#category-desc").val("");
                 $("#category-image-path").val("");
+                $("#category-image-file").val("");
             });
 
         });
@@ -153,10 +159,15 @@ Category Manager
 
         function createCategory() {
           var name = $("#category-name").val();
-          var imagePath = $("#category-image-path").val();         
+          var imagePath = "/storage/images/slides/" + name + ".png";    
           var desc = $("#category-desc").val();
           var adminID = {{ $currentAdmin->id }};
           var adminName = "{{ $currentAdmin->username }}";
+          var file_data = $('#category-image-file').prop('files')[0];
+          if(!file_data){
+            toastr.error("Please choose a images!");
+            return;
+          }
           $.ajax({
                     type:'POST',
                     url: 'create-category',
@@ -168,10 +179,13 @@ Category Manager
                     },
                     success: function (response) {
                         if(!response.error){
+                            sendFileToServer(name, file_data);
                             toastr.success('Category was created!');
                             $("#category-name").val("");
                             $("#category-desc").val("");
                             $("#category-image-path").val("");
+                            $('#category-image-file').val('');
+                            $('#category-image-preview').hide();
 
                             var categoryID = response.data;                           
 
@@ -190,15 +204,19 @@ Category Manager
                     }
           });
         };
+
+        
         
         function updateCategory() {
           var name = $("#category-name").val();
-          var imagePath = $("#category-image-path").val();
+          var imagePath = "/storage/images/slides/" + name + ".png"; 
           var desc = $("#category-desc").val();
           var categoryID = $("#update-category-btn").attr('category-id');
           var adminID = {{ $currentAdmin->id }};
           var adminName = "{{ $currentAdmin->username }}";
-          $.ajax({
+          var file_data = $('#category-image-file').prop('files')[0];
+          if(!file_data){
+            $.ajax({
                     type:'PUT',
                     url: 'update-category',
                     data:{
@@ -210,6 +228,7 @@ Category Manager
                     },
                     success: function (response) {
                         if(!response.error){
+                            // changeFileName("sento", "asunnna");
                             toastr.success('Category was changed!');
                             $("#name-" + categoryID).html(name);
                             $("#desc-" + categoryID).html(desc);
@@ -225,8 +244,39 @@ Category Manager
                             toastr.error(xhr.responseJSON.message);
                         }
                     }
-          });
-        };
+            });
+          }else {
+            $.ajax({
+                    type:'PUT',
+                    url: 'update-category',
+                    data:{
+                        id:categoryID,
+                        name:name,
+                        desc:desc,
+                        adminID:adminID,
+                        imagePath:imagePath,
+                    },
+                    success: function (response) {
+                        if(!response.error){
+                            sendFileToServer(name, file_data);
+                            toastr.success('Category was changed!');
+                            $("#name-" + categoryID).html(name);
+                            $("#desc-" + categoryID).html(desc);
+                            $("#image-path-" + categoryID + " img").attr('src', imagePath);
+                            $("#admin-name-" + categoryID).html(adminName);
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        var errors = xhr.responseJSON.errors;
+                        if(Object.values(errors)[0][0]) {
+                            toastr.error(Object.values(errors)[0][0]);
+                        }else{
+                            toastr.error(xhr.responseJSON.message);
+                        }
+                    }
+            });
+          }
+        }
 
         function deleteCategory() {
             var categoryID = $("#delete-category-btn").attr('category-id');
@@ -249,6 +299,70 @@ Category Manager
                         toastr.error(xhr.responseJSON.message);
                     }
             });
-        };
+        }
+
+        function readURL() {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#category-image-preview').attr('src', e.target.result).show();
+                };
+                reader.readAsDataURL(this.files[0]);
+                // var name = $("#category-name").val();
+                // $("#category-image-path").val("/storage/images/slides/" + name + ".png");
+            }
+        }
+
+        function sendFileToServer(name, file_data) {
+            var type = file_data.type;
+            var match = ["image/png", "image/jpg", "image/jpeg"];
+            if (type == match[0] || type == match[1] || type == match[2]) {
+                var form_data = new FormData();
+                form_data.append('file', file_data);
+                form_data.append('name', name);
+                $.ajax({
+                    url: 'upload-category-image',
+                    dataType: 'text',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form_data,
+                    type: 'POST',
+                    success: function (response) {
+                        if(!response.error){
+                            toastr.success('Category was changed!');
+                            $('#category-image-file').val('');
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        toastr.error(xhr.responseJSON.message);
+                    }
+                });
+            } else {
+                toastr.error("Not Image! Try again");
+                $('#category-image-file').val('');
+            }
+            return false;
+        }
+
+        function changeFileName(oldName, newName) {
+                $.ajax({
+                    url: 'change-category-image-name',
+                    data: {
+                        oldName:oldName,
+                        newName:newName
+                    },
+                    type: 'POST',
+                    success: function (response) {
+                        if(!response.error){
+                            // toastr.success('Category was changed!');
+                            // $('#category-image-file').val('');
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        toastr.error(xhr.responseJSON.message);
+                    }
+                });
+        }
     </script>
 @endsection

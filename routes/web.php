@@ -63,6 +63,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
         Route::post('create-category',"CategoryController@createCategory");
         Route::put('update-category',"CategoryController@updateCategory");
         Route::delete('delete-category',"CategoryController@deleteCategory");
+        Route::post('upload-category-image',"CategoryController@uploadImage");
+        Route::post('change-category-image-name',"CategoryController@changeImageName");
 
         Route::get('users/{id}',"UserController@detail");
     });
