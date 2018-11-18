@@ -43,7 +43,7 @@ class ProductRepository
         $maxPrice = $request->get('price-max');
         $order = $request->get('order');
 
-        $products = $products->select('products.*', 'color')->
+        $products = $products->select('products.*')->
         join('taggables', 'products.id', '=', 'taggable_id')->
         join('tags', 'tags.id', '=', 'taggables.tag_id')->
         join('product_details', 'products.id', '=', 'product_details.product_id');
@@ -58,6 +58,7 @@ class ProductRepository
             $products = $products->whereIn('color', $color);
         if($tags != null)
             $products = $products->whereIn('tag_id', $tags);
+        $products = $products->groupBy('products.id');
         if($order != null){
             if(in_array($order, ['asc', 'desc']))
                 $products = $products->orderBy('price', $order);
