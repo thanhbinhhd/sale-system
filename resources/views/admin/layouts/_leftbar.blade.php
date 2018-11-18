@@ -32,6 +32,9 @@
             <li>
                 <a href="{{config('menubar.order_manager_path')}}"><span class="fa fa-file"></span>{{config('menubar.order')}}</a>
             </li>
+            <li>
+                <a href="{{config('menubar.slide_manager_path')}}"><span class="fa fa-file-powerpoint-o"></span>{{config('menubar.slide')}}</a>
+            </li>
 
         </ul>
     </section>
