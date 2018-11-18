@@ -14,5 +14,24 @@ class UserController extends Controller
     {
         $this->user = $user;
     }
-    //
+
+    public function profile(){
+        $user = \Auth::guard('user')->user();
+
+        return view("user.profile",compact('user'));
+    }
+
+    public function changepass(Request $request){
+        $currentpass = $request->get('currentpass');
+        $newpass=$request->get('newpass');
+        $user = \Auth::guard('user')->user();
+        if(!(Hash::check($currentpass, $user->password))){
+            $user->password = bcrypt($newpass);
+            $user->save();
+            return response()->json(['data' => 'ok'], 200);
+        }
+        else{
+            return response()->json(['error' => 'Password invalite!'], 404);
+        }
+    }
 }

@@ -101,8 +101,9 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
                 return view('user.blog');
             }]);
         });
-        Route::get('/',['as' => 'home', function(){
-            return view('user.home');
+        Route::get('/',['as' => 'home', 'uses' => 'HomeController@index']);
+        Route::get('/shop',['as' => 'shop', function(){
+            return view('user.shop');
         }]);
 
         Route::get('/contact',['as' => 'contact', function(){
@@ -110,6 +111,9 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         }]); Route::get('/about',['as' => 'about', function(){
             return view('user.about');
         }]);
+
+        Route::get('/profile',"UserController@profile");
+        Route::put('/changepass',"UserController@changepass");
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
     });
 });

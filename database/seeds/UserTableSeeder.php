@@ -23,6 +23,11 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('123456'),
         ]);
 
+        DB::table('users')->insert([
+            'name' => 'TestUser',
+            'email' => 'user@user.com',
+            'password' => bcrypt('123456'),
+        ]);
         factory(\App\Model\User::class, 10)->create();
     }
 }
