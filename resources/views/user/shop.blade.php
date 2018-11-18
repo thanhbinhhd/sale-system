@@ -129,18 +129,18 @@
                                     <option value="default" >Default Sorting</option>
                                     <option value="popular">Popularity</option>
                                     <option value="asc">Price: low to high</option>
-                                    <option value="decs">Price: high to low</option>
+                                    <option value="desc">Price: high to low</option>
                                 </select>
                             </div>
 
                             <div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
                                 <select id="sel2" class="selection-2" name="sorting">
                                     <option>Price</option>
-                                    <option>$0.00 - $50.00</option>
-                                    <option>$50.00 - $100.00</option>
-                                    <option>$100.00 - $150.00</option>
-                                    <option>$150.00 - $200.00</option>
-                                    <option>$200.00+</option>
+                                    <option value="price-min=0&price-max=50">$0.00 - $50.00</option>
+                                    <option value="price-min=50&price-max=100">$50.00 - $100.00</option>
+                                    <option value="price-min=100&price-max=150">$100.00 - $150.00</option>
+                                    <option value="price-min=150&price-max=200">$150.00 - $200.00</option>
+                                    <option value="price-min=200">$200.00+</option>
 
                                 </select>
                             </div>
@@ -186,386 +186,24 @@
                                     <span class="block2-price m-text6 p-r-5">
 										${{$product->price}}
 									</span>
+
+                                    {{--<span class="block2-oldprice m-text7 p-r-5">--}}
+										{{--$29.50--}}
+									{{--</span>--}}
+
+                                    {{--<span class="block2-newprice m-text8 p-r-5">--}}
+										{{--$15.90--}}
+									{{--</span>--}}
                                 </div>
                             </div>
                         </div>
                         @endforeach
                         @endif
-                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
-                            {{--<!-- Block2 -->--}}
-                            {{--<div class="block2">--}}
-                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative">--}}
-                                    {{--<img src="/user/images/item-03.jpg" alt="IMG-PRODUCT">--}}
-
-                                    {{--<div class="block2-overlay trans-0-4">--}}
-                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
-                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
-                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
-                                        {{--</a>--}}
-
-                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
-                                            {{--<!-- Button -->--}}
-                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
-                                                {{--Add to Cart--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-
-                                {{--<div class="block2-txt p-t-20">--}}
-                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
-                                        {{--Denim jacket blue--}}
-                                    {{--</a>--}}
-
-                                    {{--<span class="block2-price m-text6 p-r-5">--}}
-										{{--$92.50--}}
-									{{--</span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
-                            {{--<!-- Block2 -->--}}
-                            {{--<div class="block2">--}}
-                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative">--}}
-                                    {{--<img src="/user/images/item-05.jpg" alt="IMG-PRODUCT">--}}
-
-                                    {{--<div class="block2-overlay trans-0-4">--}}
-                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
-                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
-                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
-                                        {{--</a>--}}
-
-                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
-                                            {{--<!-- Button -->--}}
-                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
-                                                {{--Add to Cart--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-
-                                {{--<div class="block2-txt p-t-20">--}}
-                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
-                                        {{--Coach slim easton black--}}
-                                    {{--</a>--}}
-
-                                    {{--<span class="block2-price m-text6 p-r-5">--}}
-										{{--$165.90--}}
-									{{--</span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
-                            {{--<!-- Block2 -->--}}
-                            {{--<div class="block2">--}}
-                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">--}}
-                                    {{--<img src="/user/images/item-07.jpg" alt="IMG-PRODUCT">--}}
-
-                                    {{--<div class="block2-overlay trans-0-4">--}}
-                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
-                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
-                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
-                                        {{--</a>--}}
-
-                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
-                                            {{--<!-- Button -->--}}
-                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
-                                                {{--Add to Cart--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-
-                                {{--<div class="block2-txt p-t-20">--}}
-                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
-                                        {{--Frayed denim shorts--}}
-                                    {{--</a>--}}
-
-                                    {{--<span class="block2-oldprice m-text7 p-r-5">--}}
-										{{--$29.50--}}
-									{{--</span>--}}
-
-                                    {{--<span class="block2-newprice m-text8 p-r-5">--}}
-										{{--$15.90--}}
-									{{--</span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
-                            {{--<!-- Block2 -->--}}
-                            {{--<div class="block2">--}}
-                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">--}}
-                                    {{--<img src="/user/images/item-01.jpg" alt="IMG-PRODUCT">--}}
-
-                                    {{--<div class="block2-overlay trans-0-4">--}}
-                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
-                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
-                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
-                                        {{--</a>--}}
-
-                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
-                                            {{--<!-- Button -->--}}
-                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
-                                                {{--Add to Cart--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-
-                                {{--<div class="block2-txt p-t-20">--}}
-                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
-                                        {{--Herschel supply co 25l--}}
-                                    {{--</a>--}}
-
-                                    {{--<span class="block2-price m-text6 p-r-5">--}}
-										{{--$75.00--}}
-									{{--</span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
-                            {{--<!-- Block2 -->--}}
-                            {{--<div class="block2">--}}
-                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative">--}}
-                                    {{--<img src="/user/images/item-14.jpg" alt="IMG-PRODUCT">--}}
-
-                                    {{--<div class="block2-overlay trans-0-4">--}}
-                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
-                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
-                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
-                                        {{--</a>--}}
-
-                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
-                                            {{--<!-- Button -->--}}
-                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
-                                                {{--Add to Cart--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-
-                                {{--<div class="block2-txt p-t-20">--}}
-                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
-                                        {{--Denim jacket blue--}}
-                                    {{--</a>--}}
-
-                                    {{--<span class="block2-price m-text6 p-r-5">--}}
-										{{--$92.50--}}
-									{{--</span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
-                            {{--<!-- Block2 -->--}}
-                            {{--<div class="block2">--}}
-                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">--}}
-                                    {{--<img src="/user/images/item-06.jpg" alt="IMG-PRODUCT">--}}
-
-                                    {{--<div class="block2-overlay trans-0-4">--}}
-                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
-                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
-                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
-                                        {{--</a>--}}
-
-                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
-                                            {{--<!-- Button -->--}}
-                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
-                                                {{--Add to Cart--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-
-                                {{--<div class="block2-txt p-t-20">--}}
-                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
-                                        {{--Herschel supply co 25l--}}
-                                    {{--</a>--}}
-
-                                    {{--<span class="block2-price m-text6 p-r-5">--}}
-										{{--$75.00--}}
-									{{--</span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
-                            {{--<!-- Block2 -->--}}
-                            {{--<div class="block2">--}}
-                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative">--}}
-                                    {{--<img src="/user/images/item-08.jpg" alt="IMG-PRODUCT">--}}
-
-                                    {{--<div class="block2-overlay trans-0-4">--}}
-                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
-                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
-                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
-                                        {{--</a>--}}
-
-                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
-                                            {{--<!-- Button -->--}}
-                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
-                                                {{--Add to Cart--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-
-                                {{--<div class="block2-txt p-t-20">--}}
-                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
-                                        {{--Denim jacket blue--}}
-                                    {{--</a>--}}
-
-                                    {{--<span class="block2-price m-text6 p-r-5">--}}
-										{{--$92.50--}}
-									{{--</span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
-                            {{--<!-- Block2 -->--}}
-                            {{--<div class="block2">--}}
-                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative">--}}
-                                    {{--<img src="/user/images/item-10.jpg" alt="IMG-PRODUCT">--}}
-
-                                    {{--<div class="block2-overlay trans-0-4">--}}
-                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
-                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
-                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
-                                        {{--</a>--}}
-
-                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
-                                            {{--<!-- Button -->--}}
-                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
-                                                {{--Add to Cart--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-
-                                {{--<div class="block2-txt p-t-20">--}}
-                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
-                                        {{--Coach slim easton black--}}
-                                    {{--</a>--}}
-
-                                    {{--<span class="block2-price m-text6 p-r-5">--}}
-										{{--$165.90--}}
-									{{--</span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
-                            {{--<!-- Block2 -->--}}
-                            {{--<div class="block2">--}}
-                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">--}}
-                                    {{--<img src="/user/images/item-11.jpg" alt="IMG-PRODUCT">--}}
-
-                                    {{--<div class="block2-overlay trans-0-4">--}}
-                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
-                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
-                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
-                                        {{--</a>--}}
-
-                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
-                                            {{--<!-- Button -->--}}
-                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
-                                                {{--Add to Cart--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-
-                                {{--<div class="block2-txt p-t-20">--}}
-                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
-                                        {{--Frayed denim shorts--}}
-                                    {{--</a>--}}
-
-                                    {{--<span class="block2-oldprice m-text7 p-r-5">--}}
-										{{--$29.50--}}
-									{{--</span>--}}
-
-                                    {{--<span class="block2-newprice m-text8 p-r-5">--}}
-										{{--$15.90--}}
-									{{--</span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
-                            {{--<!-- Block2 -->--}}
-                            {{--<div class="block2">--}}
-                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">--}}
-                                    {{--<img src="/user/images/item-12.jpg" alt="IMG-PRODUCT">--}}
-
-                                    {{--<div class="block2-overlay trans-0-4">--}}
-                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
-                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
-                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
-                                        {{--</a>--}}
-
-                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
-                                            {{--<!-- Button -->--}}
-                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
-                                                {{--Add to Cart--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-
-                                {{--<div class="block2-txt p-t-20">--}}
-                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
-                                        {{--Herschel supply co 25l--}}
-                                    {{--</a>--}}
-
-                                    {{--<span class="block2-price m-text6 p-r-5">--}}
-										{{--$75.00--}}
-									{{--</span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-                        {{--<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">--}}
-                            {{--<!-- Block2 -->--}}
-                            {{--<div class="block2">--}}
-                                {{--<div class="block2-img wrap-pic-w of-hidden pos-relative">--}}
-                                    {{--<img src="/user/images/item-15.jpg" alt="IMG-PRODUCT">--}}
-
-                                    {{--<div class="block2-overlay trans-0-4">--}}
-                                        {{--<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">--}}
-                                            {{--<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>--}}
-                                            {{--<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>--}}
-                                        {{--</a>--}}
-
-                                        {{--<div class="block2-btn-addcart w-size1 trans-0-4">--}}
-                                            {{--<!-- Button -->--}}
-                                            {{--<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">--}}
-                                                {{--Add to Cart--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-
-                                {{--<div class="block2-txt p-t-20">--}}
-                                    {{--<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">--}}
-                                        {{--Denim jacket blue--}}
-                                    {{--</a>--}}
-
-                                    {{--<span class="block2-price m-text6 p-r-5">--}}
-										{{--$92.50--}}
-									{{--</span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
                     </div>
 
                     <!-- Pagination -->
                     <div class="pagination flex-m flex-w p-t-26">
-                        @if($products != null){{ $products->links()}}@endif
+                        @if($products != null){{ $products->appends(Illuminate\Support\Facades\Input::except('page'))->links()}}@endif
                         {{--<a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>--}}
                         {{--<a href="#" class="item-pagination flex-c-m trans-0-4">2</a>--}}
                     </div>
@@ -626,11 +264,22 @@
         $('#sle1').on('change', function () {
             var url = window.location.href;
             if(url.indexOf('filter?') === -1)
-                url += '/filter?order=' + $(this).val();
+                url = '/shop/{{$categoryName}}/filter?order=' + $(this).val();
             else if(document.location.href.indexOf('order=') !== -1)
                 url = url.substring(0, document.location.href.indexOf('order=')) + 'order=' +  $(this).val();
             else
                 url += '&order=' + $(this).val();
+            location.href = url;
+        });
+
+        $('#sel2').on('change', function () {
+            var url = window.location.href;
+            if(url.indexOf('filter?') === -1)
+                url = '/shop/{{$categoryName}}/filter?' + $(this).val();
+            else if(document.location.href.indexOf('price-min=') !== -1)
+                url = url.substring(0, document.location.href.indexOf('price-min=')) +  $(this).val();
+            else
+                url += $(this).val();
             location.href = url;
         });
     </script>

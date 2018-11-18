@@ -48,4 +48,19 @@ class CategoryController extends Controller
         $this->category->destroy($id);
         return response()->json(['data'=>$id], self::CODE_DELETE_SUCCESS);
     }
+
+    public function uploadImage(Request $request){
+        $avatar = $request->file('file');
+        $name = $request->get('name');
+        $image_path = $avatar->storeAs(
+            'images/slides', $name.'.png'
+        );
+        return response()->json(['data'=>$name], self::CODE_UPDATE_SUCCESS);
+    }
+
+    public function changeImageName(Request $request){
+        $oldName = $request->file('oldName');
+        $newName = $request->file('newName');
+        // Storage::copy('images/slides/'.$oldName.'.png', 'images/slides/'.$newName.'.png');
+    }
 }
