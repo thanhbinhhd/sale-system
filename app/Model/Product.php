@@ -20,6 +20,7 @@ class Product extends Model
     public function creator(){
         return $this->belongsTo(Admin::class, 'admin_id');
     }
+    
     public function productDetail() {
         return $this->hasOne(ProductDetail::class, 'product_id');
     }
