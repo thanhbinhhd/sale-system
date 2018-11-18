@@ -17,11 +17,11 @@ class ProductRepository
     }
 
     public function getNew(){
-        return $this->model->where('status', Product::ACTIVE)->take(8)->get();
+        return $this->model->where('status', Product::ACTIVE)->take(4)->get();
     }
 
     public function getWithCondition($condition, $order){
-        return $this->model->where('status',1)->orderBy($condition,$order)->take(8)->get();
+        return $this->model->where('status',1)->orderBy($condition,$order)->take(4)->get();
     }
     public function updateStatus($status, $id){
         $product = $this->getById($id);
