@@ -48,8 +48,8 @@ Admin Manager
                         </label>
                     </td>
                     <td>
-                        <a href="{{route('admin.admin-manager.edit', ['id' => $admin->id])}}"><button type="button" class="btn btn-info">Change</button></a>
                         <button type="button" class="btn btn-danger" data-username="{{$admin->username}}" data-id="{{$admin->id}}" data-toggle="modal" data-target="#askDeleteModal">Delete</button>
+                        @if($admin->level != 1)<a href="{{route('admin.admin-manager.edit', ['id' => $admin->id])}}"><button type="button" class="btn btn-info">Change</button></a>@endif
                     </td>
                 </tr>
                 @endforeach

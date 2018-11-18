@@ -18,9 +18,11 @@
             <li>
                 <a href="{{config('menubar.user_manager_path')}}"><span class="fa fa-user"></span>{{config('menubar.user')}}</a>
             </li>
+            @if (Auth::guard('admin')->user()->level == 1)
             <li>
                 <a href="{{config('menubar.admin_manager_path')}}"><span class="fa fa-user-circle-o"></span>{{config('menubar.admin')}}</a>
             </li>
+            @endif
             <li>
                 <a href="{{config('menubar.product_manager_path')}}"><span class="fa fa-product-hunt"></span>{{config('menubar.product')}}</a>
             </li>

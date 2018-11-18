@@ -93,6 +93,8 @@ class AdminManageController extends Controller
     {
         
         $admin = Admin::find($id);
+        if ($admin->level == 1)
+            return redirect()->route('admin.admin-manager.index');
         $adminPermission = AdminPermission::where('admin_id', $id)->first();
         if($adminPermission == null)
             $adminPermission = new AdminPermission;
@@ -108,6 +110,9 @@ class AdminManageController extends Controller
      */
     public function update(EditAdminRequest $request, $id)
     {
+        $admin = $this->admin->getById($id);
+        if ($admin->level == 1)
+            return redirect()->route('admin.admin-manager.index');
         $newAdmin = array_merge($request->all(), [
                 'status' => $request->input('status') or 0,
         ]);
