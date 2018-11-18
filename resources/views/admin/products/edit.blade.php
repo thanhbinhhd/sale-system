@@ -88,7 +88,7 @@
             <img id="preview" @if ($product->image_path != null) src="{{$product->image_path}}" @else src="/admin/images/avatar.jpg" style="display: none" @endif alt="Product image" width="200" />
             <div class="form-group" style="width: 50%">
                 <label for="inputFile">Image:</label>
-                <input id="inputFile"  accept="image/png, image/jpeg" type="file" class="form-control" name="image" />
+                <input id="inputFile"  accept="image/png, image/jpeg, image/jpg" type="file" class="form-control" name="image" />
             </div>
             <div class="form-group">
             @if ($product->images != null)
@@ -102,10 +102,10 @@
             </div>
             <div class="form-group" style="width: 50%">
                 <label for="inputFiles">Other Images:</label>
-                <input id="inputFiles" type="file"  accept="image/png, image/jpeg" class="form-control" name="images[]" multiple />
+                <input id="inputFiles" type="file"  accept="image/png, image/jpeg, image/jpg" class="form-control" name="images[]" multiple />
             </div>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" value="1" @if(old('status') or $product->status == 1) checked="" @endif id="active" name="status" >
+                <input type="checkbox" class="form-check-input" value="1" @if(old('status') or $product->status == \App\Model\Product::ACTIVE) checked="" @endif id="active" name="status" >
                 <label class="form-check-label" for="active">Active this product</label>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>

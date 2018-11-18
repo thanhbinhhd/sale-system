@@ -54,6 +54,14 @@ trait BaseRepository
     }
 
     /**
+     * @param $name
+     * @return mixed
+     */
+    public function getByName($name){
+        return $this->model->where('name', $name)->first();
+    }
+
+    /**
      * Get all the records
      *
      * @return array User

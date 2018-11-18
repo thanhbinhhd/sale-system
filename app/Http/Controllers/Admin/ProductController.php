@@ -186,7 +186,7 @@ class ProductController extends Controller
         $status = $request->get('status');
         $id=$request->get('id');
         $admin = Auth::guard('admin')->user();
-        if($admin->level == 1 or $admin->adminPermission->can_update) {
+        if($admin->isAdmin() or $admin->adminPermission->can_update) {
             $this->product->updateStatus($status,$id);
             return response()->json(['data'=>$status], self::CODE_UPDATE_SUCCESS);
         }else{
@@ -203,7 +203,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $admin = Auth::guard('admin')->user();
-        if($admin->level == 1 or $admin->adminPermission->can_delete) {
+        if($admin->isAdmin() or $admin->adminPermission->can_delete) {
             $status = $this->product->destroy($id);
             return response()->json(['data' => $status], self::CODE_DELETE_SUCCESS);
         }else{

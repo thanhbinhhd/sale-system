@@ -58,9 +58,9 @@
                     <td>{{$product->created_at}}</td>
                     <td>
                         <select class="form-control product-status" data-id="{{$product->id}}">
-                            <option value="1" @if($product->status == 1) selected @endif >Active</option>
-                            <option value="0" @if($product->status == 0) selected @endif>Inactive</option>
-                            <option value="2" @if($product->status == 2) selected @endif>Reject</option>
+                            <option value="1" @if($product->status == \App\Model\Product::ACTIVE) selected @endif >Active</option>
+                            <option value="0" @if($product->status == \App\Model\Product::INACTIVE) selected @endif>Inactive</option>
+                            <option value="2" @if($product->status == \App\Model\Product::REJECT) selected @endif>Reject</option>
                         </select>
                     </td>
                     <td>

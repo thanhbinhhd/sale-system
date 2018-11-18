@@ -15,7 +15,8 @@ class Admin extends Authenticatable
     use Notifiable;
     const STAFF = 0;
     const ADMIN = 1;
-
+    const  BLOCKED = 0;
+    const ACTIVE = 1;
     /**
      * The attributes that are mass assignable.
      *
@@ -67,5 +68,9 @@ class Admin extends Authenticatable
 
     public function categories() {
         return $this->hasMany(Category::class, 'admin_id');
+    }
+
+    public function isAdmin(){
+        return $this->level == self::ADMIN;
     }
 }

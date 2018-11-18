@@ -14,9 +14,12 @@
 Route::get('private-policy', function() {
     return view('user.private-policy');
 });
-Route::get('/shop',['as' => 'shop', function(){
-    return view('user.shop');
-}]);
+Route::get('/shop/', function (){
+    return redirect(route('shop', ['category' => 'All']));
+});
+
+Route::get('/shop/{category}',['as' => 'shop', 'uses' => 'User\ShopController@show']);
+Route::get('/shop/{category}/filter', ['as' => 'filter', 'uses' => 'User\ShopController@filte']);
 Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::group(['namespace' => 'Auth', 'middleware' => 'guest'], function () {
         Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
