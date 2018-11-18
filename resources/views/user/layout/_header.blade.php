@@ -37,7 +37,7 @@
 
     <!-- Header Icon -->
     <div class="header-icons">
-        <a href="#" class="header-wrapicon1 dis-block">
+        <a href="/profile" class="header-wrapicon1 dis-block">
             <img src="/user/images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
         </a>
         <a href="{{route('user.logout')}}" class="link-color">Logout</a>
@@ -154,7 +154,7 @@
                 </div>
 
                 <!--  -->
-                <a href="#" class="header-wrapicon1 dis-block m-l-30">
+                <a href="/profile" class="header-wrapicon1 dis-block m-l-30">
                     <img src="/user/images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
                 </a>
 

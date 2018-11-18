@@ -14,4 +14,9 @@ class NewsRepository
     {
         $this->model = $news;
     }
+
+    public function getNew(){
+        $news = $this->model->where('status',1)->take(3)->get();
+        return $news;
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Repositories\CategoryRepository;
+use App\Repositories\NewsRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\SlideRepository;
 use App\Repositories\TagRepository;
@@ -17,16 +18,19 @@ class HomeController extends Controller
     protected $slide;
     protected $category;
     protected $product;
+    protected $blog;
 
 
     public function __construct(UserRepository $user, TagRepository $tag, SlideRepository $slide,
-                                CategoryRepository $category, ProductRepository $product)
+                                CategoryRepository $category, ProductRepository $product, NewsRepository $blog)
     {
         $this->user = $user;
         $this->category = $category;
         $this->tag = $tag;
         $this->slide = $slide;
         $this->product = $product;
+        $this->blog = $blog;
+
     }
 
     public function index(){
@@ -36,6 +40,7 @@ class HomeController extends Controller
         $cheaps = $this->product->getWithCondition("price","DESC");
         $views = $this->product->getWithCondition('number_viewed',"ASC");
         $products = $this->product->getNew();
-        return view('user.home',compact('slides','tags', 'categories', 'cheaps', 'products', 'views'));
+        $blogs = $this->blog->getNew();
+        return view('user.home',compact('slides','tags', 'categories', 'cheaps', 'products', 'views','blogs'));
     }
 }

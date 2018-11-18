@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="/user/css/main.min.css">
     <!--===============================================================================================-->
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
@@ -58,6 +58,8 @@
 <!--===============================================================================================-->
 <script src="/user/js/main.min.js"></script>
 <script src={{ mix('user/js/app.js') }}></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <!-- iCheck -->
 
 </body>

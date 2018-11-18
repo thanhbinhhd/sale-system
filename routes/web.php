@@ -93,22 +93,19 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
                 return view('user.blog');
             }]);
         });
-<<<<<<< HEAD
         Route::get('/',['as' => 'home', 'uses' => 'HomeController@index']);
         Route::get('/shop',['as' => 'shop', function(){
             return view('user.shop');
         }]);
-=======
-        Route::get('/',['as' => 'home', function(){
-            return view('user.home');
-        }]);
 
->>>>>>> 59b3fb7d156e745df97676b78f2b706a7bb474b7
         Route::get('/contact',['as' => 'contact', function(){
             return view('user.contact');
         }]); Route::get('/about',['as' => 'about', function(){
             return view('user.about');
         }]);
+
+        Route::get('/profile',"UserController@profile");
+        Route::put('/changepass',"UserController@changepass");
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
     });
 });
