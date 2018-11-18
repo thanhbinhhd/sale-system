@@ -50,6 +50,12 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
         Route::put('update-status',"UserController@updateStatus");
 
+        Route::get('category-manager',['as' => 'category-manager', 'uses' => 'CategoryController@index']);
+        Route::post('create-category',"CategoryController@createCategory");
+        Route::put('update-category',"CategoryController@updateCategory");
+        Route::delete('delete-category',"CategoryController@deleteCategory");
+
+
         Route::get('users/{id}',"UserController@detail");
     });
 });
