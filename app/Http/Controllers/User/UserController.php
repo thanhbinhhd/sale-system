@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Hash;
 
 class UserController extends Controller
 {
@@ -31,7 +32,7 @@ class UserController extends Controller
             return response()->json(['data' => 'ok'], 200);
         }
         else{
-            return response()->json(['error' => 'Password invalite!'], 404);
+            return response()->json(['data' => 'Password invalite!'], 200);
         }
     }
 }
