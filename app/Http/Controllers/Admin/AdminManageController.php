@@ -46,8 +46,8 @@ class AdminManageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CreateAdminRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateAdminRequest $request)
     {
@@ -91,9 +91,11 @@ class AdminManageController extends Controller
      */
     public function edit($id)
     {
-        
-        $admin = Admin::find($id);
-        $adminPermission = AdminPermission::where('admin_id', $id)->first();
+
+        $admin = $this->admin->getById($id);
+        if ($admin->isAdmin())
+            return redirect()->route('admin.admin-manager.index');
+        $adminPermission = $admin->adminPermission()->first();
         if($adminPermission == null)
             $adminPermission = new AdminPermission;
         return view('admin.admins.edit', ['admin' => $admin, 'adminPermission' => $adminPermission]);
@@ -101,15 +103,17 @@ class AdminManageController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param EditAdminRequest $request
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(EditAdminRequest $request, $id)
     {
+        $admin = $this->admin->getById($id);
+        if ($admin->isAdmin())
+            return redirect()->route('admin.admin-manager.index');
         $newAdmin = array_merge($request->all(), [
-                'status' => $request->input('status') or 0,
+                'status' => $request->input('status') or Admin::BLOCKED,
         ]);
         $newAdminPermisson = array_merge($request->all(), [
                     'admin_id' => $id
@@ -145,6 +149,10 @@ class AdminManageController extends Controller
         return response()->json(['data'=> '0'], 200);
     }
 
+    /** Update status of Admin is active or blocked
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateStatus(Request $request){
         $status = $request->get('status');
         $id=$request->get('id');

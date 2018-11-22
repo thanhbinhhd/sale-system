@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    //
+    const ACTIVE = 1;
+    const INACTIVE =0;
+    CONST REJECT = 2;
     protected $fillable = [
       'name', 'slug', 'description',
         'quantity', 'review', 'price', 'number_viewed',

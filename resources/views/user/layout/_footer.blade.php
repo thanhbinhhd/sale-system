@@ -7,7 +7,7 @@
 
             <div>
                 <p class="s-text7 w-size27">
-                    Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+                    Any questions? Let us know in store at D9 HUST
                 </p>
 
                 <div class="flex-m p-t-30">
@@ -160,7 +160,7 @@
         </a>
 
         <div class="t-center s-text8 p-t-20">
-            Copyright © 2018 All rights reserved. | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+            Copyright © 2018 All rights reserved. | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">ASTEAM K60</a>
         </div>
     </div>
 </footer>

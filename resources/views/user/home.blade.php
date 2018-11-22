@@ -37,57 +37,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Banner -->
-    {{--<div class="banner bgwhite p-t-40 p-b-40">--}}
-        {{--<div class="container">--}}
-            {{--<div class="row">--}}
-                {{--<div class="col-sm-10 col-md-8 col-lg-4 m-l-r-auto">--}}
-                    {{--<!-- block1 -->--}}
-                    {{--<div class="block1 hov-img-zoom pos-relative m-b-30">--}}
-                        {{--<img src="/user/images/banner-05.jpg" alt="IMG-BENNER">--}}
-
-                        {{--<div class="block1-wrapbtn w-size2">--}}
-                            {{--<!-- Button -->--}}
-                            {{--<a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">--}}
-                                {{--Sunglasses--}}
-                            {{--</a>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<div class="col-sm-10 col-md-8 col-lg-4 m-l-r-auto">--}}
-                    {{--<!-- block1 -->--}}
-                    {{--<div class="block1 hov-img-zoom pos-relative m-b-30">--}}
-                        {{--<img src="/user/images/banner-03.jpg" alt="IMG-BENNER">--}}
-
-                        {{--<div class="block1-wrapbtn w-size2">--}}
-                            {{--<!-- Button -->--}}
-                            {{--<a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">--}}
-                                {{--Watches--}}
-                            {{--</a>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<div class="col-sm-10 col-md-8 col-lg-4 m-l-r-auto">--}}
-                    {{--<!-- block1 -->--}}
-                    {{--<div class="block1 hov-img-zoom pos-relative m-b-30">--}}
-                        {{--<img src="/user/images/banner-10.jpg" alt="IMG-BENNER">--}}
-
-                        {{--<div class="block1-wrapbtn w-size2">--}}
-                            {{--<!-- Button -->--}}
-                            {{--<a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">--}}
-                                {{--Bags--}}
-                            {{--</a>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-
-
     <!-- Our product -->
     <section class="bgwhite p-t-45 p-b-58">
         <div class="container">
@@ -122,7 +71,7 @@
                                 <!-- Block2 -->
                                 <div class="block2">
                                     <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-                                        <img src="{{$cheap->image}}" alt="IMG-PRODUCT">
+                                        <img src="{{$cheap->image_path}}" alt="IMG-PRODUCT">
 
                                         <div class="block2-overlay trans-0-4">
                                             <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -162,8 +111,7 @@
                                 <!-- Block2 -->
                                 <div class="block2">
                                     <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
-                                        <img src="{{$product->image}}" alt="IMG-PRODUCT">
-
+                                        <img src="{{$product->image_path}}" alt="IMG-PRODUCT-NO">
                                         <div class="block2-overlay trans-0-4">
                                             <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
                                                 <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
@@ -208,7 +156,7 @@
                                 <!-- Block2 -->
                                 <div class="block2">
                                     <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
-                                        <img src="{{$view->image}}" alt="IMG-PRODUCT">
+                                        <img src="{{$view->image_path}}" alt="IMG-PRODUCT">
 
                                         <div class="block2-overlay trans-0-4">
                                             <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -284,126 +232,6 @@
         </div>
     </section>
 
-    <!-- Instagram -->
-    {{--<section class="instagram p-t-20">--}}
-        {{--<div class="sec-title p-b-52 p-l-15 p-r-15">--}}
-            {{--<h3 class="m-text5 t-center">--}}
-                {{--@ follow us on Instagram--}}
-            {{--</h3>--}}
-        {{--</div>--}}
-
-        {{--<div class="flex-w">--}}
-            {{--<!-- Block4 -->--}}
-            {{--<div class="block4 wrap-pic-w">--}}
-                {{--<img src="/user/images/gallery-03.jpg" alt="IMG-INSTAGRAM">--}}
-
-                {{--<a href="#" class="block4-overlay sizefull ab-t-l trans-0-4">--}}
-					{{--<span class="block4-overlay-heart s-text9 flex-m trans-0-4 p-l-40 p-t-25">--}}
-						{{--<i class="icon_heart_alt fs-20 p-r-12" aria-hidden="true"></i>--}}
-						{{--<span class="p-t-2">39</span>--}}
-					{{--</span>--}}
-
-                    {{--<div class="block4-overlay-txt trans-0-4 p-l-40 p-r-25 p-b-30">--}}
-                        {{--<p class="s-text10 m-b-15 h-size1 of-hidden">--}}
-                            {{--Nullam scelerisque, lacus sed consequat laoreet, dui enim iaculis leo, eu viverra ex nulla in tellus. Nullam nec ornare tellus, ac fringilla lacus. Ut sit amet enim orci. Nam eget metus elit.--}}
-                        {{--</p>--}}
-
-                        {{--<span class="s-text9">--}}
-							{{--Photo by @nancyward--}}
-						{{--</span>--}}
-                    {{--</div>--}}
-                {{--</a>--}}
-            {{--</div>--}}
-
-            {{--<!-- Block4 -->--}}
-            {{--<div class="block4 wrap-pic-w">--}}
-                {{--<img src="/user/images/gallery-07.jpg" alt="IMG-INSTAGRAM">--}}
-
-                {{--<a href="#" class="block4-overlay sizefull ab-t-l trans-0-4">--}}
-					{{--<span class="block4-overlay-heart s-text9 flex-m trans-0-4 p-l-40 p-t-25">--}}
-						{{--<i class="icon_heart_alt fs-20 p-r-12" aria-hidden="true"></i>--}}
-						{{--<span class="p-t-2">39</span>--}}
-					{{--</span>--}}
-
-                    {{--<div class="block4-overlay-txt trans-0-4 p-l-40 p-r-25 p-b-30">--}}
-                        {{--<p class="s-text10 m-b-15 h-size1 of-hidden">--}}
-                            {{--Nullam scelerisque, lacus sed consequat laoreet, dui enim iaculis leo, eu viverra ex nulla in tellus. Nullam nec ornare tellus, ac fringilla lacus. Ut sit amet enim orci. Nam eget metus elit.--}}
-                        {{--</p>--}}
-
-                        {{--<span class="s-text9">--}}
-							{{--Photo by @nancyward--}}
-						{{--</span>--}}
-                    {{--</div>--}}
-                {{--</a>--}}
-            {{--</div>--}}
-
-            {{--<!-- Block4 -->--}}
-            {{--<div class="block4 wrap-pic-w">--}}
-                {{--<img src="/user/images/gallery-09.jpg" alt="IMG-INSTAGRAM">--}}
-
-                {{--<a href="#" class="block4-overlay sizefull ab-t-l trans-0-4">--}}
-					{{--<span class="block4-overlay-heart s-text9 flex-m trans-0-4 p-l-40 p-t-25">--}}
-						{{--<i class="icon_heart_alt fs-20 p-r-12" aria-hidden="true"></i>--}}
-						{{--<span class="p-t-2">39</span>--}}
-					{{--</span>--}}
-
-                    {{--<div class="block4-overlay-txt trans-0-4 p-l-40 p-r-25 p-b-30">--}}
-                        {{--<p class="s-text10 m-b-15 h-size1 of-hidden">--}}
-                            {{--Nullam scelerisque, lacus sed consequat laoreet, dui enim iaculis leo, eu viverra ex nulla in tellus. Nullam nec ornare tellus, ac fringilla lacus. Ut sit amet enim orci. Nam eget metus elit.--}}
-                        {{--</p>--}}
-
-                        {{--<span class="s-text9">--}}
-							{{--Photo by @nancyward--}}
-						{{--</span>--}}
-                    {{--</div>--}}
-                {{--</a>--}}
-            {{--</div>--}}
-
-            {{--<!-- Block4 -->--}}
-            {{--<div class="block4 wrap-pic-w">--}}
-                {{--<img src="/user/images/gallery-13.jpg" alt="IMG-INSTAGRAM">--}}
-
-                {{--<a href="#" class="block4-overlay sizefull ab-t-l trans-0-4">--}}
-					{{--<span class="block4-overlay-heart s-text9 flex-m trans-0-4 p-l-40 p-t-25">--}}
-						{{--<i class="icon_heart_alt fs-20 p-r-12" aria-hidden="true"></i>--}}
-						{{--<span class="p-t-2">39</span>--}}
-					{{--</span>--}}
-
-                    {{--<div class="block4-overlay-txt trans-0-4 p-l-40 p-r-25 p-b-30">--}}
-                        {{--<p class="s-text10 m-b-15 h-size1 of-hidden">--}}
-                            {{--Nullam scelerisque, lacus sed consequat laoreet, dui enim iaculis leo, eu viverra ex nulla in tellus. Nullam nec ornare tellus, ac fringilla lacus. Ut sit amet enim orci. Nam eget metus elit.--}}
-                        {{--</p>--}}
-
-                        {{--<span class="s-text9">--}}
-							{{--Photo by @nancyward--}}
-						{{--</span>--}}
-                    {{--</div>--}}
-                {{--</a>--}}
-            {{--</div>--}}
-
-            {{--<!-- Block4 -->--}}
-            {{--<div class="block4 wrap-pic-w">--}}
-                {{--<img src="/user/images/gallery-15.jpg" alt="IMG-INSTAGRAM">--}}
-
-                {{--<a href="#" class="block4-overlay sizefull ab-t-l trans-0-4">--}}
-					{{--<span class="block4-overlay-heart s-text9 flex-m trans-0-4 p-l-40 p-t-25">--}}
-						{{--<i class="icon_heart_alt fs-20 p-r-12" aria-hidden="true"></i>--}}
-						{{--<span class="p-t-2">39</span>--}}
-					{{--</span>--}}
-
-                    {{--<div class="block4-overlay-txt trans-0-4 p-l-40 p-r-25 p-b-30">--}}
-                        {{--<p class="s-text10 m-b-15 h-size1 of-hidden">--}}
-                            {{--Nullam scelerisque, lacus sed consequat laoreet, dui enim iaculis leo, eu viverra ex nulla in tellus. Nullam nec ornare tellus, ac fringilla lacus. Ut sit amet enim orci. Nam eget metus elit.--}}
-                        {{--</p>--}}
-
-                        {{--<span class="s-text9">--}}
-							{{--Photo by @nancyward--}}
-						{{--</span>--}}
-                    {{--</div>--}}
-                {{--</a>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</section>--}}
 
     <!-- Shipping -->
     <section class="shipping bgwhite p-t-62 p-b-46">

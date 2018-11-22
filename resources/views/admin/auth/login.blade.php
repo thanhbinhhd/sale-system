@@ -51,8 +51,6 @@
             </form>
             <!-- /.social-auth-links -->
 
-            <a href="{{route('admin.forgot_password')}}">Forgot password</a><br>
-
         </div>
         <!-- /.login-box-body -->
     </div>

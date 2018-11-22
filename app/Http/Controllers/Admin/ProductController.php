@@ -98,16 +98,6 @@ class ProductController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -177,7 +167,7 @@ class ProductController extends Controller
         return redirect()->route('admin.product-manager.edit', ['id' => $id]);
     }
 
-    /**
+    /** update status of product
      * Update product status
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -186,7 +176,7 @@ class ProductController extends Controller
         $status = $request->get('status');
         $id=$request->get('id');
         $admin = Auth::guard('admin')->user();
-        if($admin->level == 1 or $admin->adminPermission->can_update) {
+        if($admin->isAdmin() or $admin->adminPermission->can_update) {
             $this->product->updateStatus($status,$id);
             return response()->json(['data'=>$status], self::CODE_UPDATE_SUCCESS);
         }else{
@@ -203,7 +193,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $admin = Auth::guard('admin')->user();
-        if($admin->level == 1 or $admin->adminPermission->can_delete) {
+        if($admin->isAdmin() or $admin->adminPermission->can_delete) {
             $status = $this->product->destroy($id);
             return response()->json(['data' => $status], self::CODE_DELETE_SUCCESS);
         }else{

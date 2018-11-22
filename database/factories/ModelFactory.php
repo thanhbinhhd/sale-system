@@ -44,6 +44,7 @@ $factory->define(App\Model\Product::class, function (Faker\Generator $faker) {
         'price' => $faker->numberBetween(1, 20000),
         'number_viewed' => $faker->numberBetween(1, 100),
         'admin_id' => \App\Model\Admin::pluck('id')->random(),
+        'image_path' => $faker->imageUrl(),
     ];
 });
 
