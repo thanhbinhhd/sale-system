@@ -34,9 +34,11 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="{{$user->avatar}}" class="img-circle img-responsive"> </div>
+                <div class="col-md-3 col-6 m-auto" align="center">
+                    <img alt="User Pic" src="{{$user->avatar}}" class="rounded-circle img-fluid">
+                </div>
 
-                <div class=" col-md-9 col-lg-9 ">
+                <div class="col-md-9 mt-5">
                     <table class="table table-user-information">
                         <tbody>
                         <tr>
@@ -65,7 +67,7 @@
                     </table>
 
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changepass">
-                        Open modal
+                        Change password
                     </button>
                 </div>
             </div>
@@ -151,8 +153,15 @@
                         success: function (response) {
                             if(!response.error)
                             {
-                                toastr.success('Changpass is successfully!');
-                                $("#changepass").modal('hide');
+                                console.log(response.data);
+                                console.log(response.data==="success");
+                                if(response.data==="success"){
+                                    toastr.success('Changpass is successfully!');
+                                    $("#changepass").modal('hide');
+                                }
+                                else{
+                                    toastr.warning('Password is invalid!');
+                                }
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {

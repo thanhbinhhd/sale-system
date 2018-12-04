@@ -21,7 +21,7 @@ class ProductRepository
     }
 
     public function getWithCondition($condition, $order){
-        return $this->model->where('status',1)->orderBy($condition,$order)->take(4)->get();
+        return $this->model->where('status', Product::ACTIVE)->orderBy($condition,$order)->take(4)->get();
     }
     public function updateStatus($status, $id){
         $product = $this->getById($id);
