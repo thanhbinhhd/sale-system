@@ -35,4 +35,14 @@ class UserController extends Controller
             return response()->json(['data'=>"invalidPass"]);
         }
     }
+
+    public function changeProfile(Request $request){
+        $user = Auth::guard('user')->user();
+        $user->name = $request->get('name');
+        $user->phone_number = $request->get('phone');
+        $user->address = $request->get('address');
+        $user->description = $request->get('description');
+        $user->save();
+        return response()->json(['data'=>$user]);
+    }
 }

@@ -38,7 +38,7 @@
     <!-- Header Icon -->
     <div class="header-icons">
         <a href="/profile" class="header-wrapicon1 dis-block">
-            <img src="/user/images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+            <img src="{{$user->avatar}}" class="header-icon1 rounded-circle" alt="ICON">
         </a>
         <a href="{{route('user.logout')}}" class="link-color">Logout</a>
 
@@ -143,7 +143,7 @@
 
             <div class="topbar-child2">
 					<span class="topbar-email">
-						asteamk60@example.com
+						Hello <strong>{{$user->name}}</strong>
 					</span>
 
                 {{--<div class="topbar-language rs1-select2">--}}
@@ -155,7 +155,7 @@
 
                 <!--  -->
                 <a href="/profile" class="header-wrapicon1 dis-block m-l-30">
-                    <img src="/user/images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+                    <img src="{{$user->avatar}}" class="header-icon1 rounded-circle" alt="ICON">
                 </a>
 
                 <a href="{{route('user.logout')}}" class="link-color">Logout</a>
