@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Requests\User\ChangePasswordRequest;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -22,13 +24,12 @@ class UserController extends Controller
         return view("user.profile",compact('user'));
     }
 
-    public function changepass(Request $request){
-        $currentpass = $request->get('currentpass');
-        $newpass=$request->get('newpass');
+    public function changePass(ChangePasswordRequest $request){
+        $currentPass = $request->get('old_password');
+        $newPass=$request->get('new_password');
         $user = $this->user->currentUser();
-        if(Hash::check($currentpass, $user->password)){
-            $user->password = bcrypt($newpass);
-            $this->user->updatePass($user);
+        if(Hash::check($currentPass, $user->password)){
+            $this->user->updateColumn($this->user->currentUser()->id, ['password' => bcrypt($newPass)]);
             return response()->json(['data'=>"success"]);
         }
         else{
@@ -44,5 +45,26 @@ class UserController extends Controller
         $user->description = $request->get('description');
         $this->user->updateProfile($user);
         return response()->json(['data'=>$user]);
+    }
+
+    public function uploadAvatar(Request $request) {
+		try {
+			$this->validate($request, ['avatar' => ['required', 'image']]);
+			$filename = time() . str_random(16) . '.png';
+
+			$image = $request->file('avatar')->getRealPath();
+			$folder = config('sales.avatar_folder');
+			Storage::put($folder . '/' . $filename,file_get_contents($image));
+			$imageAddress = $folder . '/' . $filename;
+
+			// delete the old avatar
+			if (isset($this->user->currentUser()->avatar)) {
+				Storage::delete($folder . str_after($this->user->currentUser()->avatar, $folder));
+			}
+			$this->user->updateColumn($this->user->currentUser()->id, ['avatar' => $imageAddress,]);
+			return response()->json(['image_address' => Storage::url($imageAddress)], 200);
+		} catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], self::CODE_NOT_IMPLEMENTED);
+		}
     }
 }

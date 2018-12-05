@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Model\AdminPermission;
 
-class AdminPermissionRepository
+class AdminPermissionRepository implements RepositoryInterface
 {
     use BaseRepository;
 

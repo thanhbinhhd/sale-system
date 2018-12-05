@@ -157,7 +157,11 @@
 
                 <!--  -->
                 <a href="/profile" class="header-wrapicon1 dis-block m-l-30">
-                    <img src="{{Auth::guard('user')->user()->avatar}}" class="header-icon1 rounded-circle" alt="ICON">
+                    @if(Auth::guard('user')->user()->avatar)
+                    <img src="{{\Illuminate\Support\Facades\Storage::url(Auth::guard('user')->user()->avatar)}}" class="header-icon1 rounded-circle" alt="ICON">
+                    @else
+                    <img src="/admin/images/avatar.jpg" class="header-icon1 rounded-circle" alt="ICON">
+                        @endif
                 </a>
 
                 <a href="{{route('user.logout')}}" class="link-color">Logout</a>

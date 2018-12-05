@@ -17,11 +17,11 @@ class ProductRepository
     }
 
     public function getNew(){
-        return $this->model->where('status', Product::ACTIVE)->take(4)->get();
+        return $this->model->where('status', Product::ACTIVE)->take(config('sales.number_product_get'))->get();
     }
 
     public function getWithCondition($condition, $order){
-        return $this->model->where('status', Product::ACTIVE)->orderBy($condition,$order)->take(4)->get();
+        return $this->model->where('status', Product::ACTIVE)->orderBy($condition,$order)->take(config('sales.number_product_get'))->get();
     }
     public function updateStatus($status, $id){
         $product = $this->getById($id);
@@ -31,7 +31,7 @@ class ProductRepository
     }
 
     /**
-     * @param $product
+     * @param $products
      * @param Request $request
      * @return mixed
      */
