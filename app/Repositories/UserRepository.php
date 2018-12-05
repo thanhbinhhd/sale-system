@@ -28,5 +28,12 @@ class UserRepository
         return $user = Auth::guard('user')->user();
     }
 
+    public function updateProfile(User $user){
+        $this->update($user->id, $user->toArray());
+    }
+
+    public function updatePass(User $user){
+        $this->update($user->id, $user->toArray());
+    }
 
 }
