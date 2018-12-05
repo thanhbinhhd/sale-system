@@ -4,11 +4,11 @@
 @endsection
 @section('content')
     <!-- Title Page -->
-    <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(/user/images/heading-pages-06.jpg);">
-        <h2 class="l-text2 t-center">
-            About
-        </h2>
-    </section>
+    {{--<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(/user/images/heading-pages-06.jpg);">--}}
+        {{--<h2 class="l-text2 t-center">--}}
+            {{--About--}}
+        {{--</h2>--}}
+    {{--</section>--}}
 
     <!-- content page -->
     <section class="bgwhite p-t-66 p-b-38">
@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-md-4 p-b-30">
                     <div class="hov-img-zoom">
-                        <img src="/user/images/banner-14.jpg" alt="IMG-ABOUT">
+                        <img src="/user/images/about_us.jpg" class="img-fluid" alt="IMG-ABOUT">
                     </div>
                 </div>
 
@@ -45,15 +45,5 @@
 @endsection
 
 @section('customJs')
-    <script type="text/javascript">
-        $(".selection-1").select2({
-            minimumResultsForSearch: 20,
-            dropdownParent: $('#dropDownSelect1')
-        });
 
-        $(".selection-2").select2({
-            minimumResultsForSearch: 20,
-            dropdownParent: $('#dropDownSelect2')
-        });
-    </script>
 @endsection

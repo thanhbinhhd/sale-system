@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Model\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserRepository
 {
@@ -23,6 +24,16 @@ class UserRepository
         return $status;
     }
 
+    public function currentUser(){
+        return $user = Auth::guard('user')->user();
+    }
 
+    public function updateProfile(User $user){
+        $this->update($user->id, $user->toArray());
+    }
+
+    public function updatePass(User $user){
+        $this->update($user->id, $user->toArray());
+    }
 
 }
