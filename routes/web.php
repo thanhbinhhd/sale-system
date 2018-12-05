@@ -113,7 +113,8 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         }]);
 
         Route::get('/profile',"UserController@profile");
-        Route::put('/changepass',"UserController@changepass");
+        Route::put('/change-pass',"UserController@changePass");
+        Route::post('/upload-avatar',"UserController@uploadAvatar");
         Route::put('/change-profile',"UserController@changeProfile");
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
     });

@@ -8,6 +8,8 @@ return [
 
     'size' => ['XS',	'S',	'M',	'L',	'XL',	'XXL'],
 
-	'number_product_get' => 4
+	'number_product_get' => 4,
+
+	'avatar_folder' => 'users/avatars'
 
 ];

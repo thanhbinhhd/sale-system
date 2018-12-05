@@ -25,6 +25,10 @@
 
         }
 
+        .margin-top-15 {
+            margin-top: 15px;
+        }
+
         .pass_show .ptxt:hover {
             color: #333333;
         }
@@ -46,7 +50,15 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-3 col-6 m-auto" align="center">
-                    <img alt="User Pic" src="{{$user->avatar}}" class="rounded-circle img-fluid">
+                    @if($user->avatar)
+                    <img alt="User Pic" src="{{\Illuminate\Support\Facades\Storage::url($user->avatar)}}" class="rounded-circle img-fluid" id="avatar-user">
+                        @else
+                        <img src="/admin/images/avatar.jpg" class="rounded-circle img-fluid" alt="ICON">
+                    @endif
+                    <div>
+                        <input hidden type="file" id="input-upload-avatar" accept="image/png, image/jpeg, image/jpg"/>
+                        <button class="btn btn-primary margin-top-15" id="upload-avatar">Upload Avatar</button>
+                    </div>
                 </div>
 
                 <div class="col-md-9 mt-5">
@@ -147,10 +159,6 @@
                         <input type="text" class="form-control border" id="ePhone" value="{{$user->phone_number}}" placeholder="Phone number">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Avatar</label>
-                        <input type="file" class="form-control " id="eAvatar" accept="image/*" placeholder="avatar">
-                    </div>
-                    <div class="form-group">
                         <label for="exampleInputPassword1">Address</label>
                         <input type="text" class="form-control border" id="eAddress" value="{{$user->address}}" placeholder="Address">
                     </div>
@@ -174,16 +182,57 @@
     <script>
         $(document).ready(function () {
             $('.pass_show').append('<span class="ptxt">Show</span>');
-        });
+            $('#upload-avatar').on('click', function() {
+              $('#input-upload-avatar').click();
+            })
+            $('#input-upload-avatar').on('change', function($event) {
+              let fileUpload = $event.target.files[0];
+              let uploadFile = (fileUpload) => {
+                console.log('file: ', fileUpload)
 
+                let formData = new FormData();
+                formData.append('avatar', fileUpload);
+                $.ajaxSetup({
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                  }
+                });
+                formData.append("upload_file", true);
+                $.ajax({
+                  type: 'POST',
+                  url: '/upload-avatar',
+                  async: true,
+                  data: formData,
+                  contentType: false,
+                  processData: false,
+                  success: function (response) {
+                    if (!response.error) {
+                      toastr.success('Avatar Upload Successfully!');
+                      $('#avatar-user').attr("src", response.image_address);
+                    }
+                    else {
+                      toastr.warning('Something error when uploading!');
+                    }
+                  },
+                  error: function (xhr, ajaxOptions, thrownError) {
+                    toastr.error(xhr.responseJSON.message);
+                  }
+                });
+              }
+              uploadFile(fileUpload)
+
+            })
+        });
 
         $(document).on('click', '.pass_show .ptxt', function () {
 
-            $(this).text($(this).text() == "Show" ? "Hide" : "Show");
+          $(this).text($(this).text() == "Show" ? "Hide" : "Show");
 
-            $(this).prev().attr('type', function (index, attr) {
-                return attr == 'password' ? 'text' : 'password';
-            });
+          $(this).prev().attr('type', function (index, attr) {
+            return attr == 'password' ? 'text' : 'password';
+          });
+
+
 
         });
 
@@ -202,16 +251,17 @@
                 if (!(currentpass && newpass && confirmpass)) {
                     toastr.warning('Please enter the full fields!');
                 }
-                else if (newpass != confirmpass) {
+                else if (newpass !== confirmpass) {
                     toastr.warning('New password and confirm password must be the same!');
                 }
                 else {
                     $.ajax({
                         type: 'PUT',
-                        url: '/changepass',
+                        url: '/change-pass',
                         data: {
-                            currentpass: currentpass,
-                            newpass: newpass,
+                          old_password: currentpass,
+                          new_password: newpass,
+                          new_password_confirmation: confirmpass
                         },
                         success: function (response) {
                             if (!response.error) {
