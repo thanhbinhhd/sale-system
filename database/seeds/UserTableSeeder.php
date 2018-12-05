@@ -26,6 +26,7 @@ class UserTableSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'TestUser',
             'email' => 'user@user.com',
+            'avatar' => '/admin/images/avatar.jpg',
             'password' => bcrypt('123456'),
         ]);
         factory(\App\Model\User::class, 10)->create();

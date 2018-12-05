@@ -21,7 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail
     const ACTIVE = 1;
     const BLOCK = 0;
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email',
         'phone_number', 'address', 'avatar',
         'status', 'description', 'email_notify_enabled'
     ];

@@ -34,6 +34,7 @@ class HomeController extends Controller
     }
 
     public function index(){
+        $user = $this->user->currentUser();
         $slides = $this->slide->all();
         $categories = $this->category->all();
         $tags = $this->tag->all();
@@ -41,6 +42,6 @@ class HomeController extends Controller
         $views = $this->product->getWithCondition('number_viewed',"ASC");
         $products = $this->product->getNew();
         $blogs = $this->blog->getNew();
-        return view('user.home',compact('slides','tags', 'categories', 'cheaps', 'products', 'views','blogs'));
+        return view('user.home',compact('user','slides','tags', 'categories', 'cheaps', 'products', 'views','blogs'));
     }
 }

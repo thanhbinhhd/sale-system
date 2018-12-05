@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -16,22 +18,31 @@ class UserController extends Controller
     }
 
     public function profile(){
-        $user = \Auth::guard('user')->user();
-
+        $user = $this->user->currentUser();
         return view("user.profile",compact('user'));
     }
 
     public function changepass(Request $request){
         $currentpass = $request->get('currentpass');
         $newpass=$request->get('newpass');
-        $user = \Auth::guard('user')->user();
-        if(!(Hash::check($currentpass, $user->password))){
+        $user = $this->user->currentUser();
+        if(Hash::check($currentpass, $user->password)){
             $user->password = bcrypt($newpass);
-            $user->save();
-            return response()->json(['data' => 'ok'], 200);
+            $this->user->updatePass($user);
+            return response()->json(['data'=>"success"]);
         }
         else{
-            return response()->json(['error' => 'Password invalite!'], 404);
+            return response()->json(['data'=>"invalidPass"]);
         }
+    }
+
+    public function changeProfile(Request $request){
+        $user = $this->user->currentUser();
+        $user->name = $request->get('name');
+        $user->phone_number = $request->get('phone');
+        $user->address = $request->get('address');
+        $user->description = $request->get('description');
+        $this->user->updateProfile($user);
+        return response()->json(['data'=>$user]);
     }
 }
