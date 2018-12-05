@@ -161,7 +161,7 @@
                             <!-- Block2 -->
                             <div class="block2">
                                 <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew fix-height">
-                                    <img src="{{$product->image_path}}" alt="IMG-PRODUCT"> 333
+                                    <img src="{{$product->image_path}}" alt="IMG-PRODUCT">
 
                                     <div class="block2-overlay trans-0-4">
                                         <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
