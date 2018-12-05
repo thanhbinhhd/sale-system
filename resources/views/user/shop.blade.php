@@ -60,7 +60,7 @@
                             Filters
                         </h4>
                         <div class="search-product pos-relative bo4 of-hidden">
-                            <input class="s-text7 size6 p-l-23 p-r-50" type="text" name="search-product" placeholder="Search Products...">
+                            <input class="p-2 p-l-23 p-r-50" type="text" name="search-product" placeholder="Search Products...">
 
                             <button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4">
                                 <i class="fs-12 fa fa-search" aria-hidden="true"></i>
@@ -124,8 +124,8 @@
                     <!--  -->
                     <div class="flex-sb-m flex-w p-b-35">
                         <div class="flex-w">
-                            <div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-                                <select id="sle1" class="selection-2" name="sorting">
+                            <div class="rs2-select2 of-hidden w-size12 m-t-5 m-b-5 m-r-10 ">
+                                <select id="sle1" class="selection-2 w-100" name="sorting">
                                     <option value="default" >Default Sorting</option>
                                     <option value="popular">Popularity</option>
                                     <option value="asc">Price: low to high</option>
@@ -133,8 +133,8 @@
                                 </select>
                             </div>
 
-                            <div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-                                <select id="sel2" class="selection-2" name="sorting">
+                            <div class="rs2-select2 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
+                                <select id="sel2" class="selection-2 w-100" name="sorting">
                                     <option>Price</option>
                                     <option value="price-min=0&price-max=50">$0.00 - $50.00</option>
                                     <option value="price-min=50&price-max=100">$50.00 - $100.00</option>

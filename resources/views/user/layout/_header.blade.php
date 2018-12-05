@@ -1,9 +1,10 @@
+
 <div class="wrap_header fixed-header2 trans-0-4">
     <!-- Logo -->
     <a href="/" class="logo">
         <img src="/user/images/icons/logo.png" alt="IMG-LOGO">
     </a>
-    {{$current_user = Auth::guard('user')->user()}}
+
 
     <!-- Menu -->
     <div class="wrap_menu">
@@ -39,7 +40,7 @@
     <!-- Header Icon -->
     <div class="header-icons">
         <a href="/profile" class="header-wrapicon1 dis-block">
-            <img src="{{$current_user->avatar}}" class="header-icon1 rounded-circle" alt="ICON">
+            <img src="{{Auth::guard('user')->user()->avatar}}" class="header-icon1 rounded-circle" alt="ICON">
         </a>
         <a href="{{route('user.logout')}}" class="link-color">Logout</a>
 
@@ -144,7 +145,7 @@
 
             <div class="topbar-child2">
 					<span class="topbar-email">
-						Hello <strong>{{$current_user->name}}</strong>
+						Hello <strong>{{Auth::guard('user')->user()->name}}</strong>
 					</span>
 
                 {{--<div class="topbar-language rs1-select2">--}}
@@ -156,7 +157,7 @@
 
                 <!--  -->
                 <a href="/profile" class="header-wrapicon1 dis-block m-l-30">
-                    <img src="{{$current_user->avatar}}" class="header-icon1 rounded-circle" alt="ICON">
+                    <img src="{{Auth::guard('user')->user()->avatar}}" class="header-icon1 rounded-circle" alt="ICON">
                 </a>
 
                 <a href="{{route('user.logout')}}" class="link-color">Logout</a>
