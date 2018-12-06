@@ -12,7 +12,7 @@
     </section>
 
     <!-- Cart -->
-    <section class="cart bgwhite p-t-70 p-b-100">
+    <section class="cart bgwhite p-t-70 p-b-100" id="app">
         <div class="container">
             <!-- Cart item -->
             <div class="container-table-cart pos-relative">
@@ -26,53 +26,30 @@
                             <th class="column-5">Total</th>
                         </tr>
 
-                        <tr class="table-row">
+                        <tr class="table-row" v-for="(item, index) in items" :key="index">
                             <td class="column-1">
                                 <div class="cart-img-product b-rad-4 o-f-hidden">
-                                    <img src="/user/images/item-10.jpg" alt="IMG-PRODUCT">
+                                    <img :src="item.attributes.image_path" alt="IMG-PRODUCT">
                                 </div>
                             </td>
-                            <td class="column-2">Men Tshirt</td>
-                            <td class="column-3">$36.00</td>
+                            <td class="column-2">@{{item.name}}</td>
+                            <td class="column-3">@{{item.price}}$</td>
                             <td class="column-4">
                                 <div class="flex-w bo5 of-hidden w-size17">
-                                    <button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
+                                    <button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2" @click="minusQty(item)" :disable="item.quantity === 1">
                                         <i class="fs-12 fa fa-minus" aria-hidden="true"></i>
                                     </button>
 
-                                    <input class="size8 m-text18 t-center num-product" type="number" name="num-product1" value="1">
+                                    <input class="size8 m-text18 t-center num-product" type="number" name="num-product1" v-bind:value="item.quantity">
 
-                                    <button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
+                                    <button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2" @click="plusQty(item)">
                                         <i class="fs-12 fa fa-plus" aria-hidden="true"></i>
                                     </button>
                                 </div>
                             </td>
-                            <td class="column-5">$36.00</td>
+                            <td class="column-5">@{{item.price * item.quantity}}$</td>
                         </tr>
 
-                        <tr class="table-row">
-                            <td class="column-1">
-                                <div class="cart-img-product b-rad-4 o-f-hidden">
-                                    <img src="/user/images/item-05.jpg" alt="IMG-PRODUCT">
-                                </div>
-                            </td>
-                            <td class="column-2">Mug Adventure</td>
-                            <td class="column-3">$16.00</td>
-                            <td class="column-4">
-                                <div class="flex-w bo5 of-hidden w-size17">
-                                    <button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
-                                        <i class="fs-12 fa fa-minus" aria-hidden="true"></i>
-                                    </button>
-
-                                    <input class="size8 m-text18 t-center num-product" type="number" name="num-product2" value="1">
-
-                                    <button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
-                                        <i class="fs-12 fa fa-plus" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </td>
-                            <td class="column-5">$16.00</td>
-                        </tr>
                     </table>
                 </div>
             </div>
@@ -112,7 +89,7 @@
 					</span>
 
                     <span class="m-text21 w-size20 w-full-sm">
-						$39.00
+						@{{ details.sub_total }}$
 					</span>
                 </div>
 
@@ -164,7 +141,7 @@
 					</span>
 
                     <span class="m-text21 w-size20 w-full-sm">
-						$39.00
+						@{{ details.total }}$
 					</span>
                 </div>
 
@@ -180,6 +157,10 @@
 @endsection
 
 @section('customJs')
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/vue.resource/1.3.1/vue-resource.min.js"></script>
+
     <script type="text/javascript">
         $(".selection-1").select2({
             minimumResultsForSearch: 20,
@@ -190,5 +171,165 @@
             minimumResultsForSearch: 20,
             dropdownParent: $('#dropDownSelect2')
         });
+
+        (function($) {
+
+          let _token = '<?php echo csrf_token() ?>';
+
+          $(document).ready(function() {
+
+            let app = new Vue({
+              el: '#app',
+              data() {
+                return {
+                  details: {
+                    sub_total: 0,
+                    total: 0,
+                    total_quantity: 0
+                  },
+                  itemCount: 0,
+                  items: [],
+                  item: {
+                    id: '',
+                    name: '',
+                    price: 0.00,
+                    qty: 1
+                  },
+                  cartCondition: {
+                    name: '',
+                    type: '',
+                    target: '',
+                    value: '',
+                    attributes: {
+                      description: 'Value Added Tax'
+                    }
+                  },
+
+                  options: {
+                    target: [
+                      {label: 'Apply to SubTotal', key: 'subtotal'},
+                      {label: 'Apply to Total', key: 'total'}
+                    ]
+                  }
+                }
+              },
+
+              watch: {
+
+              },
+
+              mounted:function(){
+                this.loadItems();
+              },
+              methods: {
+                sum(a,b) {
+                  return (b.quantity * b.price) + a;
+                },
+
+                addItem: function() {
+
+                  let _this = this;
+
+                  axios.post('/cart',{
+                    _token:_token,
+                    id:_this.item.id,
+                    name:_this.item.name,
+                    price:_this.item.price,
+                    qty:_this.item.qty
+                  }).then(function(success) {
+                    _this.loadItems();
+                  }, function(error) {
+                    console.log(error);
+                  });
+                },
+                addCartCondition: function() {
+
+                  let _this = this;
+
+                  axios.post('/cart/conditions',{
+                    _token:_token,
+                    name:_this.cartCondition.name,
+                    type:_this.cartCondition.type,
+                    target:_this.cartCondition.target,
+                    value:_this.cartCondition.value,
+                  }).then(function(success) {
+                    _this.loadItems();
+                  }, function(error) {
+                    console.log(error);
+                  });
+                },
+                clearCartCondition: function() {
+
+                  let _this = this;
+
+                  axios.delete('/cart/conditions?_token=' + _token).then(function(success) {
+                    _this.loadItems();
+                  }, function(error) {
+                    console.log(error);
+                  });
+                },
+                removeItem: function(id) {
+
+                  let _this = this;
+
+                  axios.delete('/cart/'+id,{
+                    params: {
+                      _token:_token
+                    }
+                  }).then(function(success) {
+                    _this.loadItems();
+                  }, function(error) {
+                    console.log(error);
+                  });
+                },
+                loadItems: function() {
+
+                  let _this = this;
+
+                  axios.get('/cart',{
+                    params: {
+                      limit:10
+                    }, headers: {
+                      'X-Requested-With': 'XMLHttpRequest',
+                    }
+                  }).then(function(success) {
+                    console.log(success);
+                    _this.items = success.data.data;
+                    _this.itemCount = success.data.data.length;
+                    _this.loadCartDetails();
+                  }, function(error) {
+                    console.log(error);
+                  });
+                },
+                loadCartDetails() {
+
+                  let _this = this;
+
+                  axios.get('/cart/details').then(function(success) {
+                    _this.details = success.data.data;
+                  }, function(error) {
+                    console.log(error);
+                  });
+                },
+
+                minusQty(item) {
+                  if(item.quantity > 1){
+                    item.quantity--;
+                    this.details.sub_total = this.details.total = this.items.reduce(this.sum, 0);
+                    this.details.total_quantity --;
+                  }
+                },
+
+                plusQty(item) {
+                  item.quantity++;
+                  this.details.sub_total = this.details.total = this.items.reduce(this.sum, 0);
+                  this.details.total_quantity ++;
+                }
+              }
+            });
+
+          });
+
+        })(jQuery);
     </script>
 @endsection

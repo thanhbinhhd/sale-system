@@ -40,7 +40,7 @@
     <!-- Header Icon -->
     <div class="header-icons">
         <a href="/profile" class="header-wrapicon1 dis-block">
-            <img src="{{Auth::guard('user')->user()->avatar}}" class="header-icon1 rounded-circle" alt="ICON">
+            <img src="{{\Illuminate\Support\Facades\Storage::url(Auth::guard('user')->user()->avatar)}}" class="header-icon1 rounded-circle" alt="ICON">
         </a>
         <a href="{{route('user.logout')}}" class="link-color">Logout</a>
 

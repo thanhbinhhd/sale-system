@@ -81,7 +81,7 @@
 
                                             <div class="block2-btn-addcart w-size1 trans-0-4">
                                                 <!-- Button -->
-                                                <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+                                                <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 product-add-button" id="product-{{$cheap->id}}">
                                                     Add to Cart
                                                 </button>
                                             </div>
@@ -120,7 +120,7 @@
 
                                             <div class="block2-btn-addcart w-size1 trans-0-4">
                                                 <!-- Button -->
-                                                <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+                                                <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 product-add-button" id="product-{{$product->id}}">
                                                     Add to Cart
                                                 </button>
                                             </div>
@@ -166,7 +166,7 @@
 
                                             <div class="block2-btn-addcart w-size1 trans-0-4">
                                                 <!-- Button -->
-                                                <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+                                                <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 product-add-button" id="product-{{$view->id}}">
                                                     Add to Cart
                                                 </button>
                                             </div>
@@ -299,6 +299,38 @@
                 swal(nameProduct, "is added to wishlist !", "success");
             });
         });
+
+        $('.product-add-button').on('click', function() {
+          let attr_id = $(this).attr('id');
+          let id = attr_id.split('-')[1];
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            }
+          });
+          $.ajax({
+            type: 'POST',
+            url: '/add-cart',
+            async: true,
+            data: {
+              product_id: id,
+              quantity: 1,
+            },
+            success: function (response) {
+              console.log('res: ', response);
+              if (!response.error) {
+              }
+              else {
+                toastr.warning('Something error when uploading!');
+              }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            }
+          });
+
+        })
+
     </script>
 
     <!--===============================================================================================-->
