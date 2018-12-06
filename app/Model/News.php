@@ -13,13 +13,8 @@ class News extends Model
 
     protected $fillable = [
         'title', 'slug', 'author', 'description', 'content',
-        'status', 'source', 'admin_id', 'category_id'
+        'status', 'source', 'admin_id', 'category_id', 'thumbnail_path'
     ];
-
-    public function images()
-    {
-        return $this->morphMany(Image::class, 'imageable');
-    }
 
     public function admin() {
         return $this->belongsTo(Admin::class, 'admin_id');
