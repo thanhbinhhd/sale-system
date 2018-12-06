@@ -98,13 +98,13 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
 
     Route::group(['middleware' => 'user'], function () {
         Route::group(['middleware' => 'user_verified'], function () {
-            Route::get('/cart',['as' => 'cart', function(){
-                return view('user.cart');
-            }]);
-            Route::get('/blog',['as' => 'blog', function(){
-                return view('user.blog');
-            }]);
+
         });
+	    Route::get('/cart',['as' => 'cart', 'uses' => 'CartController@index']);
+	    Route::get('/cart/details',['as' => 'cart', 'uses' => 'CartController@details']);
+	    Route::get('/blog',['as' => 'blog', function(){
+		    return view('user.blog');
+	    }]);
         Route::get('/',['as' => 'home', 'uses' => 'HomeController@index']);
         Route::get('/contact',['as' => 'contact', function(){
             return view('user.contact');
@@ -116,6 +116,7 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         Route::put('/change-pass',"UserController@changePass");
         Route::post('/upload-avatar',"UserController@uploadAvatar");
         Route::put('/change-profile',"UserController@changeProfile");
+        Route::post('/add-cart',"CartController@addCart");
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
     });
 });

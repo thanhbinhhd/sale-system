@@ -6,6 +6,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 
 class Controller extends BaseController
 {
@@ -24,4 +25,8 @@ class Controller extends BaseController
     const CODE_BAD_GATEWAY = 501;
     const CODE_SERVICE_UNAVAILABLE = 503;
     const CODE_GATEWAY_TIMEOUT = 504;
+
+	public function currentUser(){
+		return $user = Auth::guard('user')->user();
+	}
 }
