@@ -243,10 +243,6 @@
 
                             <span class="s-text6">By</span> <span class="s-text7">{{$blog->author}}</span>
                             <span class="s-text6">on</span> <span class="s-text7">{{$blog->create_at}}</span>
-
-                            <p class="s-text8 p-t-16">
-                                {{$blog->description}}
-                            </p>
                         </div>
                     </div>
                 </div>

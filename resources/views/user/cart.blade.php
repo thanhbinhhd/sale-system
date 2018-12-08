@@ -129,9 +129,60 @@
 
                 <div class="size15 trans-0-4">
                     <!-- Button -->
-                    <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+                    <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4"
+                            data-toggle="modal"
+                            data-target="#showOrder">
                         Proceed to Checkout
                     </button>
+                </div>
+            </div>
+            <div class="modal fade" id="showOrder" tabindex="-1" role="dialog" aria-labelledby="showOrder" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <table class="table" style="background: white;">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="col-1">STT</th>
+                                <th scope="col" class="col-2">Product Name</th>
+                                <th scope="col" class="col-2">Product Image</th>
+                                <th scope="col" class="col-1">Quantity</th>
+                                <th scope="col">Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item, index) in items" :key="index">
+                                    <td>@{{index + 1}}</td>
+                                    <td>@{{item.name}}</td>
+                                    <td>
+                                        <div class="cart-img-product b-rad-4 o-f-hidden">
+                                            <img :src="item.attributes.image_path" alt="IMG-PRODUCT">
+                                        </div>
+                                    </td>
+                                    <td>@{{item.quantity}}</td>
+                                    <td>@{{formatMoney(item.price)}}$</td>
+                                </tr>
+
+                                <tr>
+                                    <th colspan="3">Total</th>
+                                    <td style="color: red;font-weight: bold">@{{formatMoney(details.total)}}$</td>
+                                </tr>
+                                <tr>
+                                    <button class="btn btn-primary">
+                                        CheckOut
+                                    </button>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="form-group margin-right-10 margin-left-10">
+                            <label for="usr">Note:</label>
+                            <textarea type="text" class="form-control" id="usr" v-model="noteOrder"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success float-right"  @click="order">
+                                <span>Check Out</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -183,6 +234,7 @@
                       description: 'Value Added Tax'
                     }
                   },
+                  noteOrder: '',
 
                   options: {
                     target: [
@@ -190,6 +242,8 @@
                       {label: 'Apply to Total', key: 'total'}
                     ]
                   },
+
+
 
                   timer: null,
                   updateSuccess: true,
@@ -273,6 +327,26 @@
                     console.log(error);
                   });
                 },
+
+                order() {
+                  let url = '/order';
+                  let payload = {
+                    note: this.noteOrder,
+                  }
+                  axios.post(url, payload).then((res) => {
+                    if(res.data.success) {
+                      toastr.success('Check out success!! Thank you!!');
+                    } else {
+                      toastr.fail('Something occured!!')
+                    }
+                  }).catch((err) => {
+                    console.log(err);
+                  }).finally(() => {
+                    $('#showOrder').hide();
+                    this.loadItems();
+                  })
+                },
+
                 removeItem: function(id) {
                   let _this = this;
                   let url = '/cart/' + id;
