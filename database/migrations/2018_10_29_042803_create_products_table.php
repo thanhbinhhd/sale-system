@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->integer('category_id');
             $table->integer('admin_id')->comment('creator');
             $table->string('slug')->nullable();
-            $table->string('quantity');
+            $table->integer('quantity');
             $table->string('description')->nullable();
             $table->text('review')->nullable();
             $table->decimal('price', 13, 2);

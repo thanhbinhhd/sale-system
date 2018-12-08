@@ -20,6 +20,10 @@ class ProductRepository
         return $this->model->where('status', Product::ACTIVE)->take(config('sales.number_product_get'))->get();
     }
 
+	public function getQuantity($id){
+		return $this->getById($id)->quantity;
+	}
+
     public function getWithCondition($condition, $order){
         return $this->model->where('status', Product::ACTIVE)->orderBy($condition,$order)->take(config('sales.number_product_get'))->get();
     }
