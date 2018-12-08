@@ -57,7 +57,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
             Route::delete('{id}', 'BlogController@destroy');
         });
 
-        Route::get('dashboard',['as' => 'home', 'uses' => 'UserController@index']);
+
         Route::get('user-manager',['as' => 'user-manager', 'uses' => 'UserController@index']);
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
         Route::put('update-status',"UserController@updateStatus");
@@ -79,6 +79,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
         Route::post('change-category-image-name',"CategoryController@changeImageName");
 
         Route::resource('order-manager', 'OrderController');
+        Route::get('sale-manager/category', 'SaleController@listProducts');
+        Route::resource('sale-manager', 'SaleController');
 
     });
 });
