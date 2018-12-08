@@ -48,6 +48,13 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
             Route::delete('{id}', 'ProductController@destroy');
         });
 
+        Route::put('update-blog-status', 'BlogController@updateStatus');
+
+        Route::resource('blog-manager', 'BlogController');
+        Route::group(['prefix' => 'blog-manager'], function (){
+            Route::delete('{id}', 'BlogController@destroy');
+        });
+
         Route::get('dashboard',['as' => 'home', 'uses' => 'UserController@index']);
         Route::get('user-manager',['as' => 'user-manager', 'uses' => 'UserController@index']);
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
