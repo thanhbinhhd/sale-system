@@ -46,7 +46,7 @@ class ProductRepository
         $products = $products->select('products.*')->
         join('taggables', 'products.id', '=', 'taggable_id')->
         join('tags', 'tags.id', '=', 'taggables.tag_id')->
-        join('product_details', 'products.id', '=', 'product_details.product_id');
+        leftJoin('product_details', 'products.id', '=', 'product_details.product_id');
 
         if($maxPrice != null)
             $products = $products->where('price', '<', $maxPrice);
