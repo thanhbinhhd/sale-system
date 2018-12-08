@@ -31,4 +31,8 @@ class NewsRepository
         $new = $this->model->where('slug', $slug)->first();
         return $new->id;
     }
+
+    public function getBySlug($blogSlug){
+        return $this->model->where('slug', $blogSlug)->first();
+    }
 }

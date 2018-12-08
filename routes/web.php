@@ -109,15 +109,18 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         });
 	    Route::get('/cart',['as' => 'cart', 'uses' => 'CartController@index']);
 	    Route::get('/cart/details',['as' => 'cart', 'uses' => 'CartController@details']);
-	    Route::get('/blog',['as' => 'blog', function(){
-		    return view('user.blog');
-	    }]);
+	    // Route::get('/blog',['as' => 'blog', function(){
+		//     return view('user.blog');
+	    // }]);
         Route::get('/',['as' => 'home', 'uses' => 'HomeController@index']);
         Route::get('/contact',['as' => 'contact', function(){
             return view('user.contact');
         }]); Route::get('/about',['as' => 'about', function(){
             return view('user.about');
         }]);
+
+        Route::get('/blog',['as' => 'blog', 'uses' => 'BlogController@index']);
+        Route::get('/blog/{blogSlug}',['as' => 'blog', 'uses' => 'BlogController@details']);
 
         Route::get('/profile',"UserController@profile");
         Route::put('/change-pass',"UserController@changePass");
