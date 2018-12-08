@@ -61,13 +61,13 @@
             </div>
             <div class="form-group" style="width: 50%">
                 <label for="inputDescription">Description:</label>
-                <textarea id="inputDescription"  class="form-control" name="description" placeholder="Description">{{ old('description')?old('description'):$blog->description }}</textarea>
+                <textarea id="inputDescription" rows="5" class="form-control" name="description" placeholder="Description">{{ old('description')?old('description'):$blog->description }}</textarea>
             </div>
 
 
             <div class="form-group" style="width: 50%">
                 <label for="inputContent">Content:</label>
-                <textarea id="inputContent"  class="form-control" name="content" placeholder="Content">{{ old('content')?old('content'):$blog->content }}</textarea>
+                <textarea id="inputContent" rows="20" class="form-control" name="content" placeholder="Content">{{ old('content')?old('content'):$blog->content }}</textarea>
             </div>
             <div class="form-group" style="width: 50%">
                 <label for="inputBlogSource">Source:</label>

@@ -37,7 +37,7 @@
             </div>
             <div class="form-group" style="width: 50%">
                 <label for="inputDescription">Description:</label>
-                <textarea id="inputDescription"  class="form-control" name="description" placeholder="Description">{{ old('description')?old('description'):$category->description }}</textarea>
+                <textarea id="inputDescription" rows="5" class="form-control" name="description" placeholder="Description">{{ old('description')?old('description'):$category->description }}</textarea>
             </div>
             <img id="preview" @if ($category->image_path != null) src="{{$category->image_path}}" @else src="/admin/images/avatar.jpg" style="display: none" @endif alt="Category image" width="200" />
             <div class="form-group" style="width: 50%">

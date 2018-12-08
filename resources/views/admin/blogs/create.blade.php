@@ -50,11 +50,11 @@
             </div>
             <div class="form-group" style="width: 50%">
                 <label for="inputDescription">Description:</label>
-                <textarea id="inputDescription"  class="form-control" name="description" placeholder="Description">{{ old('description') }}</textarea>
+                <textarea id="inputDescription" rows="5"  class="form-control" name="description" placeholder="Description">{{ old('description') }}</textarea>
             </div>
             <div class="form-group" style="width: 50%">
                 <label for="inputContent">Content:</label>
-                <textarea id="inputContent"  class="form-control" name="content" placeholder="Content">{{ old('content') }}</textarea>
+                <textarea id="inputContent" rows="20" class="form-control" name="content" placeholder="Content">{{ old('content') }}</textarea>
             </div>
             <div class="form-group" style="width: 50%">
                 <label for="inputBlogSource">Source:</label>
