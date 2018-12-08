@@ -5,9 +5,9 @@
 @endsection
 @php ($currentAdmin = Auth::guard('admin')->user())
 @section('pagename')
-    Product Manager
+    Slide Manager
     @if($currentAdmin->level == 1 or $currentAdmin->adminPermission->can_add)
-        <a href="{{route('admin.product-manager.create')}}"><button type="button" class="btn btn-primary">Create New</button></a>
+        <a href="{{route('admin.slide-manager.create')}}"><button type="button" class="btn btn-primary">Create New</button></a>
     @endif
 @endsection
 @section('content')
@@ -18,19 +18,10 @@
         <table id="listtable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
             <thead>
             <tr>
-                <th class="th-sm">Name
+                <th class="th-sm">Title
                     <i class="fa fa-sort float-right" aria-hidden="true"></i>
                 </th>
-                <th class="th-sm">Creator
-                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                </th>
-                <th class="th-sm">Category
-                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                </th>
-                <th class="th-sm">Color
-                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                </th>
-                <th class="th-sm">Price
+                <th class="th-sm">Preview
                     <i class="fa fa-sort float-right" aria-hidden="true"></i>
                 </th>
                 <th class="th-sm">Created Date
@@ -44,28 +35,22 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($products as $product)
-                <tr id="row-{{$product->id}}">
-                    <td>{{$product->name}}</td>
-                    <td>@if($product->creator!=null){{$product->creator->name}}@endif</td>
-                    <td>@if($product->category!=null){{$product->category->name}}@endif</td>
+            @foreach($slides as $slide)
+                <tr id="row-{{$slide->id}}">
+                    <td>{{$slide->title}}</td>
                     <td>
-                        @if( $product->productDetail != null)
-                        <label class="color-filter color-filter{{$product->productDetail->color}}" ></label>
-                        @endif
+                      <img src="{{$slide->link}}" width="200">
                     </td>
-                    <td>{{$product->price}}</td>
-                    <td>{{$product->created_at}}</td>
+                    <td>{{$slide->created_at}}</td>
                     <td>
-                        <select class="form-control product-status" data-id="{{$product->id}}">
-                            <option value="1" @if($product->status == \App\Model\Product::ACTIVE) selected @endif >Active</option>
-                            <option value="0" @if($product->status == \App\Model\Product::INACTIVE) selected @endif>Inactive</option>
-                            <option value="2" @if($product->status == \App\Model\Product::REJECT) selected @endif>Reject</option>
+                        <select class="form-control slide-status" data-id="{{$slide->id}}">
+                            <option value="1" @if($slide->status == \App\Model\Slide::ACTIVE) selected @endif >Active</option>
+                            <option value="0" @if($slide->status == \App\Model\Slide::BLOCKED) selected @endif>Blocked</option>
                         </select>
                     </td>
                     <td>
-                        <a href="{{route('admin.product-manager.edit', ['product_manager' => $product->id])}}" type="button" class="btn btn-info">Detail</a>
-                        <button type="button" class="btn btn-danger" data-name="{{$product->name}}" data-id="{{$product->id}}" data-toggle="modal" data-target="#askDeleteModal">Delete</button>
+                        <a href="{{route('admin.slide-manager.edit', ['slide_manager' => $slide->id])}}" type="button" class="btn btn-info">Detail</a>
+                        <button type="button" class="btn btn-danger" data-name="{{$slide->title}}" data-id="{{$slide->id}}" data-toggle="modal" data-target="#askDeleteModal">Delete</button>
                     </td>
                 </tr>
             @endforeach
@@ -104,7 +89,7 @@
                 var name = button.data('name');
                 var id = button.data('id');
                 var modal = $(this)
-                modal.find('#ModalMessage').text('Do you really want to delete product ' + name + ' from db?')
+                modal.find('#ModalMessage').text("Do you really want to delete slide '" + name + "' from db?")
                 modal.find('.btn-danger').attr('data-id', id)
             })
         })
@@ -116,7 +101,7 @@
             });
             $.ajax({
                 type:'post',
-                url: '/admin/product-manager/' + id,
+                url: '/admin/slide-manager/' + id,
                 data:{
                     id:id,
                     _method: 'delete'
@@ -129,9 +114,8 @@
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
                     switch (xhr.status) {
-                        case 404: toastr.error("Product " + thrownError);
+                        case 404: toastr.error("Slide " + thrownError);
                             break;
                         default: toastr.error(xhr.responseJSON.message);
                     }
@@ -145,12 +129,12 @@
                 }
             });
 
-            $(".product-status").on("change",function () {
+            $(".slide-status").on("change",function () {
                 var id = $(this).data('id');
                 var status = $(this).val();
                 $.ajax({
                     type:'PUT',
-                    url: '/admin/update-product-status',
+                    url: '/admin/update-slide-status',
                     data:{
                         id:id,
                         status:status,
@@ -162,9 +146,8 @@
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(id);
                         switch (xhr.status) {
-                            case 404: toastr.error("Product " + thrownError);
+                            case 404: toastr.error("Slide " + thrownError);
                                 break;
                             default: toastr.error(xhr.responseJSON.message);
                         }

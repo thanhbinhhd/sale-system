@@ -14,4 +14,11 @@ class SlideRepository
     {
         $this->model = $slide;
     }
+
+    public function updateStatus($status, $id){
+        $slide = $this->getById($id);
+        $slide->status = $status;
+        $this->update($id,$slide->toArray());
+        return $status;
+    }
 }

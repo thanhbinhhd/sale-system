@@ -3,25 +3,19 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Repositories\CategoryRepository;
 
 class UpdateCategoryRequest extends FormRequest {
     public function authorize() {
         return true;
     }
 
-    public function rules(){
-        $categoryID = $this->input('id');
+    public function rules(CategoryRepository $category){
+        $categoryID = $this->input('category-id');
         return [
             'name'  => 'required|unique:categories,name,' . $categoryID,
-            'imagePath' => 'required'
+            'image'     => 'mimes:jpeg,bmp,png,jpg'
         ];
     }
 
-    public function messages(){
-        return [
-            'name.required' => 'Name can not empty!',
-            'name.unique' => 'Name was existed!',
-            'imagePath.required'  => 'Image Link can not empty!',
-        ];
-    }
 }

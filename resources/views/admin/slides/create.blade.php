@@ -8,7 +8,7 @@
 
 @endsection
 @section('pagename')
-    Blog Manager
+    Slide Manager
 @endsection
 @section('content')
     <div class="container">
@@ -17,60 +17,23 @@
                 <div class="alert alert-warning">{{ $error }}</div>
             @endforeach
         @endif
-        <form method="post" action="{{route('admin.blog-manager.store')}}" enctype="multipart/form-data">
-            <legend>Create new Blog</legend>
+        <form method="post" action="{{route('admin.slide-manager.store')}}" enctype="multipart/form-data">
+            <legend>Create new Slide</legend>
             {{ csrf_field()}}
-            <div class="form-group"  style="width: 50%">
-                <label for="inputCategory">Category:</label>
-                <select class="form-control" id="inputCategory" name="category_id">
-                    @foreach (\App\Model\Category::all() as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
-                    @endforeach
-                </select>
-            </div>
             <div class="form-group" style="width: 50%">
-                <label for="inputBlogTitle">Blog Title:</label>
-                <input id="inputBlogTitle" value="{{ old('title') }}" class="form-control" name="title" placeholder="Blog title">
+                <label for="inputSlideTitle">Slide Title:</label>
+                <input id="inputSlideTitle" value="{{ old('title') }}" class="form-control" name="title" placeholder="Slide title">
             </div>
-            <div class="form-group" style="width: 50%">
-                <label for="inputBlogSlug">Blog Slug:</label>
-                <input id="inputBlogSlug" value="{{ old('slug') }}" class="form-control" name="slug" placeholder="Blog Slug">
-            </div>
-            <div class="form-group" style="width: 50%">
-                <label for="inputBlogAuthor">Author:</label>
-                <input id="inputBlogAuthor" value="{{ old('author') }}" class="form-control" name="author" placeholder="Author">
-            </div>
-            <div class="form-group" style="width: 50%">
-                <label for="inputTag">Tag</label>
-                <select class="form-control" multiple id="inputTag" name="tag[]">
-                    @foreach(\App\Model\Tag::all() as $tag)
-                        <option value="{{$tag->id}}">{{$tag->name}}</option>
-                        @endforeach
-                </select>
-            </div>
-            <div class="form-group" style="width: 50%">
-                <label for="inputDescription">Description:</label>
-                <textarea id="inputDescription" rows="5"  class="form-control" name="description" placeholder="Description">{{ old('description') }}</textarea>
-            </div>
-            <div class="form-group" style="width: 50%">
-                <label for="inputContent">Content:</label>
-                <textarea id="inputContent" rows="20" class="form-control" name="content" placeholder="Content">{{ old('content') }}</textarea>
-            </div>
-            <div class="form-group" style="width: 50%">
-                <label for="inputBlogSource">Source:</label>
-                <input id="inputBlogSource" value="{{ old('source') }}" class="form-control" name="source" placeholder="Blog Source">
-            </div>
-
             <img id="preview" src="/admin/images/avatar.jpg" alt="your image" width="200" style="display: none"/>
             <div class="form-group" style="width: 50%">
-                <label for="inputFile">Thumbnail:</label>
+                <label for="inputFile">Image:</label>
                 <input id="inputFile"  accept="image/png, image/jpeg, image/jpg" type="file" class="form-control" name="image" />
             </div>
             <div class="form-group" id="other-preview">
             </div>
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" value="1" @if(old('status')) checked="" @endif id="active" name="status" >
-                <label class="form-check-label" for="active">Active this blog</label>
+                <label class="form-check-label" for="active">Active this slide</label>
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </form>

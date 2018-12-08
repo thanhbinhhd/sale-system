@@ -32,7 +32,7 @@ class BlogController extends Controller
 
     public function index(){
         $user = $this->user->currentUser();
-        $categories = $this->category->all();
+        $categories = $this->category->getNew();
         $tags = $this->tag->all();
         $products = $this->product->getNew();
         $blogs = $this->blog->all();
@@ -45,7 +45,7 @@ class BlogController extends Controller
         $blog = $this->blog->getBySlug($blogSlug);
 
         $user = $this->user->currentUser();
-        $categories = $this->category->all();
+        $categories = $this->category->getNew();
         $tags = $this->tag->all();
         $products = $this->product->getNew();
         return view('user.blog-details',compact('user','tags', 'categories', 'products', 'blog'));
