@@ -32,7 +32,7 @@ Category Manager
                 <tr id="row-{{$category->id}}">
                     <td id="name-{{$category->id}}">{{$category->name}}</td>
                     <td id="desc-{{$category->id}}">{{$category->description}}</td>
-                    <td id="admin-name-{{$category->id}}">{{$category->admin->username}}</td>
+                    <td id="admin-name-{{$category->id}}">@if($category->admin){{$category->admin->username}}@endif</td>
                     <td id="image-path-{{$category->id}}">
                       <img src="{{$category->image_path}}" width="100">
                     </td>

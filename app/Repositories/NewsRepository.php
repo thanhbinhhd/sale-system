@@ -16,7 +16,7 @@ class NewsRepository
     }
 
     public function getNew(){
-        $news = $this->model->where('status',1)->take(3)->get();
+        $news = $this->model->where('status', News::ACTIVE)->take(config('sales.number_blog_get'))->get();
         return $news;
     }
 
