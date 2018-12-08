@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
@@ -38,6 +39,15 @@ class Product extends Model
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function sales(){
+        return $this->hasMany(ProductSale::class, 'product_id');
+    }
+
+
+    public function discount(){
+        return $this->sales()->select(DB::raw('max(promo) as discount'))->whereRaw('now() between start_date and end_date')->first()->discount;
     }
 
     public function taggables() {

@@ -17,7 +17,7 @@ class CreateSaleRequest extends FormRequest
     {
         return [
             'product_id' => 'required',
-            'promo' => 'required',
+            'promo' => 'required|integer|between:1,99',
             'promo_code' => 'required|numeric',
             'type' => 'required',
             'start_date' => 'required|date',

@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-group">
                     <label for="promo">Promo:</label>
-                    <input type="text" value="{{old('promo')}}" name="promo" class="form-control" id="promo">
+                    <input type="number" value="{{old('promo')}}" name="promo" class="form-control" id="promo">
                 </div>
                 <div class="form-group">
                     <label for="start_date">Start date:</label>
