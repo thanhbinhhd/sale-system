@@ -41,8 +41,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
             Route::delete('{$id}', 'AdminManageController@destroy');
         });
         Route::put('update-admin-status',['as' => 'update-admin-status', 'uses' => "AdminManageController@updateStatus"]);
-        Route::put('update-product-status', 'ProductController@updateStatus');
 
+        Route::put('update-product-status', 'ProductController@updateStatus');
         Route::resource('product-manager', 'ProductController');
         Route::group(['prefix' => 'product-manager'], function (){
             Route::delete('{id}', 'ProductController@destroy');
@@ -50,11 +50,22 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
 
         Route::get('dashboard',['as' => 'home', 'uses' => 'DashBoardController@index']);
         Route::get('dashboard/get-chart', 'DashBoardController@getChart');
-        Route::put('update-blog-status', 'BlogController@updateStatus');
 
+        Route::put('update-blog-status', 'BlogController@updateStatus');
         Route::resource('blog-manager', 'BlogController');
         Route::group(['prefix' => 'blog-manager'], function (){
             Route::delete('{id}', 'BlogController@destroy');
+        });
+
+        Route::resource('category-manager', 'CategoryController');
+        Route::group(['prefix' => 'category-manager'], function (){
+            Route::delete('{id}', 'CategoryController@destroy');
+        });
+
+        Route::put('update-slide-status', 'SlideController@updateStatus');
+        Route::resource('slide-manager', 'SlideController');
+        Route::group(['prefix' => 'slide-manager'], function (){
+            Route::delete('{id}', 'SlideController@destroy');
         });
 
         Route::get('dashboard',['as' => 'home', 'uses' => 'UserController@index']);
@@ -62,21 +73,6 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
         Route::put('update-status',"UserController@updateStatus");
         Route::get('order-list/{id}', "UserController@orderList");
-        
-        Route::get('slide-manager',['as' => 'slide-manager', 'uses' => 'SlideController@index']);
-        Route::post('create-slide',"SlideController@createSlide");
-        Route::put('update-slide',"SlideController@updateSlide");
-        Route::put('update-slide-status',"SlideController@updateSlideStatus");
-        Route::delete('delete-slide',"SlideController@deleteSlide");
-        Route::post('upload-slide-image',"SlideController@uploadImage");
-        Route::post('change-slide-image-name',"SlideController@changeImageName");
-
-        Route::get('category-manager',['as' => 'category-manager', 'uses' => 'CategoryController@index']);
-        Route::post('create-category',"CategoryController@createCategory");
-        Route::put('update-category',"CategoryController@updateCategory");
-        Route::delete('delete-category',"CategoryController@deleteCategory");
-        Route::post('upload-category-image',"CategoryController@uploadImage");
-        Route::post('change-category-image-name',"CategoryController@changeImageName");
 
         Route::resource('order-manager', 'OrderController');
 

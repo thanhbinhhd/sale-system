@@ -22,7 +22,7 @@ class UpdateBlogRequest extends FormRequest {
      * @return array
      */
     public function rules(Request $request, NewsRepository $blog) {
-        $blogID = $blog->getIDfromSlug($this->input('slug'));
+        $blogID = $this->input('blog-id');
         return [
           'title'      => 'required',
           'slug'      => 'required|unique:news,slug,' . $blogID,
