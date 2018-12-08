@@ -90,7 +90,7 @@
                 modal.find('#ModalMessage').text('Do you really want to delete order ' + name + ' from db?')
                 modal.find('.btn-danger').attr('data-id', id)
             })
-        })
+        });
         function deleteOrder(id) {
             $.ajaxSetup({
                 headers: {

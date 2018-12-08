@@ -54,7 +54,7 @@ class ShopController extends Controller
      */
     public function filte($category, Request $request){
         if($category == self::ALL)
-            $products = DB::table('products');
+            $products = Product::whereRaw('TRUE');
         else{
             $categoryModel = $this->category->getByName($category);
             if ($categoryModel == null) {
