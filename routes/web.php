@@ -57,7 +57,6 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
             Route::delete('{id}', 'BlogController@destroy');
         });
 
-        Route::get('dashboard',['as' => 'home', 'uses' => 'UserController@index']);
         Route::get('user-manager',['as' => 'user-manager', 'uses' => 'UserController@index']);
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
         Route::put('update-status',"UserController@updateStatus");
@@ -112,9 +111,10 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
 
         });
 	    Route::get('/cart',['as' => 'cart', 'uses' => 'CartController@index']);
-	    Route::get('/cart/details',['as' => 'cart', 'uses' => 'CartController@details']);
-	    Route::put('/cart/update',['as' => 'cart', 'uses' => 'CartController@update']);
-	    Route::delete('/cart/{id}',['as' => 'cart', 'uses' => 'CartController@remove']);
+	    Route::post('/order',['as' => 'order', 'uses' => 'OrderController@addOrder']);
+	    Route::get('/cart/details',['as' => 'cart-details', 'uses' => 'CartController@details']);
+	    Route::put('/cart/update',['as' => 'cart-update', 'uses' => 'CartController@update']);
+	    Route::delete('/cart/{id}',['as' => 'cart-delete', 'uses' => 'CartController@remove']);
 
         Route::get('/',['as' => 'home', 'uses' => 'HomeController@index']);
         Route::get('/contact',['as' => 'contact', function(){
