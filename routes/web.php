@@ -48,7 +48,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
             Route::delete('{id}', 'ProductController@destroy');
         });
 
-        Route::get('dashboard',['as' => 'home', 'uses' => 'UserController@index']);
+        Route::get('dashboard',['as' => 'home', 'uses' => 'DashBoardController@index']);
+        Route::get('dashboard/get-chart', 'DashBoardController@getChart');
         Route::get('user-manager',['as' => 'user-manager', 'uses' => 'UserController@index']);
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
         Route::put('update-status',"UserController@updateStatus");
