@@ -3,12 +3,22 @@
     <link rel="stylesheet" type="text/css" href="/user/css/slick.css">
 @endsection
 @section('content')
-    <!-- Title Page -->
-    <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(https://goo.gl/R2ocBf);">
-        <h2 class="l-text2 t-center">
-            Blog
-        </h2>
-    </section>
+    <!-- breadcrumb -->
+	<div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
+		<a href="/" class="s-text16">
+			Home
+			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
+		</a>
+
+		<a href="/blog" class="s-text16">
+			Blog
+			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
+		</a>
+
+		<span class="s-text17">
+            {{$blog->title}}
+		</span>
+	</div>
 
     <!-- content page -->
     <section class="bgwhite p-t-60">
@@ -16,10 +26,9 @@
             <div class="row">
                 <div class="col-md-8 col-lg-9 p-b-75">
                     <div class="p-r-50 p-r-0-lg">
-                    @foreach($blogs as $blog)
                         <!-- item blog -->
                         <div class="item-blog p-b-80">
-                            <a href="/blog/{{$blog->slug}}" class="item-blog-img pos-relative dis-block hov-img-zoom">
+                            <a href="#" class="item-blog-img pos-relative dis-block hov-img-zoom">
                                 <img src="{{$blog->thumbnail_path}}" alt="IMG-BLOG">
 
                                 <span class="item-blog-date dis-block flex-c-m pos1 size17 bg4 s-text1">
@@ -30,7 +39,7 @@
 
                             <div class="item-blog-txt p-t-33">
                                 <h4 class="p-b-11">
-                                    <a href="/blog/{{$blog->slug}}" class="m-text24">
+                                    <a href="#" class="m-text24">
                                         {{$blog->title}}
                                     </a>
                                 </h4>
@@ -53,19 +62,11 @@
                                     {{$blog->description}}
                                 </p>
 
-                                <a href="/blog/{{$blog->slug}}" class="s-text20">
-                                    Continue Reading
-                                    <i class="fa fa-long-arrow-right m-l-8" aria-hidden="true"></i>
-                                </a>
+                                <p class="p-b-25">
+                                    {{$blog->content}}
+                                </p>
                             </div>
                         </div>
-                    @endforeach
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="pagination flex-m flex-w p-r-50">
-                        <a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
-                        <a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
                     </div>
                 </div>
 
@@ -138,18 +139,4 @@
         </div>
     </section>
 
-@endsection
-
-@section('customJs')
-    <script type="text/javascript">
-        $(".selection-1").select2({
-            minimumResultsForSearch: 20,
-            dropdownParent: $('#dropDownSelect1')
-        });
-
-        $(".selection-2").select2({
-            minimumResultsForSearch: 20,
-            dropdownParent: $('#dropDownSelect2')
-        });
-    </script>
 @endsection
