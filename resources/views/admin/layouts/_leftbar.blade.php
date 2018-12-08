@@ -38,7 +38,9 @@
             <li>
                 <a href="{{config('menubar.slide_manager_path')}}"><span class="fa fa-file-powerpoint-o"></span>{{config('menubar.slide')}}</a>
             </li>
-
+            <li>
+                <a href="{{config('menubar.blog_manager_path')}}"><span class="fa fa-rss-square"></span>{{config('menubar.blog')}}</a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

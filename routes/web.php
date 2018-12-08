@@ -50,6 +50,14 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
 
         Route::get('dashboard',['as' => 'home', 'uses' => 'DashBoardController@index']);
         Route::get('dashboard/get-chart', 'DashBoardController@getChart');
+        Route::put('update-blog-status', 'BlogController@updateStatus');
+
+        Route::resource('blog-manager', 'BlogController');
+        Route::group(['prefix' => 'blog-manager'], function (){
+            Route::delete('{id}', 'BlogController@destroy');
+        });
+
+        Route::get('dashboard',['as' => 'home', 'uses' => 'UserController@index']);
         Route::get('user-manager',['as' => 'user-manager', 'uses' => 'UserController@index']);
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
         Route::put('update-status',"UserController@updateStatus");
@@ -105,15 +113,18 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         });
 	    Route::get('/cart',['as' => 'cart', 'uses' => 'CartController@index']);
 	    Route::get('/cart/details',['as' => 'cart', 'uses' => 'CartController@details']);
-	    Route::get('/blog',['as' => 'blog', function(){
-		    return view('user.blog');
-	    }]);
+	    // Route::get('/blog',['as' => 'blog', function(){
+		//     return view('user.blog');
+	    // }]);
         Route::get('/',['as' => 'home', 'uses' => 'HomeController@index']);
         Route::get('/contact',['as' => 'contact', function(){
             return view('user.contact');
         }]); Route::get('/about',['as' => 'about', function(){
             return view('user.about');
         }]);
+
+        Route::get('/blog',['as' => 'blog', 'uses' => 'BlogController@index']);
+        Route::get('/blog/{blogSlug}',['as' => 'blog', 'uses' => 'BlogController@details']);
 
         Route::get('/profile',"UserController@profile");
         Route::put('/change-pass',"UserController@changePass");
