@@ -208,7 +208,7 @@
                     <!-- Block3 -->
                     <div class="block3">
                         <a href="/blog/{{$blog->id}}" class="block3-img dis-block hov-img-zoom">
-                            <img src="{{$blog->image}}" alt="IMG-BLOG">
+                            <img src="{{$blog->thumbnail_path}}" alt="IMG-BLOG">
                         </a>
 
                         <div class="block3-txt p-t-14">
