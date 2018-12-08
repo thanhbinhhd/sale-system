@@ -68,7 +68,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
         Route::post('upload-category-image',"CategoryController@uploadImage");
         Route::post('change-category-image-name',"CategoryController@changeImageName");
 
-        Route::get('users/{id}',"UserController@detail");
+        Route::resource('order-manager', 'OrderController');
+
     });
 });
 
