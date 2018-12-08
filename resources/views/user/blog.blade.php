@@ -17,6 +17,7 @@
                 <div class="col-md-8 col-lg-9 p-b-75">
                     <div class="p-r-50 p-r-0-lg">
                     @foreach($blogs as $blog)
+                        @if ($blog->status)
                         <!-- item blog -->
                         <div class="item-blog p-b-80">
                             <a href="/blog/{{$blog->slug}}" class="item-blog-img pos-relative dis-block hov-img-zoom">
@@ -47,6 +48,14 @@
                                             <span class="m-l-3 m-r-6">|</span>
                                         @endif
 									</span>
+
+                                    <span>
+                                        @foreach(\App\Model\Tag::all() as $tag)
+                                            @if (in_array($tag->id, array_column($blog->taggables()->get()->toArray(), 'tag_id'))) 
+                                                #{{$tag->name}}
+                                            @endif
+                                        @endforeach
+									</span>
                                 </div>
 
                                 <p class="p-b-12">
@@ -59,6 +68,7 @@
                                 </a>
                             </div>
                         </div>
+                        @endif
                     @endforeach
                     </div>
 

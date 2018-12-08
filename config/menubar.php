@@ -10,9 +10,11 @@ return [
 
     'category' => "Categories Manager",
 
-    'order' => "Orders manager",
+    'order' => "Orders Manager",
 
-    'slide' => "Slides manager",
+    'slide' => "Slides Manager",
+
+    'blog' => "Blogs Manager",
 
     'admin_manager_path' => "/admin/admin-manager",
 
@@ -25,6 +27,8 @@ return [
     'order_manager_path' => "/admin/order-manager",
 
     'slide_manager_path' => "/admin/slide-manager",
+
+    'blog_manager_path' => "/admin/blog-manager",
 
     'page_name' => 'Sales System',
 
