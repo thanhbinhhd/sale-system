@@ -102,6 +102,8 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         });
 	    Route::get('/cart',['as' => 'cart', 'uses' => 'CartController@index']);
 	    Route::get('/cart/details',['as' => 'cart', 'uses' => 'CartController@details']);
+	    Route::put('/cart/update',['as' => 'cart', 'uses' => 'CartController@update']);
+	    Route::delete('/cart/{id}',['as' => 'cart', 'uses' => 'CartController@remove']);
 	    Route::get('/blog',['as' => 'blog', function(){
 		    return view('user.blog');
 	    }]);

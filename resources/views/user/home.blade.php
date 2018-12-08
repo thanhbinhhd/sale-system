@@ -93,8 +93,8 @@
                                             {{$cheap->name}}
                                         </a>
 
-                                        <span class="block2-price m-text6 p-r-5">
-											${{$cheap->price}}
+                                        <span class="block2-price m-text6 p-r-5 product-price">
+											{{$cheap->price}}
 										</span>
                                     </div>
                                 </div>
@@ -131,8 +131,8 @@
                                         <a href="/product/{{$product->id}}" class="block2-name dis-block s-text3 p-b-5">
                                             {{$product->name}}
                                         </a>
-                                        <span class="block2-price m-text6 p-r-5">
-											${{$product->price}}
+                                        <span class="block2-price m-text6 p-r-5 product-price">
+											{{$product->price}}
 										</span>
                                         {{--<span class="block2-oldprice m-text7 p-r-5">--}}
 											{{--$29.50--}}
@@ -178,8 +178,8 @@
                                             Herschel supply co 25l
                                         </a>
 
-                                        <span class="block2-price m-text6 p-r-5">
-											${{$view->price}}
+                                        <span class="block2-price m-text6 p-r-5 product-price">
+											{{$view->price}}
 										</span>
                                     </div>
                                 </div>
@@ -299,6 +299,27 @@
                 swal(nameProduct, "is added to wishlist !", "success");
             });
         });
+
+        $('.product-price').each((index, item) => {
+          $(item)[0].innerText = formatMoney($(item)[0].innerText);
+          $(item)[0].innerText += '$'
+        })
+
+        function formatMoney(amount, decimalCount = 0, decimal = ".", thousands = ",") {
+          try {
+            decimalCount = Math.abs(decimalCount);
+            decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+            const negativeSign = amount < 0 ? "-" : "";
+
+            let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+            let j = (i.length > 3) ? i.length % 3 : 0;
+
+            return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+          } catch (e) {
+            console.log(e)
+          }
+        }
 
         $('.product-add-button').on('click', function() {
           let attr_id = $(this).attr('id');

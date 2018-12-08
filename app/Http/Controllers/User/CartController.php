@@ -3,21 +3,25 @@
 namespace App\Http\Controllers\User;
 
 use App\Repositories\ProductRepository;
-
+use Cart;
+use App\Repositories\SlideRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
 	protected $product;
+	protected $slide;
 
-	public function __construct(ProductRepository $product)
+	public function __construct(ProductRepository $product, SlideRepository $slide)
 	{
 		$this->product = $product;
+		$this->slide = $slide;
 	}
 
 	public function index(Request $request) {
 		$userId = $this->currentUser()->id;
+		$slides = $this->slide->all();
 		if($request->ajax())
 		{
 			$items = [];
@@ -35,7 +39,7 @@ class CartController extends Controller
 		}
 		else
 		{
-			return view('user.cart');
+			return view('user.cart', compact('slides'));
 		}
 	}
 
@@ -63,7 +67,7 @@ class CartController extends Controller
 		),201,[]);
 	}
 
-	public function details()
+	public function details(Request $request)
 	{
 		$userId = $this->currentUser()->id; // get this from session or wherever it came from
 
@@ -78,5 +82,44 @@ class CartController extends Controller
 		),200,[]);
 	}
 
+	public function update(Request $request) {
+		$userId = $this->currentUser()->id; // get this from session or wherever it came from
+		$product_id = $request->get('product_id');
+		$quantity = $request->get('quantity');
+		$quantityOfProductInCart = \Cart::session($userId)->get($product_id)->quantity;
+		$quantityOfProduct = $this->product->getQuantity($product_id);
+		if($quantity <= 0) {
+			return response(array(
+				'success' => false,
+				'data' => \Cart::session($userId)->getContent(),
+				'message' => "Update false!"
+			),200,[]);
+		}
+		if($quantity > $quantityOfProduct) {
+			return response(array(
+				'success' => false,
+				'data' => \Cart::session($userId)->getContent(),
+				'message' => "Cannot update quantity of this product"
+			),200,[]);
+		}
+		$quantityUpdate = $quantity - $quantityOfProductInCart;
+		\Cart::update($product_id, ['quantity' => $quantityUpdate]);
+		return response(array(
+			'success' => true,
+			'data' => \Cart::session($userId)->getContent(),
+			'message' => "Update Cart Success"
+		),200,[]);
+	}
+
+	public function remove($id, Request $request) {
+		$userId = $this->currentUser()->id; // get this from session or wherever it came from
+		$product_id = $id;
+		$cart = \Cart::session($userId)->remove($product_id);
+		return response(array(
+			'success' => true,
+			'data' => \Cart::session($userId)->getContent(),
+			'message' => "Remove Success"
+		),200,[]);
+	}
 
 }

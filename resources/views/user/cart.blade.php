@@ -5,7 +5,7 @@
 @section('content')
 
     <!-- Title Page -->
-    <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(/user/images/heading-pages-01.jpg);">
+    <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(/user/images/slide-banner.jpg);">
         <h2 class="l-text2 t-center">
             Cart
         </h2>
@@ -24,6 +24,7 @@
                             <th class="column-3">Price</th>
                             <th class="column-4 p-l-70">Quantity</th>
                             <th class="column-5">Total</th>
+                            <th>Action</th>
                         </tr>
 
                         <tr class="table-row" v-for="(item, index) in items" :key="index">
@@ -33,21 +34,30 @@
                                 </div>
                             </td>
                             <td class="column-2">@{{item.name}}</td>
-                            <td class="column-3">@{{item.price}}$</td>
+                            <td class="column-3">@{{formatMoney(item.price)}}$</td>
                             <td class="column-4">
                                 <div class="flex-w bo5 of-hidden w-size17">
                                     <button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2" @click="minusQty(item)" :disable="item.quantity === 1">
                                         <i class="fs-12 fa fa-minus" aria-hidden="true"></i>
                                     </button>
 
-                                    <input class="size8 m-text18 t-center num-product" type="number" name="num-product1" v-bind:value="item.quantity">
+                                    <input class="size8 m-text18 t-center num-product"
+                                           type="number"
+                                           name="num-product1"
+                                           v-model="item.quantity"
+                                           @keyup="checkFinishInput(item)">
 
                                     <button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2" @click="plusQty(item)">
                                         <i class="fs-12 fa fa-plus" aria-hidden="true"></i>
                                     </button>
                                 </div>
                             </td>
-                            <td class="column-5">@{{item.price * item.quantity}}$</td>
+                            <td class="column-5">@{{formatMoney(item.price * item.quantity)}}$</td>
+                            <td>
+                                <button class="btn btn-danger" @click="removeItem(item.id)">
+                                    Remove
+                                </button>
+                            </td>
                         </tr>
 
                     </table>
@@ -89,7 +99,7 @@
 					</span>
 
                     <span class="m-text21 w-size20 w-full-sm">
-						@{{ details.sub_total }}$
+						@{{ formatMoney(details.sub_total) }}$
 					</span>
                 </div>
 
@@ -103,34 +113,6 @@
                         <p class="s-text8 p-b-23">
                             There are no shipping methods available. Please double check your address, or contact us if you need any help.
                         </p>
-
-                        <span class="s-text19">
-							Calculate Shipping
-						</span>
-
-                        <div class="rs2-select2 rs3-select2 rs4-select2 bo4 of-hidden w-size21 m-t-8 m-b-12">
-                            <select class="selection-2" name="country">
-                                <option>Select a country...</option>
-                                <option>US</option>
-                                <option>UK</option>
-                                <option>Japan</option>
-                            </select>
-                        </div>
-
-                        <div class="size13 bo4 m-b-12">
-                            <input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="state" placeholder="State /  country">
-                        </div>
-
-                        <div class="size13 bo4 m-b-22">
-                            <input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="postcode" placeholder="Postcode / Zip">
-                        </div>
-
-                        <div class="size14 trans-0-4 m-b-10">
-                            <!-- Button -->
-                            <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-                                Update Totals
-                            </button>
-                        </div>
                     </div>
                 </div>
 
@@ -141,7 +123,7 @@
 					</span>
 
                     <span class="m-text21 w-size20 w-full-sm">
-						@{{ details.total }}$
+						@{{ formatMoney(details.total) }}$
 					</span>
                 </div>
 
@@ -157,9 +139,6 @@
 @endsection
 
 @section('customJs')
-    <script src="https://unpkg.com/vue"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/vue.resource/1.3.1/vue-resource.min.js"></script>
 
     <script type="text/javascript">
         $(".selection-1").select2({
@@ -210,16 +189,26 @@
                       {label: 'Apply to SubTotal', key: 'subtotal'},
                       {label: 'Apply to Total', key: 'total'}
                     ]
-                  }
+                  },
+
+                  timer: null,
+                  updateSuccess: true,
                 }
               },
 
               watch: {
-
+                updateSuccess: function() {
+                  if(this.updateSuccess === false) {
+                    console.log(22);
+                    this.loadItems();
+                  }
+                }
               },
 
               mounted:function(){
                 this.loadItems();
+
+
               },
               methods: {
                 sum(a,b) {
@@ -242,6 +231,22 @@
                     console.log(error);
                   });
                 },
+                formatMoney(amount, decimalCount = 0, decimal = ".", thousands = ",") {
+                  try {
+                    decimalCount = Math.abs(decimalCount);
+                    decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+                    const negativeSign = amount < 0 ? "-" : "";
+
+                    let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+                    let j = (i.length > 3) ? i.length % 3 : 0;
+
+                    return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+                  } catch (e) {
+                    console.log(e)
+                  }
+                },
+
                 addCartCondition: function() {
 
                   let _this = this;
@@ -269,14 +274,9 @@
                   });
                 },
                 removeItem: function(id) {
-
                   let _this = this;
-
-                  axios.delete('/cart/'+id,{
-                    params: {
-                      _token:_token
-                    }
-                  }).then(function(success) {
+                  let url = '/cart/' + id;
+                  axios.delete(url).then(function(success) {
                     _this.loadItems();
                   }, function(error) {
                     console.log(error);
@@ -299,6 +299,8 @@
                     _this.loadCartDetails();
                   }, function(error) {
                     console.log(error);
+                  }).finally(() => {
+                    this.updateSuccess = true;
                   });
                 },
                 loadCartDetails() {
@@ -312,18 +314,56 @@
                   });
                 },
 
-                minusQty(item) {
-                  if(item.quantity > 1){
-                    item.quantity--;
+                updateCart(item, quantity) {
+                  let url = '/cart/update';
+                  console.log(item.quantity);
+                  console.log(quantity);
+                  let payload = {
+                    product_id: item.id,
+                    quantity: (item.quantity) + parseInt(quantity)
+                  }
+                  axios.put(url, payload).then(function(success) {
+                    if(success.data.success) {
+                      item.quantity = parseInt(item.quantity) + parseInt(quantity);
+                      toastr.success('Update success for product ', item.name);
+                    } else {
+                      alert(1);
+                      toastr.warning('Update false for product ', item.name);
+                      this.updateSuccess = false;
+                    }
+                  }, function(error) {
+                    console.log(error);
+                    toastr.warning('Something error!: ', error);
+                  }).finally(() => {
                     this.details.sub_total = this.details.total = this.items.reduce(this.sum, 0);
-                    this.details.total_quantity --;
+                    this.details.quantity = parseInt(this.details.quantity);
+                  });
+                },
+
+                minusQty(item) {
+                  if(item.quantity > 1) {
+                    this.updateCart(item, -1);
                   }
                 },
 
                 plusQty(item) {
-                  item.quantity++;
-                  this.details.sub_total = this.details.total = this.items.reduce(this.sum, 0);
-                  this.details.total_quantity ++;
+                  this.updateCart(item, 1);
+                },
+
+                checkFinishInput(item) {
+                  clearTimeout(this.timer);
+                  this.timer = setTimeout(this.updateQuantity(item), 1000)
+                },
+
+                updateQuantity(item) {
+                  if(item.quantity > 0) {
+                    this.updateCart(item, 0)
+                    this.details.sub_total = this.details.total = this.items.reduce(this.sum, 0);
+                    let sumQty = (a, b) => {
+                      return a + b.quantity;
+                    }
+                    this.details.total_quantity = this.items.reduce(sumQty, 0);
+                  }
                 }
               }
             });

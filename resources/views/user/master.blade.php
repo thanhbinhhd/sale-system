@@ -28,6 +28,9 @@
     <!-- jQuery UI 1.11.4 -->
     <script src="/user/js/bootstrap.bundle.min.js"></script>
     <!-- iCheck -->
+    <script>
+
+    </script>
 @show
 @yield('footer')
 </body>
