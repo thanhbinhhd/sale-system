@@ -24,7 +24,7 @@ return [
 
     'product_manager_path' => "/admin/product-manager",
 
-    'category_manager_path' => "/admin/category-manager",
+    'category_manager_path' => "/admin/category-manager/",
 
     'order_manager_path' => "/admin/order-manager",
 
