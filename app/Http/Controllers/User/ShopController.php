@@ -65,7 +65,6 @@ class ShopController extends Controller
                 $products = $categoryModel->products();
             }
         }
-
         $products = $this->product->filte($products, $request)->paginate(self::CATEGORY_PAGINATION);
         return view('user.shop', ['products' => $products, 'categoryName' => $category]);
     }

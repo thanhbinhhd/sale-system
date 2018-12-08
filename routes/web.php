@@ -48,6 +48,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
             Route::delete('{id}', 'ProductController@destroy');
         });
 
+        Route::get('dashboard',['as' => 'home', 'uses' => 'DashBoardController@index']);
+        Route::get('dashboard/get-chart', 'DashBoardController@getChart');
         Route::put('update-blog-status', 'BlogController@updateStatus');
 
         Route::resource('blog-manager', 'BlogController');
@@ -59,6 +61,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
         Route::get('user-manager',['as' => 'user-manager', 'uses' => 'UserController@index']);
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
         Route::put('update-status',"UserController@updateStatus");
+        Route::get('order-list/{id}', "UserController@orderList");
         
         Route::get('slide-manager',['as' => 'slide-manager', 'uses' => 'SlideController@index']);
         Route::post('create-slide',"SlideController@createSlide");
@@ -75,7 +78,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
         Route::post('upload-category-image',"CategoryController@uploadImage");
         Route::post('change-category-image-name',"CategoryController@changeImageName");
 
-        Route::get('users/{id}',"UserController@detail");
+        Route::resource('order-manager', 'OrderController');
+
     });
 });
 

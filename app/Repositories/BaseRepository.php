@@ -124,4 +124,14 @@ trait BaseRepository
 
         return $model;
     }
+
+    /**
+     * @param $status
+     * @param $id
+     * @return mixed
+     */
+    public function updateStatus($status, $id){
+        $this->updateColumn($id, ['status' => $status]);
+        return $status;
+    }
 }
