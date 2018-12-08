@@ -32,4 +32,8 @@ class UserController extends Controller
         return response()->json(['data'=>$user]);
     }
 
+    public function orderList($id){
+        $orders = $this->user->getById($id)->orders;
+        return response()->json(['data'=>$orders]);
+    }
 }
