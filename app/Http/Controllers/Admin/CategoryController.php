@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -20,52 +21,54 @@ class CategoryController extends Controller
 
     public function index(){
         $categories = $this->category->all();
-        return view('admin.categories', compact('categories'));
+        return view('admin.categories.index', compact('categories'));
     }
 
-    public function createCategory(CreateCategoryRequest $request){
-        $name = $request->get('name');
-        $desc = $request->get('desc');
-        $imagePath = $request->get('imagePath');
-        $adminID = $request->get('adminID');
-        $categoryNew = array("name"=>$name, "description"=>$desc, "admin_id"=>$adminID, "image_path"=>$imagePath);
-        $id = $this->category->store($categoryNew)->id;
-        return response()->json(['data'=>$id], self::CODE_CREATE_SUCCESS);
+    public function create() {
+        return view('admin.categories.create');
     }
 
-    public function updateCategory(UpdateCategoryRequest $request){
-        $id = $request->get('id');
-        $name = $request->get('name');
-        $desc = $request->get('desc');
-        $imagePath = $request->get('imagePath');
-        $adminID = $request->get('adminID');
-        $updateArray = array("name"=>$name, "description"=>$desc, "admin_id"=>$adminID, "image_path"=>$imagePath);
-        $this->category->update($id, $updateArray);
-        return response()->json(['data'=>$updateArray], self::CODE_UPDATE_SUCCESS);
+    public function edit($id) {
+        $category = $this->category->getById($id);
+        return view('admin.categories.edit', ['category' => $category]);
     }
 
-    public function deleteCategory(Request $request){
-        $id = $request->get('id');
-        $this->category->destroy($id);
-        return response()->json(['data'=>$id], self::CODE_DELETE_SUCCESS);
+    public function store(CreateCategoryRequest $request) {
+        $category = $this->category->store(array_merge($request->all(),
+                [
+                    'admin_id'  => Auth::guard('admin')->user()->id,
+                    'image_path' => "/admin/images/avatar.jpg"
+                ]));
+        $avatar = $request->file('image');
+        $image_path = $avatar->store('images/categories');
+        $this->category->update($category->id, ['image_path' => '/storage/' . $image_path,]);
+
+        \Session::flash('message', 'Successfully created new "'. $category->name . '"!');
+        return redirect()->route('admin.category-manager.index');
+
     }
 
-    public function uploadImage(Request $request){
-        $avatar = $request->file('file');
-        $name = $request->get('name');
-        $image_path = $avatar->storeAs(
-            'images/categories', $name.'.png'
-        );
-        return response()->json(['data'=>$name], self::CODE_UPDATE_SUCCESS);
-    }
+    public function update(UpdateCategoryRequest $request, $id) {
+        $category = $this->category->getById($id);
+        $this->category->update($id, $request->all());
 
-    public function changeImageName(Request $request){
-        $oldName = $request->get('oldName');
-        $newName = $request->get('newName');
-        if($oldName != $newName){
-            Storage::move('images/categories/'.$oldName.'.png', 'images/categories/'.$newName.'.png');
+        if ($request->hasFile('image')){
+            $avatar = $request->file('image');
+            $image_path = $avatar->store('images/categories');
+            $this->category->update($id, ['image_path' => '/storage/' . $image_path,]);
         }
-        return response()->json(['data'=>$oldName], self::CODE_UPDATE_SUCCESS);
-        
+
+        \Session::flash('message', 'Update category "'. $category->name . '" successfully!');
+        return redirect()->route('admin.category-manager.edit', ['id' => $id]);
+    }
+
+    public function destroy($id) {
+        $admin = Auth::guard('admin')->user();
+        if($admin->isAdmin() or $admin->adminPermission->can_delete) {
+            $status = $this->category->destroy($id);
+            return response()->json(['data' => $status], self::CODE_DELETE_SUCCESS);
+        }else{
+            return response()->json(['message' => 'Not permission'], self::CODE_FORBIDDEN);
+        }
     }
 }
