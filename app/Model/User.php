@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Notifications\OrderCompletedNotification;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\UserVerifyMail;
 use App\Scopes\StatusScope;
@@ -66,6 +67,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new UserVerifyMail());
+    }
+
+    public function sendOrderCompletedNotification(){
+        $this->notify(new OrderCompletedNotification());
     }
 
     public function orders(){

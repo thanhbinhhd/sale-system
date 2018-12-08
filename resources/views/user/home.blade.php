@@ -93,9 +93,19 @@
                                             {{$cheap->name}}
                                         </a>
 
-                                        <span class="block2-price m-text6 p-r-5 product-price">
-											{{$cheap->price}}
-										</span>
+                                        @if($cheap->discount() > 0)
+                                            <span class="block2-oldprice m-text7 p-r-5 product-price">
+										{{$cheap->price}}
+									</span>
+
+                                            <span class="block2-newprice m-text8 p-r-5 product-price">
+										{{$cheap->price - $cheap->price * $cheap->discount() / 100}}
+									</span>
+                                        @else
+                                            <span class="block2-price m-text6 p-r-5 product-price">
+                                        {{$cheap->price}}
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -131,16 +141,19 @@
                                         <a href="/product/{{$product->id}}" class="block2-name dis-block s-text3 p-b-5">
                                             {{$product->name}}
                                         </a>
-                                        <span class="block2-price m-text6 p-r-5 product-price">
-											{{$product->price}}
-										</span>
-                                        {{--<span class="block2-oldprice m-text7 p-r-5">--}}
-											{{--$29.50--}}
-										{{--</span>--}}
+                                        @if($product->discount() > 0)
+                                            <span class="block2-oldprice m-text7 p-r-5 product-price">
+										    {{$product->price}}
+                                            </span>
 
-                                        {{--<span class="block2-newprice m-text8 p-r-5">--}}
-											{{--$15.90--}}
-										{{--</span>--}}
+                                            <span class="block2-newprice m-text8 p-r-5 product-price">
+                                            {{$product->price - $product->price * $product->discount() / 100}}
+                                            </span>
+                                        @else
+                                            <span class="block2-price m-text6 p-r-5 product-price">
+                                            {{$product->price}}
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -178,9 +191,19 @@
                                             Herschel supply co 25l
                                         </a>
 
-                                        <span class="block2-price m-text6 p-r-5 product-price">
-											{{$view->price}}
-										</span>
+                                        @if($view->discount() > 0)
+                                            <span class="block2-oldprice m-text7 p-r-5 product-price">
+										{{$view->price}}
+									</span>
+
+                                            <span class="block2-newprice m-text8 p-r-5 product-price">
+										{{$view->price - $view->price * $view->discount() / 100}}
+									</span>
+                                        @else
+                                            <span class="block2-price m-text6 p-r-5 product-price">
+                                        {{$view->price}}
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

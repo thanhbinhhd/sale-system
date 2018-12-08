@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Model\Order;
 use App\Repositories\OrderRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -54,6 +55,8 @@ class OrderController extends Controller
         $admin = Auth::guard('admin')->user();
         if($admin->isAdmin() or $admin->adminPermission->can_update) {
             $this->order->updateStatus($status,$id);
+            if ($status == Order::HANDLED)
+                $this->order->getById($id)->creator->sendOrderCompletedNotification();
             return response()->json(['data'=>$status], self::CODE_UPDATE_SUCCESS);
         }else{
             return response()->json(['message' => 'Not permission'], self::CODE_FORBIDDEN);

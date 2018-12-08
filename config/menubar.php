@@ -16,6 +16,8 @@ return [
 
     'blog' => "Blogs Manager",
 
+    'sale' => 'Sale-off Manager',
+
     'admin_manager_path' => "/admin/admin-manager",
 
     'user_manager_path' => "/admin/user-manager",
@@ -29,6 +31,8 @@ return [
     'slide_manager_path' => "/admin/slide-manager",
 
     'blog_manager_path' => "/admin/blog-manager",
+
+    'sale_off_manager_path' => "/admin/sale-manager",
 
     'page_name' => 'Sales System',
 
