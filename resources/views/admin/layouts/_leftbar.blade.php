@@ -41,6 +41,9 @@
             <li>
                 <a href="{{config('menubar.blog_manager_path')}}"><span class="fa fa-rss-square"></span>{{config('menubar.blog')}}</a>
             </li>
+            <li>
+                <a href="{{config('menubar.sale_off_manager_path')}}"><span class="fa fa fa-level-down"></span>{{config('menubar.sale')}}</a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

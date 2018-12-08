@@ -183,18 +183,19 @@
                                     <a href="product/{{$product->name}}" class="block2-name dis-block s-text3 p-b-5">
                                         {{$product->name}}
                                     </a>
-
-                                    <span class="block2-price m-text6 p-r-5 product-price">
+                                    @if($product->discount() > 0)
+                                    <span class="block2-oldprice m-text7 p-r-5 product-price">
 										{{$product->price}}
 									</span>
 
-                                    {{--<span class="block2-oldprice m-text7 p-r-5">--}}
-										{{--$29.50--}}
-									{{--</span>--}}
-
-                                    {{--<span class="block2-newprice m-text8 p-r-5">--}}
-										{{--$15.90--}}
-									{{--</span>--}}
+                                    <span class="block2-newprice m-text8 p-r-5 product-price">
+										{{$product->price - $product->price * $product->discount() / 100}}
+									</span>
+                                    @else
+                                        <span class="block2-price m-text6 p-r-5 product-price">
+                                        {{$product->price}}
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
                         </div>

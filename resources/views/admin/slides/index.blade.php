@@ -5,7 +5,10 @@
 @endsection
 @php ($currentAdmin = Auth::guard('admin')->user())
 @section('pagename')
-    Order Manager
+    Slide Manager
+    @if($currentAdmin->level == 1 or $currentAdmin->adminPermission->can_add)
+        <a href="{{route('admin.slide-manager.create')}}"><button type="button" class="btn btn-primary">Create New</button></a>
+    @endif
 @endsection
 @section('content')
     <div class="container">
@@ -15,19 +18,13 @@
         <table id="listtable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
             <thead>
             <tr>
-                <th class="th-sm">Order ID
+                <th class="th-sm">Title
                     <i class="fa fa-sort float-right" aria-hidden="true"></i>
                 </th>
-                <th class="th-sm">Username
+                <th class="th-sm">Preview
                     <i class="fa fa-sort float-right" aria-hidden="true"></i>
                 </th>
-                <th class="th-sm">Address
-                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                </th>
-                <th class="th-sm">Order date
-                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                </th>
-                <th class="th-sm">Email
+                <th class="th-sm">Created Date
                     <i class="fa fa-sort float-right" aria-hidden="true"></i>
                 </th>
                 <th class="th-sm">Status
@@ -38,17 +35,22 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($orders as $order)
-                <tr id="row-{{$order->id}}">
-                    <td>{{$order->id}}</td>
-                    <td>@if($order->creator!=null){{$order->creator->name}}@endif</td>
-                    <td>@if($order->creator!=null){{$order->creator->address}}@endif</td>
-                    <td>{{$order->created_at}}</td>
-                    <td>@if($order->creator!=null){{$order->creator->email}}@endif</td>
-                    <td>{{($order->status == \App\Model\Order::HANDLED)?"Completed":"Pending"}}</td>
+            @foreach($slides as $slide)
+                <tr id="row-{{$slide->id}}">
+                    <td>{{$slide->title}}</td>
                     <td>
-                        <a href="{{route('admin.order-manager.show', ['id' => $order->id])}}" type="button" class="btn btn-info">Detail</a>
-                        <button type="button" class="btn btn-danger" data-name="@if($order->creator!=null){{$order->creator->name}}@endif" data-id="{{$order->id}}" data-toggle="modal" data-target="#askDeleteModal">Delete</button>
+                      <img src="{{$slide->link}}" width="200">
+                    </td>
+                    <td>{{$slide->created_at}}</td>
+                    <td>
+                        <select class="form-control slide-status" data-id="{{$slide->id}}">
+                            <option value="1" @if($slide->status == \App\Model\Slide::ACTIVE) selected @endif >Active</option>
+                            <option value="0" @if($slide->status == \App\Model\Slide::BLOCKED) selected @endif>Blocked</option>
+                        </select>
+                    </td>
+                    <td>
+                        <a href="{{route('admin.slide-manager.edit', ['slide_manager' => $slide->id])}}" type="button" class="btn btn-info">Detail</a>
+                        <button type="button" class="btn btn-danger" data-name="{{$slide->title}}" data-id="{{$slide->id}}" data-toggle="modal" data-target="#askDeleteModal">Delete</button>
                     </td>
                 </tr>
             @endforeach
@@ -70,7 +72,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" onclick="deleteOrder(this.getAttribute('data-id'))" data-dismiss="modal">Delete</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteAdmin(this.getAttribute('data-id'))" data-dismiss="modal">Delete</button>
                 </div>
             </div>
         </div>
@@ -87,19 +89,19 @@
                 var name = button.data('name');
                 var id = button.data('id');
                 var modal = $(this)
-                modal.find('#ModalMessage').text('Do you really want to delete order ' + name + ' from db?')
+                modal.find('#ModalMessage').text("Do you really want to delete slide '" + name + "' from db?")
                 modal.find('.btn-danger').attr('data-id', id)
             })
-        });
-        function deleteOrder(id) {
+        })
+        function deleteAdmin(id) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
-                type:'delete',
-                url: '/admin/order-manager/' + id,
+                type:'post',
+                url: '/admin/slide-manager/' + id,
                 data:{
                     id:id,
                     _method: 'delete'
@@ -112,9 +114,8 @@
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
                     switch (xhr.status) {
-                        case 404: toastr.error("order " + thrownError);
+                        case 404: toastr.error("Slide " + thrownError);
                             break;
                         default: toastr.error(xhr.responseJSON.message);
                     }
@@ -127,6 +128,32 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
+            $(".slide-status").on("change",function () {
+                var id = $(this).data('id');
+                var status = $(this).val();
+                $.ajax({
+                    type:'PUT',
+                    url: '/admin/update-slide-status',
+                    data:{
+                        id:id,
+                        status:status,
+                    },
+                    success: function (response) {
+                        if(!response.error)
+                        {
+                            toastr.success('Status was changed!');
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        switch (xhr.status) {
+                            case 404: toastr.error("Slide " + thrownError);
+                                break;
+                            default: toastr.error(xhr.responseJSON.message);
+                        }
+                    }
+                });
+            })
         });
     </script>
 @endsection

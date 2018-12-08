@@ -30,6 +30,7 @@
             <legend>Edit Blog</legend>
             {{ csrf_field()}}
             <input name="_method" type="hidden" value="PUT">
+            <input name="blog-id" type="hidden" value={{$blog->id}}>
             <div class="form-group"  style="width: 50%">
                 <label for="inputCategory">Category:</label>
                 <select class="form-control" id="inputCategory" name="category_id">

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateSlideRequest;
 use App\Http\Requests\UpdateSlideRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class SlideController extends Controller
 {
@@ -17,60 +18,69 @@ class SlideController extends Controller
         $this->slide = $slide;
     }
 
-    public function index(){
+    public function index() {
         $slides = $this->slide->all();
-        return view('admin.slides', compact('slides'));
+        return view('admin.slides.index', compact('slides'));
     }
 
-    public function createSlide(CreateSlideRequest $request){
-        $title = $request->get('title');
-        $link = $request->get('link');
-        $status = 1;
-        $slideNew = array("title"=>$title, "link"=>$link, "status"=>$status);
-        $id = $this->slide->store($slideNew)->id;
-        return response()->json(['data'=>$id], self::CODE_CREATE_SUCCESS);
+    public function create() {
+        return view('admin.slides.create');
     }
 
-    public function updateSlide(UpdateSlideRequest $request){
-        $id = $request->get('id');
-        $title = $request->get('title');
-        $link = $request->get('link');
-        $updateArray = array("title"=>$title, "link"=>$link);
-        $this->slide->update($id, $updateArray);
-        return response()->json(['data'=>$updateArray], self::CODE_UPDATE_SUCCESS);
-    }
-    
-    public function deleteSlide(Request $request){
-        $id = $request->get('id');
-        $this->slide->destroy($id);
-        return response()->json(['data'=>$id], self::CODE_DELETE_SUCCESS);
+    public function edit($id) {
+        $slide = $this->slide->getById($id);
+        return view('admin.slides.edit', ['slide' => $slide]);
     }
 
-    public function updateSlideStatus(Request $request){
-        $status = $request->get('status');
-        $id = $request->get('id');
-        $statusArray = array("status"=>$status);
-        $this->slide->update($id, $statusArray);
-        return response()->json(['data'=>$statusArray], self::CODE_UPDATE_SUCCESS);
+    public function store(CreateSlideRequest $request) {
+
+        $slide = $this->slide->store(array_merge($request->all(),
+                [
+                    'status'    => $request->has('status')?1:0,
+                ]));
+        $avatar = $request->file('image');
+        $image_path = $avatar->store('images/slides');
+        $this->slide->update($slide->id, ['link' => '/storage/' . $image_path,]);
+
+        \Session::flash('message', 'Successfully created new "'. $slide->title . '"!');
+        return redirect()->route('admin.slide-manager.index');
+
     }
 
-    public function uploadImage(Request $request){
-        $avatar = $request->file('file');
-        $name = $request->get('name');
-        $image_path = $avatar->storeAs(
-            'images/slides', $name.'.png'
-        );
-        return response()->json(['data'=>$name], self::CODE_UPDATE_SUCCESS);
-    }
+    public function update(UpdateSlideRequest $request, $id) {
+        $slide = $this->slide->getById($id);
+        $this->slide->update($id, $request->all());
 
-    public function changeImageName(Request $request){
-        $oldName = $request->get('oldName');
-        $newName = $request->get('newName');
-        if($oldName != $newName){
-            Storage::move('images/slides/'.$oldName.'.png', 'images/slides/'.$newName.'.png');
+        if ($request->hasFile('image')){
+            $avatar = $request->file('image');
+            $image_path = $avatar->store('images/slides');
+            $this->slide->update($id, ['link' => '/storage/' . $image_path,]);
         }
-        return response()->json(['data'=>$oldName], self::CODE_UPDATE_SUCCESS);
-        
+
+        \Session::flash('message', 'Update slide "'. $slide->title . '" successfully!');
+        return redirect()->route('admin.slide-manager.edit', ['id' => $id]);
+    }
+
+    public function updateStatus(Request $request) {
+        $status = $request->get('status');
+        $id=$request->get('id');
+        $admin = Auth::guard('admin')->user();
+        if($admin->isAdmin() or $admin->adminPermission->can_update) {
+            $this->slide->updateStatus($status,$id);
+            return response()->json(['data'=>$status], self::CODE_UPDATE_SUCCESS);
+        }else{
+            return response()->json(['message' => 'Not permission'], self::CODE_FORBIDDEN);
+        }
+    }
+
+    public function destroy($id) {
+        $admin = Auth::guard('admin')->user();
+        if($admin->isAdmin() or $admin->adminPermission->can_delete) {
+            $status = $this->slide->destroy($id);
+            return response()->json(['data' => $status], self::CODE_DELETE_SUCCESS);
+        }else{
+            return response()->json(['message' => 'Not permission'], self::CODE_FORBIDDEN);
+        }
     }
 
 }

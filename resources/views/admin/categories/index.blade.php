@@ -5,7 +5,10 @@
 @endsection
 @php ($currentAdmin = Auth::guard('admin')->user())
 @section('pagename')
-    Order Manager
+    Category Manager
+    @if($currentAdmin->level == 1 or $currentAdmin->adminPermission->can_add)
+        <a href="{{route('admin.category-manager.create')}}"><button type="button" class="btn btn-primary">Create New</button></a>
+    @endif
 @endsection
 @section('content')
     <div class="container">
@@ -15,22 +18,16 @@
         <table id="listtable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
             <thead>
             <tr>
-                <th class="th-sm">Order ID
+                <th class="th-sm">Name
                     <i class="fa fa-sort float-right" aria-hidden="true"></i>
                 </th>
-                <th class="th-sm">Username
+                <th class="th-sm">Admin
                     <i class="fa fa-sort float-right" aria-hidden="true"></i>
                 </th>
-                <th class="th-sm">Address
+                <th class="th-sm">Preview
                     <i class="fa fa-sort float-right" aria-hidden="true"></i>
                 </th>
-                <th class="th-sm">Order date
-                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                </th>
-                <th class="th-sm">Email
-                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                </th>
-                <th class="th-sm">Status
+                <th class="th-sm">Created Date
                     <i class="fa fa-sort float-right" aria-hidden="true"></i>
                 </th>
                 <th class="th-sm">Action
@@ -38,17 +35,17 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($orders as $order)
-                <tr id="row-{{$order->id}}">
-                    <td>{{$order->id}}</td>
-                    <td>@if($order->creator!=null){{$order->creator->name}}@endif</td>
-                    <td>@if($order->creator!=null){{$order->creator->address}}@endif</td>
-                    <td>{{$order->created_at}}</td>
-                    <td>@if($order->creator!=null){{$order->creator->email}}@endif</td>
-                    <td>{{($order->status == \App\Model\Order::HANDLED)?"Completed":"Pending"}}</td>
+            @foreach($categories as $category)
+                <tr id="row-{{$category->id}}">
+                    <td>{{$category->name}}</td>
+                    <td>@if($category->admin){{$category->admin->username}}@endif</td>
                     <td>
-                        <a href="{{route('admin.order-manager.show', ['id' => $order->id])}}" type="button" class="btn btn-info">Detail</a>
-                        <button type="button" class="btn btn-danger" data-name="@if($order->creator!=null){{$order->creator->name}}@endif" data-id="{{$order->id}}" data-toggle="modal" data-target="#askDeleteModal">Delete</button>
+                      <img src="{{$category->image_path}}" width="200">
+                    </td>
+                    <td>{{$category->created_at}}</td>
+                    <td>
+                        <a href="{{route('admin.category-manager.edit', ['category_manager' => $category->id])}}" type="button" class="btn btn-info">Detail</a>
+                        <button type="button" class="btn btn-danger" data-name="{{$category->name}}" data-id="{{$category->id}}" data-toggle="modal" data-target="#askDeleteModal">Delete</button>
                     </td>
                 </tr>
             @endforeach
@@ -70,7 +67,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" onclick="deleteOrder(this.getAttribute('data-id'))" data-dismiss="modal">Delete</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteAdmin(this.getAttribute('data-id'))" data-dismiss="modal">Delete</button>
                 </div>
             </div>
         </div>
@@ -87,19 +84,19 @@
                 var name = button.data('name');
                 var id = button.data('id');
                 var modal = $(this)
-                modal.find('#ModalMessage').text('Do you really want to delete order ' + name + ' from db?')
+                modal.find('#ModalMessage').text("Do you really want to delete category '" + name + "' from db?")
                 modal.find('.btn-danger').attr('data-id', id)
             })
-        });
-        function deleteOrder(id) {
+        })
+        function deleteAdmin(id) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
-                type:'delete',
-                url: '/admin/order-manager/' + id,
+                type:'post',
+                url: '/admin/category-manager/' + id,
                 data:{
                     id:id,
                     _method: 'delete'
@@ -112,9 +109,8 @@
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
                     switch (xhr.status) {
-                        case 404: toastr.error("order " + thrownError);
+                        case 404: toastr.error("Blog " + thrownError);
                             break;
                         default: toastr.error(xhr.responseJSON.message);
                     }

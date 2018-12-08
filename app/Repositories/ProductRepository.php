@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Model\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductRepository
 {

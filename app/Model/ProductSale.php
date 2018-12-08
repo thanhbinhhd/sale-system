@@ -9,7 +9,7 @@ class ProductSale extends Model
     //
     protected $fillable = [
         'description', 'product_id', 'promo',
-        'promo_code', 'type', 'admin_id'
+        'promo_code', 'type', 'admin_id', 'start_date', 'end_date'
     ];
 
     protected $dates = [
