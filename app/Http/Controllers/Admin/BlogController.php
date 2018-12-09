@@ -9,6 +9,7 @@ use App\Model\News;
 use App\Model\Tag;
 use App\Model\Taggable;
 use App\Repositories\NewsRepository;
+use App\Repositories\SubscribeRepository;
 use App\Repositories\TaggableRepository;
 use App\Repositories\TagRepository;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +18,11 @@ use App\Http\Controllers\Controller;
 
 class BlogController extends Controller {
     protected $blog;
+    protected $subscribe;
 
-    public function __construct(NewsRepository $blog) {
+    public function __construct(NewsRepository $blog, SubscribeRepository $subscribe) {
         $this->blog = $blog;
+        $this->subscribe = $subscribe;
     }
 
     public function index() {
@@ -50,6 +53,14 @@ class BlogController extends Controller {
                     'taggable_type' => News::class
                 ]);
             }
+        }
+
+        if($request->get('notify')) {
+            $subscribes = $this->subscribe->all();
+            $title = $request->get("title");
+            $description = $request->get("description");
+            $blogSlug = $request->get("slug");
+            $this->sendNotifyUser($subscribes, $title, $description, $blogSlug);
         }
 
         \Session::flash('message', 'Successfully created new "'. $blog->title . '"!');
@@ -106,6 +117,12 @@ class BlogController extends Controller {
             return response()->json(['data' => $status], self::CODE_DELETE_SUCCESS);
         }else{
             return response()->json(['message' => 'Not permission'], self::CODE_FORBIDDEN);
+        }
+    }
+
+    public function sendNotifyUser($subscribes, $title, $description, $blogSlug) {
+        foreach($subscribes as $subscribe) {
+            $subscribe->sendSubscribeNotification($title, $description, $blogSlug);
         }
     }
 }
