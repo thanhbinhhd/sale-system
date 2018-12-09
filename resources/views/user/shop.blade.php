@@ -158,7 +158,7 @@
                             <!-- Block2 -->
                             <div class="block2">
 
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew  fixed-height">
+                                <div class="block2-img  of-hidden pos-relative block2-labelnew  fixed-height">
                                     <img src="{{$product->image_path}}" alt="IMG-PRODUCT">
 
                                     <div class="block2-overlay trans-0-4">
