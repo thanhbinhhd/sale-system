@@ -69,8 +69,8 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->notify(new UserVerifyMail());
     }
 
-    public function sendOrderCompletedNotification(){
-        $this->notify(new OrderCompletedNotification());
+    public function sendOrderCompletedNotification($user, $order, $orderDetail){
+        $this->notify(new OrderCompletedNotification($user, $order, $orderDetail));
     }
 
     public function orders(){

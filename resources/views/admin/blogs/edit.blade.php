@@ -90,8 +90,10 @@
 @endsection
 @section('customscript')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <script type="text/javascript">
+    <script src="https://cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>
 
+    <script type="text/javascript">
+      CKEDITOR.replace( 'inputContent' );
         function readURL(input) {
 
             if (input.files && input.files[0]) {

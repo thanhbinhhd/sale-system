@@ -79,14 +79,14 @@
                         <td>{{$index}}</td>
                         <td>{{$detail->product->name}}</td>
                         <td>{{$detail->quantity}}</td>
-                        <td>{{money_format('%(#10n', $detail->total_price)}} VND</td>
+                        <td>{{money_format('%(#10n', $detail->total_price)}}</td>
                     </tr>
                     @php $total += $detail->total_price; @endphp
                 @endforeach
 
                 <tr>
                     <th colspan="3">Total</th>
-                    <td style="color: red;font-weight: bold">{{money_format('%(#10n', $total)}} VND</td>
+                    <td style="color: red;font-weight: bold">{{money_format('%(#10n', $total)}}</td>
                 </tr>
                 </tbody>
             </table>

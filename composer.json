@@ -12,6 +12,7 @@
         "laravel/socialite": "^3.2",
         "laravel/tinker": "^1.0",
         "league/fractal": "^0.17.0",
+        "unisharp/laravel-ckeditor": "^4.7",
         "yzalis/identicon": "^1.2"
     },
     "require-dev": {

@@ -53,10 +53,13 @@ class OrderController extends Controller
     {
         $status = $request->get('status');
         $admin = Auth::guard('admin')->user();
+        $user = $this->order->getById($id)->creator;
+        $order = $this->order->getById($id);
+        $orderDetail = $this->order->getById($id)->detail()->get();
         if($admin->isAdmin() or $admin->adminPermission->can_update) {
             $this->order->updateStatus($status,$id);
             if ($status == Order::HANDLED)
-                $this->order->getById($id)->creator->sendOrderCompletedNotification();
+                $this->order->getById($id)->creator->sendOrderCompletedNotification($user, $order, $orderDetail);
             return response()->json(['data'=>$status], self::CODE_UPDATE_SUCCESS);
         }else{
             return response()->json(['message' => 'Not permission'], self::CODE_FORBIDDEN);

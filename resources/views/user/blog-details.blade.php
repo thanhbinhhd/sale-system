@@ -1,6 +1,11 @@
 @extends('user.layout.master')
 @section('customCss')
     <link rel="stylesheet" type="text/css" href="/user/css/slick.css">
+    <style>
+        .overflow-hidden {
+            overflow: hidden;
+        }
+    </style>
 @endsection
 @section('content')
     <!-- breadcrumb -->
@@ -24,7 +29,7 @@
     <section class="bgwhite p-t-60">
         <div class="container">
             <div class="row">
-                <div class="col-md-8 col-lg-9 p-b-75">
+                <div class="col-md-8 col-lg-9 p-b-75 overflow-hidden">
                     <div class="p-r-50 p-r-0-lg">
                         <!-- item blog -->
                         <div class="item-blog p-b-80">
@@ -71,7 +76,7 @@
                                 </p>
 
                                 <p class="p-b-25">
-                                    {{$blog->content}}
+                                    {!! $blog->content !!}
                                 </p>
                             </div>
                         </div>

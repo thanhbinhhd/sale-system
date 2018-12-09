@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Events\AddOrder;
 use App\Model\Order;
+use App\Model\OrderDetail;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Symfony\Component\EventDispatcher\Event;
 
 
 class OrderController extends Controller
@@ -36,18 +39,17 @@ class OrderController extends Controller
 			]);
 			$newOrder = $this->order->store($order);
 			$carts = \Cart::session($currentUserId)->getContent();
-			$i = 0;
 			foreach (($carts) as $cart) {
-				$orderDetail = array_merge([], [
+				(new OrderDetailRepository(new OrderDetail()))->store([
 					'product_id' => $cart->id,
 					'quantity' => $cart->quantity,
 					'order_id' => $newOrder->id,
 					'total_price' => $cart->price,
 				]);
-				$i ++;
-				$this->orderDetail->store($orderDetail);
 			}
 			\Cart::session($currentUserId)->clear();
+			$orderDetail = $newOrder->detail()->get();
+			event(new AddOrder($this->currentUser(), $newOrder, $orderDetail));
 			return response()->json([
 				'success' => true,
 				'data' => $newOrder,
