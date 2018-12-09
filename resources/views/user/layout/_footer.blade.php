@@ -60,7 +60,6 @@
             </div>
             <!-- </form> -->
         </div>
-
     </div>
 
     <div class="t-center p-l-15 p-r-15">

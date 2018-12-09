@@ -72,6 +72,10 @@
                 <input type="checkbox" class="form-check-input" value="1" @if(old('status')) checked="" @endif id="active" name="status" >
                 <label class="form-check-label" for="active">Active this blog</label>
             </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" value="1" @if(old('status')) checked="" @endif id="active-notify" name="notify" >
+                <label class="form-check-label" for="active-notify">Notify to User</label>
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </form>
     </div>
