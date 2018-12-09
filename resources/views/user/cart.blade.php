@@ -34,7 +34,16 @@
                                 </div>
                             </td>
                             <td class="column-2">@{{item.name}}</td>
-                            <td class="column-3">@{{formatMoney(item.price)}}$</td>
+                            <td class="column-3">
+                                <div v-if="item.attributes.discount > 0">
+                                    <span style="color: red; margin-right: 5px;">@{{formatMoney(item.price)}}$</span>
+                                    <span style="text-decoration: line-through;">@{{formatMoney(item.attributes.oldPrice)}}$</span>
+                                </div>
+                                <div v-else>
+                                    <span>@{{formatMoney(item.price)}}$
+                                    </span>
+                                </div>
+                            </td>
                             <td class="column-4">
                                 <div class="flex-w bo5 of-hidden w-size17">
                                     <button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2" @click="minusQty(item)" :disable="item.quantity === 1">
@@ -72,7 +81,7 @@
 
                     <div class="size12 trans-0-4 m-t-10 m-b-10 m-r-10">
                         <!-- Button -->
-                        <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+                        <button id="apply-coupon" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
                             Apply coupon
                         </button>
                     </div>
@@ -153,7 +162,16 @@
                                         </div>
                                     </td>
                                     <td>@{{item.quantity}}</td>
-                                    <td>@{{formatMoney(item.price)}}$</td>
+                                    <td>
+                                        <div v-if="item.attributes.discount > 0">
+                                            <span style="color: red; margin-right: 5px;">@{{formatMoney(item.price)}}$</span>
+                                            <span style="text-decoration: line-through;">@{{formatMoney(item.attributes.oldPrice)}}$</span>
+                                        </div>
+                                        <div v-else>
+                                            <span>@{{formatMoney(item.price)}}$
+                                            </span>
+                                        </div>
+                                    </td>
                                 </tr>
 
                                 <tr>
@@ -429,7 +447,7 @@
                     this.updateCart(item, 0)
                     this.details.sub_total = this.details.total = this.items.reduce(this.sum, 0);
                     let sumQty = (a, b) => {
-                      return a + b.quantity;
+                      return parseInt(a) + parseInt(b.quantity);
                     }
                     this.details.total_quantity = this.items.reduce(sumQty, 0);
                   }

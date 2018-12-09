@@ -177,9 +177,9 @@
                                 </div>
 
                                 <div class="block2-txt p-t-20">
-                                    <a href="product/{{$product->name}}" class="block2-name dis-block s-text3 p-b-5">
+                                    <span class="block2-name dis-block s-text3 p-b-5">
                                         {{$product->name}}
-                                    </a>
+                                    </span>
                                     @if($product->discount() > 0)
                                     <span class="block2-oldprice m-text7 p-r-5 product-price">
 										{{$product->price}}

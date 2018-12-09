@@ -47,7 +47,12 @@ class Product extends Model
 
 
     public function discount(){
-        return $this->sales()->select(DB::raw('max(promo) as discount'))->whereRaw('now() between start_date and end_date')->first()->discount;
+        $dis = $this->sales()->select(DB::raw('max(promo) as discount'))->whereRaw('now() between start_date and end_date')->first()->discount;
+        return ($dis == null)?0:$dis;
+    }
+
+    public function discountedPrice(){
+        return $this->price - $this->price * $this->discount() / 100;
     }
 
     public function taggables() {

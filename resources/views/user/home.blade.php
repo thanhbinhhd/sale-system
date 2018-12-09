@@ -89,9 +89,9 @@
                                     </div>
 
                                     <div class="block2-txt p-t-20">
-                                        <a href="/product/{{$cheap->id}}}" class="block2-name dis-block s-text3 p-b-5">
+                                        <span class="block2-name dis-block s-text3 p-b-5">
                                             {{$cheap->name}}
-                                        </a>
+                                        </span>
 
                                         @if($cheap->discount() > 0)
                                             <span class="block2-oldprice m-text7 p-r-5 product-price">
@@ -138,9 +138,9 @@
                                     </div>
 
                                     <div class="block2-txt p-t-20">
-                                        <a href="/product/{{$product->id}}" class="block2-name dis-block s-text3 p-b-5">
+                                        <span  class="block2-name dis-block s-text3 p-b-5">
                                             {{$product->name}}
-                                        </a>
+                                        </span>
                                         @if($product->discount() > 0)
                                             <span class="block2-oldprice m-text7 p-r-5 product-price">
 										    {{$product->price}}
@@ -187,9 +187,9 @@
                                     </div>
 
                                     <div class="block2-txt p-t-20">
-                                        <a href="/product/{{$view->id}}" class="block2-name dis-block s-text3 p-b-5">
+                                        <span  class="block2-name dis-block s-text3 p-b-5">
                                             Herschel supply co 25l
-                                        </a>
+                                        </span>
 
                                         @if($view->discount() > 0)
                                             <span class="block2-oldprice m-text7 p-r-5 product-price">
