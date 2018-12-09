@@ -111,6 +111,7 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
 
         });
 	    Route::get('/cart',['as' => 'cart', 'uses' => 'CartController@index']);
+	    Route::get('//product/{id}', ['uses' => 'HomeController@productDetail']);
 	    Route::post('/order',['as' => 'order', 'uses' => 'OrderController@addOrder']);
 	    Route::get('/cart/details',['as' => 'cart-details', 'uses' => 'CartController@details']);
 	    Route::put('/cart/update',['as' => 'cart-update', 'uses' => 'CartController@update']);
