@@ -53,7 +53,7 @@
                                 </div>
                             </td>
                             <td class="column-5">@{{formatMoney(item.price * item.quantity)}}$</td>
-                            <td>
+                            <td class="px-3 ">
                                 <button class="btn btn-danger" @click="removeItem(item.id)">
                                     Remove
                                 </button>
@@ -76,13 +76,6 @@
                             Apply coupon
                         </button>
                     </div>
-                </div>
-
-                <div class="size10 trans-0-4 m-t-10 m-b-10">
-                    <!-- Button -->
-                    <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-                        Update Cart
-                    </button>
                 </div>
             </div>
 
@@ -138,7 +131,7 @@
             </div>
             <div class="modal fade" id="showOrder" tabindex="-1" role="dialog" aria-labelledby="showOrder" aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content p-3">
                         <table class="table" style="background: white;">
                             <thead>
                             <tr>
@@ -163,7 +156,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th colspan="3">Total</th>
+                                    <th colspan="4">Total</th>
                                     <td style="color: red;font-weight: bold">@{{formatMoney(details.total)}}$</td>
                                 </tr>
                                 <tr>
@@ -399,10 +392,10 @@
                   axios.put(url, payload).then(function(success) {
                     if(success.data.success) {
                       item.quantity = parseInt(item.quantity) + parseInt(quantity);
-                      toastr.success('Update success for product ', item.name);
+
                     } else {
                       alert(1);
-                      toastr.warning('Update false for product ', item.name);
+
                       this.updateSuccess = false;
                     }
                   }, function(error) {

@@ -45,9 +45,6 @@
         <a href="{{route('user.logout')}}" class="link-color">Logout</a>
 
         <span class="linedivide1"></span>
-        <div id="cart">
-            @include('user.cart-header')
-        </div>
 
     </div>
 </div>
@@ -92,9 +89,6 @@
 
                 <a href="{{route('user.logout')}}" class="link-color">Logout</a>
                 <span class="linedivide1"></span>
-                <div id="cart1">
-                    @include('user.cart-header')
-                </div>
             </div>
         </div>
 
@@ -153,8 +147,6 @@
                 <a href="{{route('user.logout')}}" class="link-color">Logout</a>
 
                 <span class="linedivide2"></span>
-
-                @include('user.cart-header')
             </div>
 
             <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
