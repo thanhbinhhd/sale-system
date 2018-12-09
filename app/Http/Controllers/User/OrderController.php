@@ -33,6 +33,8 @@ class OrderController extends Controller
 		try{
 			$currentUserId = $this->currentUser()->id;
 			$note = $request->get('note');
+			$address = $request->get('address');
+			$phone_number = $request->get('phoneNumber');
 			\Cart::session($currentUserId);
 			$order = array_merge([], [
 				'user_id' => $currentUserId,
@@ -40,6 +42,8 @@ class OrderController extends Controller
 				'sub_total' => \Cart::session($currentUserId)->getSubTotal(),
 				'total' => \Cart::session($currentUserId)->getTotal(),
 				'note'  => $note,
+				'address'  => $address,
+				'phone_number'  => $phone_number,
 			]);
 			$newOrder = $this->order->store($order);
 			$carts = \Cart::session($currentUserId)->getContent();
@@ -66,5 +70,7 @@ class OrderController extends Controller
 		}
 
 	}
+
+
 	//
 }

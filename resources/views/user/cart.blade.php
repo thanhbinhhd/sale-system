@@ -1,6 +1,11 @@
 @extends('user.layout.master')
 @section('customCss')
     <link rel="stylesheet" type="text/css" href="/user/css/slick.css">
+    <style>
+        .border-input {
+            border: 1px solid #ced4da !important;
+        }
+    </style>
     @endsection
 @section('content')
 
@@ -186,6 +191,14 @@
                             </tbody>
                         </table>
                         <div class="form-group">
+                            <label for="address-order">Address:</label>
+                            <input class="form-control border-input" id="address-order" v-model="address"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber-order">Phone Number:</label>
+                            <input class="form-control border-input" id="phoneNumber-order" v-model="phoneNumber"/>
+                        </div>
+                        <div class="form-group">
                             <label for="comment">Note:</label>
                             <textarea class="form-control" rows="4" id="comment" v-model="noteOrder"></textarea>
                         </div>
@@ -230,6 +243,8 @@
                     total: 0,
                     total_quantity: 0
                   },
+                  address: '',
+                  phoneNumber: '',
                   itemCount: 0,
                   items: [],
                   item: {
@@ -345,6 +360,8 @@
                   let url = '/order';
                   let payload = {
                     note: this.noteOrder,
+                    address: this.address,
+                    phoneNumber: this.phoneNumber
                   }
                   axios.post(url, payload).then((res) => {
                     if(res.data.success) {
@@ -414,8 +431,6 @@
                       item.quantity = parseInt(item.quantity) + parseInt(quantity);
 
                     } else {
-                      alert(1);
-
                       this.updateSuccess = false;
                     }
                   }, function(error) {

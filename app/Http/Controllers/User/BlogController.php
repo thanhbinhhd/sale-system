@@ -18,6 +18,8 @@ class BlogController extends Controller
     protected $product;
     protected $blog;
 
+    const BLOG_PAGINATION = 8;
+
 
     public function __construct(UserRepository $user, TagRepository $tag,
                                 CategoryRepository $category, ProductRepository $product, NewsRepository $blog)
@@ -38,7 +40,7 @@ class BlogController extends Controller
         $categories = $this->category->getNew();
         $tags = $this->tag->all();
         $products = $this->product->getNew();
-        $blogs = $this->blog->all();
+        $blogs = $this->blog->page(self::BLOG_PAGINATION);
         return view('user.blog',compact('user','tags', 'categories', 'products', 'blogs'));
     }
 
@@ -47,9 +49,10 @@ class BlogController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function details($blogSlug){
-
-        //Find blog model by slug
         $blog = $this->blog->getBySlug($blogSlug);
+        if(!$blog){
+            return redirect()->route('user.blog');
+        }
 
         $user = $this->user->currentUser();
         $categories = $this->category->getNew();
@@ -57,5 +60,39 @@ class BlogController extends Controller
         $products = $this->product->getNew();
         return view('user.blog-details',compact('user','tags', 'categories', 'products', 'blog'));
 
-  }
+    }
+
+    public function searchWithCategory($category){
+        $user = $this->user->currentUser();
+        $categories = $this->category->getNew();
+        $tags = $this->tag->all();
+        $products = $this->product->getNew();
+
+        $categoryModel = $this->category->getByName($category);
+        if ($categoryModel != null){
+            $blogs = $categoryModel->news()->paginate(self::BLOG_PAGINATION);
+            return view('user.blog',compact('user','tags', 'categories', 'products', 'blogs'));
+        }else {
+            $blogs = [];
+            return view('user.blog',compact('user','tags', 'categories', 'products', 'blogs'));
+        }
+        
+    }
+
+    // public function searchWithTag($tag){
+    //     $user = $this->user->currentUser();
+    //     $categories = $this->category->getNew();
+    //     $tags = $this->tag->all();
+    //     $products = $this->product->getNew();
+
+    //     $tagModel = $this->tag->getByName($tag);
+    //     if ($tagModel != null){
+    //         $blogs = $tagModel->news()->paginate(self::BLOG_PAGINATION);
+    //         return view('user.blog',compact('user','tags', 'categories', 'products', 'blogs'));
+    //     }else {
+    //         $blogs = [];
+    //         return view('user.blog',compact('user','tags', 'categories', 'products', 'blogs'));
+    //     }
+        
+    // }
 }
