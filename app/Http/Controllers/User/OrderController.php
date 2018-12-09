@@ -25,6 +25,10 @@ class OrderController extends Controller
 		$this->orderDetail = $orderDetail;
 	}
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
 	public function addOrder(Request $request) {
 		try{
 			$currentUserId = $this->currentUser()->id;

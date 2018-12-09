@@ -21,14 +21,24 @@ class SaleController extends Controller
     }
 
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(){
         return view('admin.sale.index', ['sales' => $this->sale->all()]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create(){
         return view('admin.sale.create', ['categories' => $this->category->all()]);
     }
 
+    /**
+     * @param CreateSaleRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(CreateSaleRequest $request){
         foreach ($request->get('product_id') as $product_id){
             (new ProductSaleRepository(new ProductSale()))->store(array_merge($request->all(),
@@ -39,10 +49,17 @@ class SaleController extends Controller
         return redirect()->route('admin.sale-manager.index');
     }
 
+    /**
+     *
+     */
     public function show(){
             // Do not delete this function, maybe raise bug, because it is resource controller
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function listProducts(Request $request){
         return response()->json(
             ['data' => $this->category->getById($request->get('id'))->products],

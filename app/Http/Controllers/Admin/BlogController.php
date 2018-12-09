@@ -20,20 +20,35 @@ class BlogController extends Controller {
     protected $blog;
     protected $subscribe;
 
+    /**
+     * BlogController constructor.
+     * @param NewsRepository $blog
+     * @param SubscribeRepository $subscribe
+     */
     public function __construct(NewsRepository $blog, SubscribeRepository $subscribe) {
         $this->blog = $blog;
         $this->subscribe = $subscribe;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index() {
         $blogs = $this->blog->all();
         return view('admin.blogs.index', compact('blogs'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create() {
         return view('admin.blogs.create');
     }
 
+    /**
+     * @param CreateBlogRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(CreateBlogRequest $request) {
 
         $blog = $this->blog->store(array_merge($request->all(),
@@ -68,11 +83,20 @@ class BlogController extends Controller {
 
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit($id) {
         $blog = $this->blog->getById($id);
         return view('admin.blogs.edit', ['blog' => $blog]);
     }
 
+    /**
+     * @param UpdateBlogRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(UpdateBlogRequest $request, $id) {
         $blog = $this->blog->getById($id);
         $this->blog->update($id, $request->all());
@@ -98,6 +122,10 @@ class BlogController extends Controller {
         return redirect()->route('admin.blog-manager.edit', ['id' => $id]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateStatus(Request $request) {
         $status = $request->get('status');
         $id=$request->get('id');
@@ -110,6 +138,10 @@ class BlogController extends Controller {
         }
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy($id) {
         $admin = Auth::guard('admin')->user();
         if($admin->isAdmin() or $admin->adminPermission->can_delete) {
@@ -120,6 +152,12 @@ class BlogController extends Controller {
         }
     }
 
+    /**
+     * @param $subscribes
+     * @param $title
+     * @param $description
+     * @param $blogSlug
+     */
     public function sendNotifyUser($subscribes, $title, $description, $blogSlug) {
         foreach($subscribes as $subscribe) {
             $subscribe->sendSubscribeNotification($title, $description, $blogSlug);

@@ -17,6 +17,9 @@ class SubscribeController extends Controller
 
     }
 
+    /**
+     * @param CreateSubscribeRequest $request
+     */
     public function subscribe(CreateSubscribeRequest $request){
         $this->subscribe->store($request->all());
     }

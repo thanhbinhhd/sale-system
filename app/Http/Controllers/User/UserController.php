@@ -19,11 +19,18 @@ class UserController extends Controller
         $this->user = $user;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function profile(){
         $user = $this->user->currentUser();
         return view("user.profile",compact('user'));
     }
 
+    /**
+     * @param ChangePasswordRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function changePass(ChangePasswordRequest $request){
         $currentPass = $request->get('old_password');
         $newPass=$request->get('new_password');
@@ -37,6 +44,10 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function changeProfile(Request $request){
         $user = $this->user->currentUser();
         $user->name = $request->get('name');
@@ -47,6 +58,10 @@ class UserController extends Controller
         return response()->json(['data'=>$user]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function uploadAvatar(Request $request) {
 		try {
 			$this->validate($request, ['avatar' => ['required', 'image']]);
