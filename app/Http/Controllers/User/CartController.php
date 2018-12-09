@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Repositories\ProductRepository;
 use Cart;
 use App\Repositories\SlideRepository;
+use Darryldecode\Cart\CartCondition;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -56,10 +57,12 @@ class CartController extends Controller
 			'size' => isset($productDetail) ? '' : $productDetail->first()->size,
 			'color' => isset($productDetail) ? '' : $productDetail->first()->color,
 			'image_path' => $product->image_path,
-		];
+            'discount' =>  $product->discount(),
+            'oldPrice' => $product->price,
+        ];
 
 		$item = \Cart::session($userId)
-			->add($product->id, $product->name, $product->price, $quantity, $customAttributes);
+			->add($product->id, $product->name, $product->discountedPrice(), $quantity, $customAttributes);
 		return response(array(
 			'success' => true,
 			'data' => \Cart::session($userId)->getContent(),
@@ -76,7 +79,7 @@ class CartController extends Controller
 			'data' => array(
 				'total_quantity' => \Cart::session($userId)->getTotalQuantity(),
 				'sub_total' => \Cart::session($userId)->getSubTotal(),
-				'total' => \Cart::session($userId)->getTotal(),
+				'total' => \Cart::session($userId)->getToTal(),
 			),
 			'message' => "Get cart details success."
 		),200,[]);
