@@ -74,21 +74,22 @@
 
                     <!-- Pagination -->
                     <div class="pagination flex-m flex-w p-r-50">
-                        <a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
-                        <a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
+                        @if($blogs != null){{ $blogs->appends(Illuminate\Support\Facades\Input::except('page'))->links()}}@endif
+                        {{--<a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>--}}
+                        {{--<a href="#" class="item-pagination flex-c-m trans-0-4">2</a>--}}
                     </div>
                 </div>
 
                 <div class="col-md-4 col-lg-3 p-b-75">
                     <div class="rightbar">
                         <!-- Search -->
-                        <div class="pos-relative bo11 of-hidden">
+                        <!-- <div class="pos-relative bo11 of-hidden">
                             <input class="s-text7 size16 p-l-23 p-r-50" type="text" name="search-product" placeholder="Search">
 
                             <button class="flex-c-m size5 ab-r-m color1 color0-hov trans-0-4">
                                 <i class="fs-13 fa fa-search" aria-hidden="true"></i>
                             </button>
-                        </div>
+                        </div> -->
 
                         <!-- Categories -->
                         <h4 class="m-text23 p-t-56 p-b-34">
@@ -98,7 +99,7 @@
                         <ul>
                             @foreach($categories as $category)
                             <li class="p-t-6 p-b-8 bo7">
-                                <a href="#" class="s-text13 p-t-5 p-b-5">
+                                <a href="/blog/category/{{$category->name}}" class="s-text13 p-t-5 p-b-5">
                                     {{$category->name}}
                                 </a>
                             </li>
@@ -131,7 +132,7 @@
                         </ul>
 
                         <!-- Tags -->
-                        <h4 class="m-text23 p-t-50 p-b-25">
+                        <!-- <h4 class="m-text23 p-t-50 p-b-25">
                             Tags
                         </h4>
 
@@ -141,7 +142,7 @@
                                 {{$tag->name}}
                             </a>
                             @endforeach
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

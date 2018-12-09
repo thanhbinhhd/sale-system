@@ -125,7 +125,9 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         }]);
 
         Route::get('/blog',['as' => 'blog', 'uses' => 'BlogController@index']);
-        Route::get('/blog/{blogSlug}',['as' => 'blog', 'uses' => 'BlogController@details']);
+        Route::get('/blog/{blogSlug}',['as' => 'blogDetail', 'uses' => 'BlogController@details']);
+        Route::get('/blog/category/{category}',['as' => 'blogCategory', 'uses' => 'BlogController@searchWithCategory']);
+        // Route::get('/blog/tag/{tag}',['as' => 'blogTag', 'uses' => 'BlogController@searchWithTag']);
 
         Route::get('/profile',"UserController@profile");
         Route::put('/change-pass',"UserController@changePass");
