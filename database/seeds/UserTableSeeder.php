@@ -28,6 +28,7 @@ class UserTableSeeder extends Seeder
             'email' => 'user@user.com',
             'avatar' => '/admin/images/avatar.jpg',
             'password' => bcrypt('123456'),
+            'email_verified_at' => date("Y-m-d H:i:s"),
         ]);
         factory(\App\Model\User::class, 10)->create();
     }
