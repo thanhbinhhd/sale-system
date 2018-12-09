@@ -7,7 +7,7 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/user/css/lightbox.min.css">
     <!--===============================================================================================-->
-
+    <link rel="stylesheet" type="text/css" href="/user/css/fixed-size.css"/>
 @endsection
 @section('content')
 
@@ -70,7 +70,7 @@
                             <div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
                                 <!-- Block2 -->
                                 <div class="block2">
-                                    <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+                                    <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew fixed-height">
                                         <img src="{{$cheap->image_path}}" alt="IMG-PRODUCT">
 
                                         <div class="block2-overlay trans-0-4">
