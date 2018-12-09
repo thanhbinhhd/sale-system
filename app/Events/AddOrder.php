@@ -15,16 +15,18 @@ class AddOrder implements ShouldBroadcast
 
 	public $user;
 	public $order;
+	public $orderDetail;
 
 	/**
 	 * Create a new event instance.
 	 *
 	 * @return void
 	 */
-	public function __construct($user, $order)
+	public function __construct($user, $order, $orderDetail)
 	{
 		$this->user = $user;
 		$this->order = $order;
+		$this->orderDetail = $orderDetail;
 
 		$this->dontBroadcastToCurrentUser();
 	}

@@ -1,6 +1,6 @@
 <?php
 
-namespace HapoJC\Listeners;
+namespace App\Listeners;
 
 use App\Events\AddOrder;
 use App\Model\User;
@@ -28,12 +28,10 @@ class SendMailToOrderUser
 	 */
 	public function handle(AddOrder $event)
 	{
-		dd($event);
-		$subUsers = $event->subUsers;
-		foreach ($subUsers as $subUser) {
-			$user = User::findOrFail($subUser->id);
-			$user->notify(new AddNewOrderNotification($subUser->token));
-		}
+		$user = $event->user;
+		$order = $event->order;
+		$orderDetail = $event->orderDetail;
+		$user->notify(new AddNewOrderNotification($order, $user, $orderDetail));
 	}
 
 }

@@ -14,17 +14,19 @@ class AddNewOrderNotification extends Notification
 
 	protected $order;
 	protected $user;
+	protected $orderDetail;
 	/**
 	 * Create a new notification instance.
 	 *
 	 * @return void
 	 */
 
-	public function __construct($order, $user)
+	public function __construct($order, $user, $orderDetail)
 	{
 		//
 		$this->order = $order;
 		$this->user = $user;
+		$this->orderDetail = $orderDetail;
 	}
 
 	/**
@@ -47,13 +49,13 @@ class AddNewOrderNotification extends Notification
 	public function toMail($notifiable)
 	{
 		return (new MailMessage)
-			->line(Lang::getFromJson('You are receiving this email because you ordered some products in my website by this email.'))
-			->action(Lang::getFromJson('Go to website'), route('shop',['category' =>'All'] ))
-			->line(Lang::getFromJson('Your order has been processed and will be shipped within a short period of time.'))
+			->from('quanghoang4334@gmail.com')
+			->bcc('leconghau.hit@gmail.com')
 			->view('user.mail.accept-order', [
-
-			])
-			->line(Lang::getFromJson('Thank you for using our service.'));
+				'order' => $this->order,
+				'user' => $this->user,
+				'orderDetail' => $this->orderDetail,
+			]);
 	}
 
 	/**
