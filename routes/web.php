@@ -71,11 +71,13 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], fu
         Route::get('user-manager',['as' => 'user-manager', 'uses' => 'UserController@index']);
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
         Route::put('update-status',"UserController@updateStatus");
+        Route::get('user/{id}',"UserController@detail");
         Route::get('order-list/{id}', "UserController@orderList");
 
         Route::resource('order-manager', 'OrderController');
         Route::get('sale-manager/category', 'SaleController@listProducts');
         Route::resource('sale-manager', 'SaleController');
+
 
     });
 });
