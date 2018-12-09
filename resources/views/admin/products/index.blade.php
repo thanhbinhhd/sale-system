@@ -48,7 +48,7 @@
                 <tr id="row-{{$product->id}}">
                     <td>{{$product->name}}</td>
                     <td>@if($product->creator!=null){{$product->creator->name}}@endif</td>
-                    <td>{{$product->category->name}}</td>
+                    <td>@if($product->category!=null){{$product->category->name}}@endif</td>
                     <td>
                         @if( $product->productDetail != null)
                         <label class="color-filter color-filter{{$product->productDetail->color}}" ></label>

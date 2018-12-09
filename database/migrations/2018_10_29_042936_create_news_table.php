@@ -18,6 +18,7 @@ class CreateNewsTable extends Migration
             $table->string('title');
             $table->string('slug');
             $table->string('author')->nullable();
+            $table->string('thumbnail_path')->nullable();
             $table->text('description')->nullable();
             $table->text('content');
             $table->integer('status')->default(1)->comment('1 is active, 0 is blocked');

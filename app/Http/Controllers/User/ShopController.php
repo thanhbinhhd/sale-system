@@ -54,7 +54,7 @@ class ShopController extends Controller
      */
     public function filte($category, Request $request){
         if($category == self::ALL)
-            $products = DB::table('products');
+            $products = Product::whereRaw('TRUE');
         else{
             $categoryModel = $this->category->getByName($category);
             if ($categoryModel == null) {
@@ -65,7 +65,6 @@ class ShopController extends Controller
                 $products = $categoryModel->products();
             }
         }
-
         $products = $this->product->filte($products, $request)->paginate(self::CATEGORY_PAGINATION);
         return view('user.shop', ['products' => $products, 'categoryName' => $category]);
     }

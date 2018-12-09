@@ -115,8 +115,26 @@ User Manager
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Order list of user</h4>
                 </div>
-                <div class="modal-body">
-                   order list
+                <div class="modal-body" id="modal-body">
+                    <table id="listtable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th class="th-sm">Order ID
+                                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                            </th>
+                            <th class="th-sm">Order date
+                                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                            </th>
+                            <th class="th-sm">Status
+                                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                            </th>
+                            <th class="th-sm">Action
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody id="table-content">
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -180,7 +198,25 @@ User Manager
             $(".order-btn").on("click",function () {
                 $("#order-modal").modal("show");
                 $.ajax({
-
+                    type: 'get',
+                    url: 'order-list/'+$(this).val(),
+                    success: function (response) {
+                        if(!response.error)
+                        {
+                            var tableContent = $('#table-content');
+                            for (let i = 0; i < response.data.length; i++) {
+                                tableContent.append('<tr><td>' +
+                                                    response.data[i].id + '</td><td>'+
+                                                    response.data[i].created_at+'</td><td>'+
+                                    ((response.data[i].status === {{\App\Model\Order::HANDLED}})?'Completed':'Pending') +
+                                                    '</td><td>'+
+                                    '<a href="/admin/order-manager/' + response.data[i].id + '" type="button" class="btn btn-info">Detail</a>'+'</td></tr>');
+                            }
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        toastr.error(xhr.responseJSON.message);
+                    }
                 });
             })
         });

@@ -7,7 +7,7 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/user/css/lightbox.min.css">
     <!--===============================================================================================-->
-
+    <link rel="stylesheet" type="text/css" href="/user/css/fixed-size.css"/>
 @endsection
 @section('content')
 
@@ -70,7 +70,7 @@
                             <div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
                                 <!-- Block2 -->
                                 <div class="block2">
-                                    <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+                                    <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew fixed-height">
                                         <img src="{{$cheap->image_path}}" alt="IMG-PRODUCT">
 
                                         <div class="block2-overlay trans-0-4">
@@ -81,7 +81,7 @@
 
                                             <div class="block2-btn-addcart w-size1 trans-0-4">
                                                 <!-- Button -->
-                                                <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+                                                <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 product-add-button" id="product-{{$cheap->id}}">
                                                     Add to Cart
                                                 </button>
                                             </div>
@@ -93,9 +93,19 @@
                                             {{$cheap->name}}
                                         </a>
 
-                                        <span class="block2-price m-text6 p-r-5">
-											${{$cheap->price}}
-										</span>
+                                        @if($cheap->discount() > 0)
+                                            <span class="block2-oldprice m-text7 p-r-5 product-price">
+										{{$cheap->price}}
+									</span>
+
+                                            <span class="block2-newprice m-text8 p-r-5 product-price">
+										{{$cheap->price - $cheap->price * $cheap->discount() / 100}}
+									</span>
+                                        @else
+                                            <span class="block2-price m-text6 p-r-5 product-price">
+                                        {{$cheap->price}}
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +130,7 @@
 
                                             <div class="block2-btn-addcart w-size1 trans-0-4">
                                                 <!-- Button -->
-                                                <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+                                                <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 product-add-button" id="product-{{$product->id}}">
                                                     Add to Cart
                                                 </button>
                                             </div>
@@ -131,16 +141,19 @@
                                         <a href="/product/{{$product->id}}" class="block2-name dis-block s-text3 p-b-5">
                                             {{$product->name}}
                                         </a>
-                                        <span class="block2-price m-text6 p-r-5">
-											${{$product->price}}
-										</span>
-                                        {{--<span class="block2-oldprice m-text7 p-r-5">--}}
-											{{--$29.50--}}
-										{{--</span>--}}
+                                        @if($product->discount() > 0)
+                                            <span class="block2-oldprice m-text7 p-r-5 product-price">
+										    {{$product->price}}
+                                            </span>
 
-                                        {{--<span class="block2-newprice m-text8 p-r-5">--}}
-											{{--$15.90--}}
-										{{--</span>--}}
+                                            <span class="block2-newprice m-text8 p-r-5 product-price">
+                                            {{$product->price - $product->price * $product->discount() / 100}}
+                                            </span>
+                                        @else
+                                            <span class="block2-price m-text6 p-r-5 product-price">
+                                            {{$product->price}}
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +179,7 @@
 
                                             <div class="block2-btn-addcart w-size1 trans-0-4">
                                                 <!-- Button -->
-                                                <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+                                                <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 product-add-button" id="product-{{$view->id}}">
                                                     Add to Cart
                                                 </button>
                                             </div>
@@ -178,9 +191,19 @@
                                             Herschel supply co 25l
                                         </a>
 
-                                        <span class="block2-price m-text6 p-r-5">
-											${{$view->price}}
-										</span>
+                                        @if($view->discount() > 0)
+                                            <span class="block2-oldprice m-text7 p-r-5 product-price">
+										{{$view->price}}
+									</span>
+
+                                            <span class="block2-newprice m-text8 p-r-5 product-price">
+										{{$view->price - $view->price * $view->discount() / 100}}
+									</span>
+                                        @else
+                                            <span class="block2-price m-text6 p-r-5 product-price">
+                                        {{$view->price}}
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +231,7 @@
                     <!-- Block3 -->
                     <div class="block3">
                         <a href="/blog/{{$blog->id}}" class="block3-img dis-block hov-img-zoom">
-                            <img src="{{$blog->image}}" alt="IMG-BLOG">
+                            <img src="{{$blog->thumbnail_path}}" alt="IMG-BLOG">
                         </a>
 
                         <div class="block3-txt p-t-14">
@@ -220,10 +243,6 @@
 
                             <span class="s-text6">By</span> <span class="s-text7">{{$blog->author}}</span>
                             <span class="s-text6">on</span> <span class="s-text7">{{$blog->create_at}}</span>
-
-                            <p class="s-text8 p-t-16">
-                                {{$blog->description}}
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -299,6 +318,59 @@
                 swal(nameProduct, "is added to wishlist !", "success");
             });
         });
+
+        $('.product-price').each((index, item) => {
+          $(item)[0].innerText = formatMoney($(item)[0].innerText);
+          $(item)[0].innerText += '$'
+        })
+
+        function formatMoney(amount, decimalCount = 0, decimal = ".", thousands = ",") {
+          try {
+            decimalCount = Math.abs(decimalCount);
+            decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+            const negativeSign = amount < 0 ? "-" : "";
+
+            let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+            let j = (i.length > 3) ? i.length % 3 : 0;
+
+            return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+          } catch (e) {
+            console.log(e)
+          }
+        }
+
+        $('.product-add-button').on('click', function() {
+          let attr_id = $(this).attr('id');
+          let id = attr_id.split('-')[1];
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            }
+          });
+          $.ajax({
+            type: 'POST',
+            url: '/add-cart',
+            async: true,
+            data: {
+              product_id: id,
+              quantity: 1,
+            },
+            success: function (response) {
+              console.log('res: ', response);
+              if (!response.error) {
+              }
+              else {
+                toastr.warning('Something error when uploading!');
+              }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            }
+          });
+
+        })
+
     </script>
 
     <!--===============================================================================================-->

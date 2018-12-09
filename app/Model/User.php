@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Notifications\OrderCompletedNotification;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\UserVerifyMail;
 use App\Scopes\StatusScope;
@@ -21,7 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
     const ACTIVE = 1;
     const BLOCK = 0;
     protected $fillable = [
-        'name', 'email',
+        'name', 'email', 'password',
         'phone_number', 'address', 'avatar',
         'status', 'description', 'email_notify_enabled'
     ];
@@ -66,6 +67,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new UserVerifyMail());
+    }
+
+    public function sendOrderCompletedNotification(){
+        $this->notify(new OrderCompletedNotification());
+    }
+
+    public function orders(){
+        return $this->hasMany(Order::class, 'user_id');
     }
 
 }

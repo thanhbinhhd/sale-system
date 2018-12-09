@@ -17,4 +17,8 @@ class CategoryRepository
         $this->model = $category;
     }
 
+    public function getNew(){
+        return $this->model->take(config('sales.number_category_get'))->get();
+    }
+
 }

@@ -10,9 +10,13 @@ return [
 
     'category' => "Categories Manager",
 
-    'order' => "Orders manager",
+    'order' => "Orders Manager",
 
-    'slide' => "Slides manager",
+    'slide' => "Slides Manager",
+
+    'blog' => "Blogs Manager",
+
+    'sale' => 'Sale-off Manager',
 
     'admin_manager_path' => "/admin/admin-manager",
 
@@ -20,11 +24,15 @@ return [
 
     'product_manager_path' => "/admin/product-manager",
 
-    'category_manager_path' => "/admin/category-manager",
+    'category_manager_path' => "/admin/category-manager/",
 
     'order_manager_path' => "/admin/order-manager",
 
     'slide_manager_path' => "/admin/slide-manager",
+
+    'blog_manager_path' => "/admin/blog-manager",
+
+    'sale_off_manager_path' => "/admin/sale-manager",
 
     'page_name' => 'Sales System',
 

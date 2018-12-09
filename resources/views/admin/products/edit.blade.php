@@ -34,7 +34,7 @@
                 <label for="inputCategory">Category:</label>
                 <select class="form-control" id="inputCategory" name="category_id">
                     @foreach (\App\Model\Category::all() as $category)
-                        <option @if($category->id == $product->category_id) checked @endif value="{{$category->id}}">{{$category->name}}</option>
+                        <option @if($category->id == $product->category_id) selected @endif value="{{$category->id}}">{{$category->name}}</option>
                     @endforeach
                 </select>
             </div>

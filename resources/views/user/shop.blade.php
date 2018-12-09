@@ -4,15 +4,12 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/user/css/nouislider.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link href="/user/css/fixed-size.css" rel="stylesheet"/>
     <style type="text/css">
         .quantity{
             color: white;
             text-align: center;
             margin-bottom: 50px;
-        }
-        .fix-height{
-            height: 360px;
-            overflow: hidden;
         }
     </style>
     @endsection
@@ -161,7 +158,7 @@
                             <!-- Block2 -->
                             <div class="block2">
 
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew  fixed-height">
                                     <img src="{{$product->image_path}}" alt="IMG-PRODUCT">
 
                                     <div class="block2-overlay trans-0-4">
@@ -172,7 +169,7 @@
                                         <div class="block2-btn-addcart w-size1 trans-0-4">
                                             <p class="quantity">@if ($product->quantity > 0) Quantity: {{$product->quantity}} @else Out of stock @endif</p>
                                             <!-- Button -->
-                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+                                            <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 product-add-button" id="shop-{{$product->id}}">
                                                 Add to Cart
                                             </button>
                                         </div>
@@ -183,18 +180,19 @@
                                     <a href="product/{{$product->name}}" class="block2-name dis-block s-text3 p-b-5">
                                         {{$product->name}}
                                     </a>
-
-                                    <span class="block2-price m-text6 p-r-5">
-										${{$product->price}}
+                                    @if($product->discount() > 0)
+                                    <span class="block2-oldprice m-text7 p-r-5 product-price">
+										{{$product->price}}
 									</span>
 
-                                    {{--<span class="block2-oldprice m-text7 p-r-5">--}}
-										{{--$29.50--}}
-									{{--</span>--}}
-
-                                    {{--<span class="block2-newprice m-text8 p-r-5">--}}
-										{{--$15.90--}}
-									{{--</span>--}}
+                                    <span class="block2-newprice m-text8 p-r-5 product-price">
+										{{$product->price - $product->price * $product->discount() / 100}}
+									</span>
+                                    @else
+                                        <span class="block2-price m-text6 p-r-5 product-price">
+                                        {{$product->price}}
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -215,10 +213,16 @@
 @endsection
 
 @section('customJs')
+    <!--===============================================================================================-->
+    <script type="text/javascript" src="/user/js/sweetalert.min.js"></script>
     <script type="text/javascript">
+
         $(document).ready(function () {
             $("#inputTag").select2();
+
         });
+
+
         $('.block2-btn-addcart').each(function(){
             var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
             $(this).on('click', function(){
@@ -232,6 +236,27 @@
                 swal(nameProduct, "is added to wishlist !", "success");
             });
         });
+
+        $('.product-price').each((index, item) => {
+          $(item)[0].innerText = formatMoney($(item)[0].innerText);
+          $(item)[0].innerText += '$'
+        })
+
+        function formatMoney(amount, decimalCount = 0, decimal = ".", thousands = ",") {
+          try {
+            decimalCount = Math.abs(decimalCount);
+            decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+            const negativeSign = amount < 0 ? "-" : "";
+
+            let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+            let j = (i.length > 3) ? i.length % 3 : 0;
+
+            return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+          } catch (e) {
+            console.log(e)
+          }
+        }
     </script>
 
     <!--===============================================================================================-->
@@ -282,6 +307,36 @@
             else
                 url += $(this).val();
             location.href = url;
+        });
+
+        $('.product-add-button').on('click', function() {
+          let attr_id = $(this).attr('id');
+          let id = attr_id.split('-')[1];
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            }
+          });
+          $.ajax({
+            type: 'POST',
+            url: '/add-cart',
+            async: true,
+            data: {
+              product_id: id,
+              quantity: 1,
+            },
+            success: function (response) {
+              console.log('res: ', response);
+              if (!response.error) {
+              }
+              else {
+                toastr.warning('Something error when uploading!');
+              }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+            }
+          });
         });
     </script>
 @endsection

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{config('sales.default_system_name')}} | Log in</title>
+    <title>{{config('sales.default_system_name')}}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -40,7 +40,9 @@
 </head>
 </head>
 <body class="animsition">
-@include('user.layout._header')
+<div>
+    @include('user.layout._header')
+</div>
 @yield('content')
 @include('user.layout._footer')
 <script src="/user/js/jquery.min.js"></script>
@@ -62,6 +64,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <!-- iCheck -->
+<script src="https://unpkg.com/vue"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/vue.resource/1.3.1/vue-resource.min.js"></script>
+<script type="text/javascript" src="/user/js/nouislider.min.js"></script>
 
 </body>
 </html>

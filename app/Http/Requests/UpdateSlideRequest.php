@@ -6,17 +6,11 @@
         return true;
     }
      public function rules(){
-        $slideID = $this->input('id');
+        $slideID = $this->input('slide-id');
         return [
             'title'  => 'required|unique:slides,title,' . $slideID,
-            'link' => 'required'
+            'image'     => 'mimes:jpeg,bmp,png,jpg'
         ];
     }
-     public function messages(){
-        return [
-            'title.required' => 'Title can not empty!',
-            'title.unique' => 'Title was existed!',
-            'link.required'  => 'Image Link can not empty!',
-        ];
-    }
+
 }

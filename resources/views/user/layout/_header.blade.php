@@ -1,3 +1,4 @@
+<div>
 
 <div class="wrap_header fixed-header2 trans-0-4">
     <!-- Logo -->
@@ -40,93 +41,22 @@
     <!-- Header Icon -->
     <div class="header-icons">
         <a href="/profile" class="header-wrapicon1 dis-block">
-            <img src="{{Auth::guard('user')->user()->avatar}}" class="header-icon1 rounded-circle" alt="ICON">
-        </a>
+            @if(Auth::guard('user')->user()->avatar)
+                <img src="{{\Illuminate\Support\Facades\Storage::url(Auth::guard('user')->user()->avatar)}}" class="header-icon1 rounded-circle" alt="ICON">
+            @else
+                <img src="/admin/images/avatar.jpg" class="header-icon1 rounded-circle" alt="ICON">
+            @endif        </a>
         <a href="{{route('user.logout')}}" class="link-color">Logout</a>
 
         <span class="linedivide1"></span>
-
-        <div class="header-wrapicon2">
-            <img src="/user/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-            <span class="header-icons-noti">0</span>
-
-            <!-- Header cart noti -->
-            <div class="header-cart header-dropdown">
-                <ul class="header-cart-wrapitem">
-                    <li class="header-cart-item">
-                        <div class="header-cart-item-img">
-                            <img src="/user/images/item-cart-01.jpg" alt="IMG">
-                        </div>
-
-                        <div class="header-cart-item-txt">
-                            <a href="#" class="header-cart-item-name">
-                                White Shirt With Pleat Detail Back
-                            </a>
-
-                            <span class="header-cart-item-info">
-									1 x $19.00
-								</span>
-                        </div>
-                    </li>
-
-                    <li class="header-cart-item">
-                        <div class="header-cart-item-img">
-                            <img src="/user/images/item-cart-02.jpg" alt="IMG">
-                        </div>
-
-                        <div class="header-cart-item-txt">
-                            <a href="#" class="header-cart-item-name">
-                                Converse All Star Hi Black Canvas
-                            </a>
-
-                            <span class="header-cart-item-info">
-									1 x $39.00
-								</span>
-                        </div>
-                    </li>
-
-                    <li class="header-cart-item">
-                        <div class="header-cart-item-img">
-                            <img src="/user/images/item-cart-03.jpg" alt="IMG">
-                        </div>
-
-                        <div class="header-cart-item-txt">
-                            <a href="#" class="header-cart-item-name">
-                                Nixon Porter Leather Watch In Tan
-                            </a>
-
-                            <span class="header-cart-item-info">
-									1 x $17.00
-								</span>
-                        </div>
-                    </li>
-                </ul>
-
-                <div class="header-cart-total">
-                    Total: $75.00
-                </div>
-
-                <div class="header-cart-buttons">
-                    <div class="header-cart-wrapbtn">
-                        <!-- Button -->
-                        <a href="/cart" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                            View Cart
-                        </a>
-                    </div>
-
-                    <div class="header-cart-wrapbtn">
-                        <!-- Button -->
-                        <a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                            Check Out
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <div id="cart">
+            @include('user.cart-header')
         </div>
+
     </div>
 </div>
 <!-- Header -->
-<header class="header2">
+    <header class="header2">
     <!-- Header desktop -->
     <div class="container-menu-header-v2">
         <div class="topbar2">
@@ -166,83 +96,8 @@
 
                 <a href="{{route('user.logout')}}" class="link-color">Logout</a>
                 <span class="linedivide1"></span>
-
-                <div class="header-wrapicon2 m-r-13">
-                    <img src="/user/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-                    <span class="header-icons-noti">0</span>
-
-                    <!-- Header cart noti -->
-                    <div class="header-cart header-dropdown">
-                        <ul class="header-cart-wrapitem">
-                            <li class="header-cart-item">
-                                <div class="header-cart-item-img">
-                                    <img src="/user/images/item-cart-01.jpg" alt="IMG">
-                                </div>
-
-                                <div class="header-cart-item-txt">
-                                    <a href="#" class="header-cart-item-name">
-                                        White Shirt With Pleat Detail Back
-                                    </a>
-
-                                    <span class="header-cart-item-info">
-											1 x $19.00
-										</span>
-                                </div>
-                            </li>
-
-                            <li class="header-cart-item">
-                                <div class="header-cart-item-img">
-                                    <img src="/user/images/item-cart-02.jpg" alt="IMG">
-                                </div>
-
-                                <div class="header-cart-item-txt">
-                                    <a href="#" class="header-cart-item-name">
-                                        Converse All Star Hi Black Canvas
-                                    </a>
-
-                                    <span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-                                </div>
-                            </li>
-
-                            <li class="header-cart-item">
-                                <div class="header-cart-item-img">
-                                    <img src="/user/images/item-cart-03.jpg" alt="IMG">
-                                </div>
-
-                                <div class="header-cart-item-txt">
-                                    <a href="#" class="header-cart-item-name">
-                                        Nixon Porter Leather Watch In Tan
-                                    </a>
-
-                                    <span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-                                </div>
-                            </li>
-                        </ul>
-
-                        <div class="header-cart-total">
-                            Total: $75.00
-                        </div>
-
-                        <div class="header-cart-buttons">
-                            <div class="header-cart-wrapbtn">
-                                <!-- Button -->
-                                <a href="/cart" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                    View Cart
-                                </a>
-                            </div>
-
-                            <div class="header-cart-wrapbtn">
-                                <!-- Button -->
-                                <a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                    Check Out
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                <div id="cart1">
+                    @include('user.cart-header')
                 </div>
             </div>
         </div>
@@ -300,90 +155,14 @@
             <!-- Header Icon mobile -->
             <div class="header-icons-mobile">
                 <a href="#" class="header-wrapicon1 dis-block">
-                    <img src="/user/images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+                    <img src="{{\Illuminate\Support\Facades\Storage::url(Auth::guard('user')->user()->avatar)}}" class="header-icon1" alt="ICON">
                 </a>
 
                 <a href="{{route('user.logout')}}" class="link-color">Logout</a>
 
                 <span class="linedivide2"></span>
 
-                <div class="header-wrapicon2">
-                    <img src="/user/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-                    <span class="header-icons-noti">0</span>
-
-                    <!-- Header cart noti -->
-                    <div class="header-cart header-dropdown">
-                        <ul class="header-cart-wrapitem">
-                            <li class="header-cart-item">
-                                <div class="header-cart-item-img">
-                                    <img src="/user/images/item-cart-01.jpg" alt="IMG">
-                                </div>
-
-                                <div class="header-cart-item-txt">
-                                    <a href="#" class="header-cart-item-name">
-                                        White Shirt With Pleat Detail Back
-                                    </a>
-
-                                    <span class="header-cart-item-info">
-											1 x $19.00
-										</span>
-                                </div>
-                            </li>
-
-                            <li class="header-cart-item">
-                                <div class="header-cart-item-img">
-                                    <img src="/user/images/item-cart-02.jpg" alt="IMG">
-                                </div>
-
-                                <div class="header-cart-item-txt">
-                                    <a href="#" class="header-cart-item-name">
-                                        Converse All Star Hi Black Canvas
-                                    </a>
-
-                                    <span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-                                </div>
-                            </li>
-
-                            <li class="header-cart-item">
-                                <div class="header-cart-item-img">
-                                    <img src="/user/images/item-cart-03.jpg" alt="IMG">
-                                </div>
-
-                                <div class="header-cart-item-txt">
-                                    <a href="#" class="header-cart-item-name">
-                                        Nixon Porter Leather Watch In Tan
-                                    </a>
-
-                                    <span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-                                </div>
-                            </li>
-                        </ul>
-
-                        <div class="header-cart-total">
-                            Total: $75.00
-                        </div>
-
-                        <div class="header-cart-buttons">
-                            <div class="header-cart-wrapbtn">
-                                <!-- Button -->
-                                <a href="/cart" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                    View Cart
-                                </a>
-                            </div>
-
-                            <div class="header-cart-wrapbtn">
-                                <!-- Button -->
-                                <a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                    Check Out
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @include('user.cart-header')
             </div>
 
             <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
@@ -458,3 +237,7 @@
         </nav>
     </div>
 </header>
+</div>
+
+
+

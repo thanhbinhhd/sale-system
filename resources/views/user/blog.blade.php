@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <!-- Title Page -->
-    <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(/user/images/heading-pages-05.jpg);">
+    <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(https://goo.gl/R2ocBf);">
         <h2 class="l-text2 t-center">
             Blog
         </h2>
@@ -16,225 +16,60 @@
             <div class="row">
                 <div class="col-md-8 col-lg-9 p-b-75">
                     <div class="p-r-50 p-r-0-lg">
+                    @foreach($blogs as $blog)
+                        @if ($blog->status)
                         <!-- item blog -->
                         <div class="item-blog p-b-80">
-                            <a href="blog-detail.html" class="item-blog-img pos-relative dis-block hov-img-zoom">
-                                <img src="/user/images/blog-04.jpg" alt="IMG-BLOG">
+                            <a href="/blog/{{$blog->slug}}" class="item-blog-img pos-relative dis-block hov-img-zoom">
+                                <img src="{{$blog->thumbnail_path}}" alt="IMG-BLOG">
 
                                 <span class="item-blog-date dis-block flex-c-m pos1 size17 bg4 s-text1">
-									28 Dec, 2018
+                                    @php ($createdTime = date('d M, Y', strtotime($blog->created_at)))
+                                    {{$createdTime}}
 								</span>
                             </a>
 
                             <div class="item-blog-txt p-t-33">
                                 <h4 class="p-b-11">
-                                    <a href="blog-detail.html" class="m-text24">
-                                        Black Friday Guide: Best Sales & Discount Codes
+                                    <a href="/blog/{{$blog->slug}}" class="m-text24">
+                                        {{$blog->title}}
                                     </a>
                                 </h4>
 
                                 <div class="s-text8 flex-w flex-m p-b-21">
 									<span>
-										By Admin
+										By {{$blog->author}}
 										<span class="m-l-3 m-r-6">|</span>
 									</span>
 
                                     <span>
-										Cooking, Food
-										<span class="m-l-3 m-r-6">|</span>
+                                        @if ($blog->category)
+                                            {{$blog->category->name}}
+                                            <span class="m-l-3 m-r-6">|</span>
+                                        @endif
 									</span>
 
                                     <span>
-										8 Comments
+                                        @foreach(\App\Model\Tag::all() as $tag)
+                                            @if (in_array($tag->id, array_column($blog->taggables()->get()->toArray(), 'tag_id'))) 
+                                                #{{$tag->name}}
+                                            @endif
+                                        @endforeach
 									</span>
                                 </div>
 
                                 <p class="p-b-12">
-                                    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
+                                    {{$blog->description}}
                                 </p>
 
-                                <a href="blog-detail.html" class="s-text20">
+                                <a href="/blog/{{$blog->slug}}" class="s-text20">
                                     Continue Reading
                                     <i class="fa fa-long-arrow-right m-l-8" aria-hidden="true"></i>
                                 </a>
                             </div>
                         </div>
-
-                        <!-- item blog -->
-                        <div class="item-blog p-b-80">
-                            <a href="blog-detail.html" class="item-blog-img pos-relative dis-block hov-img-zoom">
-                                <img src="/user/images/blog-05.jpg" alt="IMG-BLOG">
-
-                                <span class="item-blog-date dis-block flex-c-m pos1 size17 bg4 s-text1">
-									26 Dec, 2018
-								</span>
-                            </a>
-
-                            <div class="item-blog-txt p-t-33">
-                                <h4 class="p-b-11">
-                                    <a href="blog-detail.html" class="m-text24">
-                                        The White Sneakers Nearly Every Fashion Girls Own
-                                    </a>
-                                </h4>
-
-                                <div class="s-text8 flex-w flex-m p-b-21">
-									<span>
-										By Admin
-										<span class="m-l-3 m-r-6">|</span>
-									</span>
-
-                                    <span>
-										Fashion, Life style
-										<span class="m-l-3 m-r-6">|</span>
-									</span>
-
-                                    <span>
-										8 Comments
-									</span>
-                                </div>
-
-                                <p class="p-b-12">
-                                    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
-                                </p>
-
-                                <a href="blog-detail.html" class="s-text20">
-                                    Continue Reading
-                                    <i class="fa fa-long-arrow-right m-l-8" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- item blog -->
-                        <div class="item-blog p-b-80">
-                            <a href="blog-detail.html" class="item-blog-img pos-relative dis-block hov-img-zoom">
-                                <img src="/user/images/blog-08.jpg" alt="IMG-BLOG">
-
-                                <span class="item-blog-date dis-block flex-c-m pos1 size17 bg4 s-text1">
-									22 Dec, 2018
-								</span>
-                            </a>
-
-                            <div class="item-blog-txt p-t-33">
-                                <h4 class="p-b-11">
-                                    <a href="blog-detail.html" class="m-text24">
-                                        Black Friday Guide: Best Sales & Discount Codes
-                                    </a>
-                                </h4>
-
-                                <div class="s-text8 flex-w flex-m p-b-21">
-									<span>
-										By Admin
-										<span class="m-l-3 m-r-6">|</span>
-									</span>
-
-                                    <span>
-										Cooking, Food
-										<span class="m-l-3 m-r-6">|</span>
-									</span>
-
-                                    <span>
-										8 Comments
-									</span>
-                                </div>
-
-                                <p class="p-b-12">
-                                    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
-                                </p>
-
-                                <a href="blog-detail.html" class="s-text20">
-                                    Continue Reading
-                                    <i class="fa fa-long-arrow-right m-l-8" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- item blog -->
-                        <div class="item-blog p-b-80">
-                            <a href="blog-detail.html" class="item-blog-img pos-relative dis-block hov-img-zoom">
-                                <img src="/user/images/blog-02.jpg" alt="IMG-BLOG">
-
-                                <span class="item-blog-date dis-block flex-c-m pos1 size17 bg4 s-text1">
-									18 Dec, 2018
-								</span>
-                            </a>
-
-                            <div class="item-blog-txt p-t-33">
-                                <h4 class="p-b-11">
-                                    <a href="blog-detail.html" class="m-text24">
-                                        Black Friday Guide: Best Sales & Discount Codes
-                                    </a>
-                                </h4>
-
-                                <div class="s-text8 flex-w flex-m p-b-21">
-									<span>
-										By Admin
-										<span class="m-l-3 m-r-6">|</span>
-									</span>
-
-                                    <span>
-										Cooking, Food
-										<span class="m-l-3 m-r-6">|</span>
-									</span>
-
-                                    <span>
-										8 Comments
-									</span>
-                                </div>
-
-                                <p class="p-b-12">
-                                    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
-                                </p>
-
-                                <a href="blog-detail.html" class="s-text20">
-                                    Continue Reading
-                                    <i class="fa fa-long-arrow-right m-l-8" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- item blog -->
-                        <div class="item-blog p-b-80">
-                            <a href="blog-detail.html" class="item-blog-img pos-relative dis-block hov-img-zoom">
-                                <img src="/user/images/blog-03.jpg" alt="IMG-BLOG">
-
-                                <span class="item-blog-date dis-block flex-c-m pos1 size17 bg4 s-text1">
-									16 Dec, 2018
-								</span>
-                            </a>
-
-                            <div class="item-blog-txt p-t-33">
-                                <h4 class="p-b-11">
-                                    <a href="blog-detail.html" class="m-text24">
-                                        Black Friday Guide: Best Sales & Discount Codes
-                                    </a>
-                                </h4>
-
-                                <div class="s-text8 flex-w flex-m p-b-21">
-									<span>
-										By Admin
-										<span class="m-l-3 m-r-6">|</span>
-									</span>
-
-                                    <span>
-										Cooking, Food
-										<span class="m-l-3 m-r-6">|</span>
-									</span>
-
-                                    <span>
-										8 Comments
-									</span>
-                                </div>
-
-                                <p class="p-b-12">
-                                    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
-                                </p>
-
-                                <a href="blog-detail.html" class="s-text20">
-                                    Continue Reading
-                                    <i class="fa fa-long-arrow-right m-l-8" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                        </div>
+                        @endif
+                    @endforeach
                     </div>
 
                     <!-- Pagination -->
@@ -261,35 +96,13 @@
                         </h4>
 
                         <ul>
-                            <li class="p-t-6 p-b-8 bo6">
-                                <a href="#" class="s-text13 p-t-5 p-b-5">
-                                    Fashion
-                                </a>
-                            </li>
-
+                            @foreach($categories as $category)
                             <li class="p-t-6 p-b-8 bo7">
                                 <a href="#" class="s-text13 p-t-5 p-b-5">
-                                    Beauty
+                                    {{$category->name}}
                                 </a>
                             </li>
-
-                            <li class="p-t-6 p-b-8 bo7">
-                                <a href="#" class="s-text13 p-t-5 p-b-5">
-                                    Street Style
-                                </a>
-                            </li>
-
-                            <li class="p-t-6 p-b-8 bo7">
-                                <a href="#" class="s-text13 p-t-5 p-b-5">
-                                    Life Style
-                                </a>
-                            </li>
-
-                            <li class="p-t-6 p-b-8 bo7">
-                                <a href="#" class="s-text13 p-t-5 p-b-5">
-                                    DIY & Crafts
-                                </a>
-                            </li>
+                            @endforeach
                         </ul>
 
                         <!-- Featured Products -->
@@ -298,172 +111,23 @@
                         </h4>
 
                         <ul class="bgwhite">
+                            @foreach($products as $product)
                             <li class="flex-w p-b-20">
-                                <a href="product-detail.html" class="dis-block wrap-pic-w w-size22 m-r-20 trans-0-4 hov4">
-                                    <img src="/user/images/item-16.jpg" alt="IMG-PRODUCT">
+                                <a href="/product/{{$product->id}}" class="dis-block wrap-pic-w w-size22 m-r-20 trans-0-4 hov4">
+                                    <img src="{{$product->image_path}}" alt="IMG-PRODUCT">
                                 </a>
 
                                 <div class="w-size23 p-t-5">
-                                    <a href="product-detail.html" class="s-text20">
-                                        White Shirt With Pleat Detail Back
+                                    <a href="/product/{{$product->id}}" class="s-text20">
+                                        {{$product->name}}
                                     </a>
 
                                     <span class="dis-block s-text17 p-t-6">
-										$19.00
+                                        ${{$product->price}}
 									</span>
                                 </div>
                             </li>
-
-                            <li class="flex-w p-b-20">
-                                <a href="product-detail.html" class="dis-block wrap-pic-w w-size22 m-r-20 trans-0-4 hov4">
-                                    <img src="/user/images/item-17.jpg" alt="IMG-PRODUCT">
-                                </a>
-
-                                <div class="w-size23 p-t-5">
-                                    <a href="product-detail.html" class="s-text20">
-                                        Converse All Star Hi Black Canvas
-                                    </a>
-
-                                    <span class="dis-block s-text17 p-t-6">
-										$39.00
-									</span>
-                                </div>
-                            </li>
-
-                            <li class="flex-w p-b-20">
-                                <a href="product-detail.html" class="dis-block wrap-pic-w w-size22 m-r-20 trans-0-4 hov4">
-                                    <img src="/user/images/item-08.jpg" alt="IMG-PRODUCT">
-                                </a>
-
-                                <div class="w-size23 p-t-5">
-                                    <a href="product-detail.html" class="s-text20">
-                                        Nixon Porter Leather Watch In Tan
-                                    </a>
-
-                                    <span class="dis-block s-text17 p-t-6">
-										$17.00
-									</span>
-                                </div>
-                            </li>
-
-                            <li class="flex-w p-b-20">
-                                <a href="product-detail.html" class="dis-block wrap-pic-w w-size22 m-r-20 trans-0-4 hov4">
-                                    <img src="/user/images/item-03.jpg" alt="IMG-PRODUCT">
-                                </a>
-
-                                <div class="w-size23 p-t-5">
-                                    <a href="product-detail.html" class="s-text20">
-                                        Denim jacket blue
-                                    </a>
-
-                                    <span class="dis-block s-text17 p-t-6">
-										$39.00
-									</span>
-                                </div>
-                            </li>
-
-                            <li class="flex-w p-b-20">
-                                <a href="product-detail.html" class="dis-block wrap-pic-w w-size22 m-r-20 trans-0-4 hov4">
-                                    <img src="/user/images/item-05.jpg" alt="IMG-PRODUCT">
-                                </a>
-
-                                <div class="w-size23 p-t-5">
-                                    <a href="product-detail.html" class="s-text20">
-                                        Nixon Porter Leather Watch In Tan
-                                    </a>
-
-                                    <span class="dis-block s-text17 p-t-6">
-										$17.00
-									</span>
-                                </div>
-                            </li>
-                        </ul>
-
-                        <!-- Archive -->
-                        <h4 class="m-text23 p-t-50 p-b-16">
-                            Archive
-                        </h4>
-
-                        <ul>
-                            <li class="flex-sb-m">
-                                <a href="#" class="s-text13 p-t-5 p-b-5">
-                                    July 2018
-                                </a>
-
-                                <span class="s-text13">
-									(9)
-								</span>
-                            </li>
-
-                            <li class="flex-sb-m">
-                                <a href="#" class="s-text13 p-t-5 p-b-5">
-                                    June 2018
-                                </a>
-
-                                <span class="s-text13">
-									(39)
-								</span>
-                            </li>
-
-                            <li class="flex-sb-m">
-                                <a href="#" class="s-text13 p-t-5 p-b-5">
-                                    May 2018
-                                </a>
-
-                                <span class="s-text13">
-									(29)
-								</span>
-                            </li>
-
-                            <li class="flex-sb-m">
-                                <a href="#" class="s-text13 p-t-5 p-b-5">
-                                    April  2018
-                                </a>
-
-                                <span class="s-text13">
-									(35)
-								</span>
-                            </li>
-
-                            <li class="flex-sb-m">
-                                <a href="#" class="s-text13 p-t-5 p-b-5">
-                                    March 2018
-                                </a>
-
-                                <span class="s-text13">
-									(22)
-								</span>
-                            </li>
-
-                            <li class="flex-sb-m">
-                                <a href="#" class="s-text13 p-t-5 p-b-5">
-                                    February 2018
-                                </a>
-
-                                <span class="s-text13">
-									(32)
-								</span>
-                            </li>
-
-                            <li class="flex-sb-m">
-                                <a href="#" class="s-text13 p-t-5 p-b-5">
-                                    January 2018
-                                </a>
-
-                                <span class="s-text13">
-									(21)
-								</span>
-                            </li>
-
-                            <li class="flex-sb-m">
-                                <a href="#" class="s-text13 p-t-5 p-b-5">
-                                    December 2017
-                                </a>
-
-                                <span class="s-text13">
-									(26)
-								</span>
-                            </li>
+                            @endforeach
                         </ul>
 
                         <!-- Tags -->
@@ -472,25 +136,11 @@
                         </h4>
 
                         <div class="wrap-tags flex-w">
+                            @foreach($tags as $tag)
                             <a href="#" class="tag-item">
-                                Fashion
+                                {{$tag->name}}
                             </a>
-
-                            <a href="#" class="tag-item">
-                                Lifestyle
-                            </a>
-
-                            <a href="#" class="tag-item">
-                                Denim
-                            </a>
-
-                            <a href="#" class="tag-item">
-                                Streetstyle
-                            </a>
-
-                            <a href="#" class="tag-item">
-                                Crafts
-                            </a>
+                            @endforeach
                         </div>
                     </div>
                 </div>

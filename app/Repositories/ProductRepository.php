@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Model\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductRepository
 {
@@ -19,6 +20,10 @@ class ProductRepository
     public function getNew(){
         return $this->model->where('status', Product::ACTIVE)->take(config('sales.number_product_get'))->get();
     }
+
+	public function getQuantity($id){
+		return $this->getById($id)->quantity;
+	}
 
     public function getWithCondition($condition, $order){
         return $this->model->where('status', Product::ACTIVE)->orderBy($condition,$order)->take(config('sales.number_product_get'))->get();
@@ -46,7 +51,7 @@ class ProductRepository
         $products = $products->select('products.*')->
         join('taggables', 'products.id', '=', 'taggable_id')->
         join('tags', 'tags.id', '=', 'taggables.tag_id')->
-        join('product_details', 'products.id', '=', 'product_details.product_id');
+        leftJoin('product_details', 'products.id', '=', 'product_details.product_id');
 
         if($maxPrice != null)
             $products = $products->where('price', '<', $maxPrice);
