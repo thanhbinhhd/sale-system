@@ -130,5 +130,7 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         Route::put('/change-profile',"UserController@changeProfile");
         Route::post('/add-cart',"CartController@addCart");
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
+
+        Route::post('/create-subscribe',"SubscribeController@subscribe");
     });
 });
