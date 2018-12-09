@@ -4,15 +4,12 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/user/css/nouislider.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link href="/user/css/fixed-size.css" rel="stylesheet"/>
     <style type="text/css">
         .quantity{
             color: white;
             text-align: center;
             margin-bottom: 50px;
-        }
-        .fix-height{
-            height: 360px;
-            overflow: hidden;
         }
     </style>
     @endsection
@@ -161,7 +158,7 @@
                             <!-- Block2 -->
                             <div class="block2">
 
-                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+                                <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew  fixed-height">
                                     <img src="{{$product->image_path}}" alt="IMG-PRODUCT">
 
                                     <div class="block2-overlay trans-0-4">
