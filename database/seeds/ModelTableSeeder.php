@@ -12,7 +12,7 @@ class ModelTableSeeder extends Seeder
     public function run()
     {
         factory(\App\Model\User::class, 10)->create();
-        factory(\App\Model\Category::class, 80)->create();
+        factory(\App\Model\Category::class, 10)->create();
         factory(\App\Model\Product::class, 10)->create();
         factory(\App\Model\Tag::class, 10)->create();
         factory(\App\Model\Slide::class, 10)->create();

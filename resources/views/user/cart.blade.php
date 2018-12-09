@@ -131,14 +131,15 @@
                     <!-- Button -->
                     <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4"
                             data-toggle="modal"
-                            data-target="#showOrder">
+                            data-target="#showOrder"
+                    >
                         Proceed to Checkout
                     </button>
                 </div>
             </div>
             <div class="modal fade" id="showOrder" tabindex="-1" role="dialog" aria-labelledby="showOrder" aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content margin-right-10 margin-left-10">
                         <table class="table" style="background: white;">
                             <thead>
                             <tr>
@@ -173,10 +174,11 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="form-group margin-right-10 margin-left-10">
-                            <label for="usr">Note:</label>
-                            <textarea type="text" class="form-control" id="usr" v-model="noteOrder"></textarea>
+                        <div class="form-group">
+                            <label for="comment">Note:</label>
+                            <textarea class="form-control" rows="4" id="comment" v-model="noteOrder"></textarea>
                         </div>
+
                         <div class="form-group">
                             <button class="btn btn-success float-right"  @click="order">
                                 <span>Check Out</span>
@@ -342,7 +344,7 @@
                   }).catch((err) => {
                     console.log(err);
                   }).finally(() => {
-                    $('#showOrder').hide();
+                    $('#showOrder').modal('toggle');
                     this.loadItems();
                   })
                 },
