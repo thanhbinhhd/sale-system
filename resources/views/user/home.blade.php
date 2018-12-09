@@ -70,7 +70,7 @@
                             <div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
                                 <!-- Block2 -->
                                 <div class="block2">
-                                    <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew fixed-height">
+                                    <div class="block2-img  of-hidden pos-relative block2-labelnew fixed-height">
                                         <img src="{{$cheap->image_path}}" alt="IMG-PRODUCT">
 
                                         <div class="block2-overlay trans-0-4">
@@ -120,7 +120,7 @@
                             <div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
                                 <!-- Block2 -->
                                 <div class="block2">
-                                    <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
+                                    <div class="block2-img  of-hidden pos-relative block2-labelsale">
                                         <img src="{{$product->image_path}}" alt="IMG-PRODUCT-NO">
                                         <div class="block2-overlay trans-0-4">
                                             <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -168,7 +168,7 @@
                             <div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
                                 <!-- Block2 -->
                                 <div class="block2">
-                                    <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
+                                    <div class="block2-img  of-hidden pos-relative block2-labelsale">
                                         <img src="{{$view->image_path}}" alt="IMG-PRODUCT">
 
                                         <div class="block2-overlay trans-0-4">
