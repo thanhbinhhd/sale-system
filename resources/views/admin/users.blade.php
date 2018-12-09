@@ -178,11 +178,13 @@ User Manager
 
             $(".info-btn").on("click",function () {
                 $("#info-modal").modal("show");
+                var id = $(this).val();
                 $.ajax({
                     type: 'get',
-                    url: 'users/'+$(this).val(),
+                    url: 'user/'+id,
                     success: function (response) {
                         $user=response.data;
+                        console.log($user);
                         $("#info-id").html($user.id);
                         $("#info-name").html($user.name);
                         $("#info-mail").html($user.email);
@@ -191,6 +193,9 @@ User Manager
                         $("#info-address").html($user.address);
                         $("#info-status").html(($user.status==1)?"Active":"Blocked");
                         $("#info-description").html($user.description);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        toastr.error(xhr.responseJSON.message);
                     }
                 });
             })
