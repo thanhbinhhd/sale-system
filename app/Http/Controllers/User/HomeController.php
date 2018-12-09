@@ -44,4 +44,10 @@ class HomeController extends Controller
         $blogs = $this->blog->getNew();
         return view('user.home',compact('user','slides','tags', 'categories', 'cheaps', 'products', 'views','blogs'));
     }
+
+    public function productDetail($id) {
+		$product = $this->product->getById($id);
+		$productDetail = $product->productDetail()->first();
+	    return view('user.product-detail', compact('product', 'productDetail'));
+    }
 }

@@ -11,7 +11,7 @@ class Order extends Model
     //
     protected $fillable = [
       'user_id', 'quantity', 'sub_total',
-        'total', 'status', 'note'
+        'total', 'status', 'note', 'address', 'phone_number'
     ];
 
     public function creator(){

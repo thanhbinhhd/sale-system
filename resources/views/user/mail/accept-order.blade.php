@@ -30,8 +30,8 @@
             <p>Địa chỉ giao hàng</p>
             <ul>
                 <li>Họ và tên khách hàng: {!! $user->name !!}</li>
-                <li>Địa chỉ{!! $user->address !!}</li>
-                <li>SDT{!! $user->phone_number !!}</li>
+                <li>Địa chỉ: {!! $order->address !!}</li>
+                <li>SDT: {!! $order->phone_number !!}</li>
             </ul>　
         </div>
         <p><b>Phí vận chuyển: </b>0đ (miễn phí)</p>

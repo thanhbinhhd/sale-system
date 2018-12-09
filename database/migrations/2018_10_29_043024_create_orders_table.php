@@ -21,6 +21,8 @@ class CreateOrdersTable extends Migration
             $table->decimal('total', 13, 2);
             $table->integer('status')->default(0)->comment('0 is incomplete, 1 is completed');
             $table->string('note')->nullable();
+            $table->string('address')->nullable();
+            $table->string('phone_number')->nullable();
             $table->timestamps();
         });
     }
