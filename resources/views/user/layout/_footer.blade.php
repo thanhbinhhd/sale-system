@@ -124,13 +124,13 @@
 
 				<!-- <form> -->
 					<div class="effect1 w-size9">
-						<input class="s-text7 bg6 w-full p-b-5" type="email" name="email" placeholder="email@example.com">
+						<input class="s-text7 bg6 w-full p-b-5" id="subscribe-email" type="email" name="email" placeholder="email@example.com">
 						<span class="effect1-line"></span>
 					</div>
 
 					<div class="w-size2 p-t-20">
 						<!-- Button -->
-						<button type="submit" class="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">
+						<button id="subscribe-btn" class="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">
 							Subscribe
 						</button>
 					</div>
