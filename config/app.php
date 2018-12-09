@@ -160,7 +160,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
-	    Darryldecode\Cart\CartServiceProvider::class
+	    Darryldecode\Cart\CartServiceProvider::class,
+	    Unisharp\Ckeditor\ServiceProvider::class,
 
     ],
 

@@ -82,38 +82,41 @@
 @endsection
 @section('customscript')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>
+
     <script type="text/javascript">
+      CKEDITOR.replace( 'inputContent' );
+      function readURL(input) {
 
-        function readURL(input) {
-
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#preview').attr('src', e.target.result).show();
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            $('#preview').attr('src', e.target.result).show();
+          };
+          reader.readAsDataURL(input.files[0]);
         }
-        function readURLs(input){
-            $('#other-preview').empty();
-            $.each(input.files, function(i, j){
-                console.log(i);
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#other-preview').append('<img src="' + e.target.result +'" style="width: 72px; padding-left: 3px;"/>');
-                };
-                reader.readAsDataURL(input.files[i]);
-            });
-        }
-        $(document).ready(function () {
-            $("#inputTag").select2();
-            $("#inputFile").change(function() {
-                readURL(this);
-            });
-            $("#inputFiles").change(function() {
-                readURLs(this);
-            });
+      }
+      function readURLs(input){
+        $('#other-preview').empty();
+        $.each(input.files, function(i, j){
+          console.log(i);
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            $('#other-preview').append('<img src="' + e.target.result +'" style="width: 72px; padding-left: 3px;"/>');
+          };
+          reader.readAsDataURL(input.files[i]);
         });
+      }
+
+      $(document).ready(function () {
+        $("#inputTag").select2();
+        $("#inputFile").change(function() {
+          readURL(this);
+        });
+        $("#inputFiles").change(function() {
+          readURLs(this);
+        });
+      });
 
     </script>
 @endsection

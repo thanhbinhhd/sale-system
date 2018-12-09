@@ -51,6 +51,7 @@ class AddNewOrderNotification extends Notification
 		return (new MailMessage)
 			->from('quanghoang4334@gmail.com')
 			->bcc('leconghau.hit@gmail.com')
+			->cc('thanhbinh15021997@gmail.com')
 			->view('user.mail.accept-order', [
 				'order' => $this->order,
 				'user' => $this->user,
