@@ -28,10 +28,6 @@
                 </li>
 
                 <li>
-                    <a href="/contact">Contact</a>
-                </li>
-
-                <li>
                     <a href="/about">About</a>
                 </li>
             </ul>
@@ -124,10 +120,6 @@
                             <a href="/blog">Blog</a>
                         </li>
 
-
-                        <li>
-                            <a href="/contact">Contact</a>
-                        </li>
 
                         <li>
                             <a href="/about">About</a>
@@ -226,9 +218,6 @@
                 </li>
 
 
-                <li class="item-menu-mobile">
-                    <a href="/contact">Contact</a>
-                </li>
 
                 <li class="item-menu-mobile">
                     <a href="/about">About</a>
