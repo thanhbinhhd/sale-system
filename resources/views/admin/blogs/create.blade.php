@@ -20,7 +20,7 @@
         <form method="post" action="{{route('admin.blog-manager.store')}}" enctype="multipart/form-data">
             <legend>Create new Blog</legend>
             {{ csrf_field()}}
-            <div class="form-group"  style="width: 50%">
+            <div class="form-group">
                 <label for="inputCategory">Category:</label>
                 <select class="form-control" id="inputCategory" name="category_id">
                     @foreach (\App\Model\Category::all() as $category)
@@ -28,19 +28,19 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group" style="width: 50%">
+            <div class="form-group" >
                 <label for="inputBlogTitle">Blog Title:</label>
                 <input id="inputBlogTitle" value="{{ old('title') }}" class="form-control" name="title" placeholder="Blog title">
             </div>
-            <div class="form-group" style="width: 50%">
+            <div class="form-group" >
                 <label for="inputBlogSlug">Blog Slug:</label>
                 <input id="inputBlogSlug" value="{{ old('slug') }}" class="form-control" name="slug" placeholder="Blog Slug">
             </div>
-            <div class="form-group" style="width: 50%">
+            <div class="form-group" >
                 <label for="inputBlogAuthor">Author:</label>
                 <input id="inputBlogAuthor" value="{{ old('author') }}" class="form-control" name="author" placeholder="Author">
             </div>
-            <div class="form-group" style="width: 50%">
+            <div class="form-group" >
                 <label for="inputTag">Tag</label>
                 <select class="form-control" multiple id="inputTag" name="tag[]">
                     @foreach(\App\Model\Tag::all() as $tag)
@@ -48,21 +48,21 @@
                         @endforeach
                 </select>
             </div>
-            <div class="form-group" style="width: 50%">
+            <div class="form-group" >
                 <label for="inputDescription">Description:</label>
                 <textarea id="inputDescription" rows="5"  class="form-control" name="description" placeholder="Description">{{ old('description') }}</textarea>
             </div>
-            <div class="form-group" style="width: 50%">
+            <div class="form-group" >
                 <label for="inputContent">Content:</label>
                 <textarea id="inputContent" rows="20" class="form-control" name="content" placeholder="Content">{{ old('content') }}</textarea>
             </div>
-            <div class="form-group" style="width: 50%">
+            <div class="form-group" >
                 <label for="inputBlogSource">Source:</label>
                 <input id="inputBlogSource" value="{{ old('source') }}" class="form-control" name="source" placeholder="Blog Source">
             </div>
 
             <img id="preview" src="/admin/images/avatar.jpg" alt="your image" width="200" style="display: none"/>
-            <div class="form-group" style="width: 50%">
+            <div class="form-group" >
                 <label for="inputFile">Thumbnail:</label>
                 <input id="inputFile"  accept="image/png, image/jpeg, image/jpg" type="file" class="form-control" name="image" />
             </div>
@@ -76,7 +76,7 @@
                 <input type="checkbox" class="form-check-input" value="1" @if(old('status')) checked="" @endif id="active-notify" name="notify" >
                 <label class="form-check-label" for="active-notify">Notify to User</label>
             </div>
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary" style="margin-bottom: 20px">Create</button>
         </form>
     </div>
 @endsection
