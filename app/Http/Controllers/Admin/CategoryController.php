@@ -19,20 +19,34 @@ class CategoryController extends Controller
         $this->category = $category;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(){
         $categories = $this->category->all();
         return view('admin.categories.index', compact('categories'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create() {
         return view('admin.categories.create');
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit($id) {
         $category = $this->category->getById($id);
         return view('admin.categories.edit', ['category' => $category]);
     }
 
+    /**
+     * @param CreateCategoryRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(CreateCategoryRequest $request) {
         $category = $this->category->store(array_merge($request->all(),
                 [
@@ -48,6 +62,11 @@ class CategoryController extends Controller
 
     }
 
+    /**
+     * @param UpdateCategoryRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(UpdateCategoryRequest $request, $id) {
         $category = $this->category->getById($id);
         $this->category->update($id, $request->all());
@@ -62,6 +81,10 @@ class CategoryController extends Controller
         return redirect()->route('admin.category-manager.edit', ['id' => $id]);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy($id) {
         $admin = Auth::guard('admin')->user();
         if($admin->isAdmin() or $admin->adminPermission->can_delete) {

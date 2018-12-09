@@ -18,20 +18,34 @@ class SlideController extends Controller
         $this->slide = $slide;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index() {
         $slides = $this->slide->all();
         return view('admin.slides.index', compact('slides'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create() {
         return view('admin.slides.create');
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit($id) {
         $slide = $this->slide->getById($id);
         return view('admin.slides.edit', ['slide' => $slide]);
     }
 
+    /**
+     * @param CreateSlideRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(CreateSlideRequest $request) {
 
         $slide = $this->slide->store(array_merge($request->all(),
@@ -47,6 +61,11 @@ class SlideController extends Controller
 
     }
 
+    /**
+     * @param UpdateSlideRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(UpdateSlideRequest $request, $id) {
         $slide = $this->slide->getById($id);
         $this->slide->update($id, $request->all());
@@ -61,6 +80,10 @@ class SlideController extends Controller
         return redirect()->route('admin.slide-manager.edit', ['id' => $id]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateStatus(Request $request) {
         $status = $request->get('status');
         $id=$request->get('id');
@@ -73,6 +96,10 @@ class SlideController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy($id) {
         $admin = Auth::guard('admin')->user();
         if($admin->isAdmin() or $admin->adminPermission->can_delete) {

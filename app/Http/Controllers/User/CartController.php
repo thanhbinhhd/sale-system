@@ -44,6 +44,10 @@ class CartController extends Controller
 		}
 	}
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
 	public function addCart(Request $request) {
 
 		$product_id = $request->get('product_id');

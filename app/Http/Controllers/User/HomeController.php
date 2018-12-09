@@ -33,6 +33,9 @@ class HomeController extends Controller
 
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(){
         $user = $this->user->currentUser();
         $slides = $this->slide->all();
