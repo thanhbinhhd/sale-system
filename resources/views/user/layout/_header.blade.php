@@ -28,10 +28,6 @@
                 </li>
 
                 <li>
-                    <a href="/contact">Contact</a>
-                </li>
-
-                <li>
                     <a href="/about">About</a>
                 </li>
             </ul>
@@ -49,9 +45,6 @@
         <a href="{{route('user.logout')}}" class="link-color">Logout</a>
 
         <span class="linedivide1"></span>
-        <div id="cart">
-            @include('user.cart-header')
-        </div>
 
     </div>
 </div>
@@ -96,9 +89,6 @@
 
                 <a href="{{route('user.logout')}}" class="link-color">Logout</a>
                 <span class="linedivide1"></span>
-                <div id="cart1">
-                    @include('user.cart-header')
-                </div>
             </div>
         </div>
 
@@ -124,10 +114,6 @@
                             <a href="/blog">Blog</a>
                         </li>
 
-
-                        <li>
-                            <a href="/contact">Contact</a>
-                        </li>
 
                         <li>
                             <a href="/about">About</a>
@@ -161,8 +147,6 @@
                 <a href="{{route('user.logout')}}" class="link-color">Logout</a>
 
                 <span class="linedivide2"></span>
-
-                @include('user.cart-header')
             </div>
 
             <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
@@ -226,9 +210,6 @@
                 </li>
 
 
-                <li class="item-menu-mobile">
-                    <a href="/contact">Contact</a>
-                </li>
 
                 <li class="item-menu-mobile">
                     <a href="/about">About</a>

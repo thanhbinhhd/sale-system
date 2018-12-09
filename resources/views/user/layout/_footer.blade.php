@@ -1,141 +1,65 @@
 <footer class="bg6 p-t-45 p-b-43 p-l-45 p-r-45">
-    <div class="flex-w p-b-90">
-        
-        <div class="w-size6 p-t-30 p-l-15 p-r-15 respon3">
-				<h4 class="s-text12 p-b-30">
-					GET IN TOUCH
-				</h4>
+    <div class="flex-w">
+        <div class="col-md-4 p-t-30 p-l-15 p-r-15 respon3">
+            <h4 class="s-text12 p-b-30">
+                GET IN TOUCH
+            </h4>
 
-				<div>
-					<p class="s-text7 w-size27">
-                        Any questions? Let us know in store at D9 HUST, Ha Noi, Viet Nam or call us on (+84) 904 202 777
-					</p>
+            <div>
+                <p class="s-text7 w-size27">
+                    Any questions? Let us know in store at D9 HUST
+                </p>
 
-					<div class="flex-m p-t-30">
-						<a href="#" class="fs-18 color1 p-r-20 fa fa-facebook"></a>
-						<a href="#" class="fs-18 color1 p-r-20 fa fa-instagram"></a>
-						<a href="#" class="fs-18 color1 p-r-20 fa fa-pinterest-p"></a>
-						<a href="#" class="fs-18 color1 p-r-20 fa fa-snapchat-ghost"></a>
-						<a href="#" class="fs-18 color1 p-r-20 fa fa-youtube-play"></a>
-					</div>
-				</div>
-		</div>
+                <div class="flex-m p-t-30">
+                    <a href="#" class="fs-18 color1 p-r-20 fa fa-facebook"></a>
+                    <a href="#" class="fs-18 color1 p-r-20 fa fa-instagram"></a>
+                    <a href="#" class="fs-18 color1 p-r-20 fa fa-pinterest-p"></a>
+                    <a href="#" class="fs-18 color1 p-r-20 fa fa-snapchat-ghost"></a>
+                    <a href="#" class="fs-18 color1 p-r-20 fa fa-youtube-play"></a>
+                </div>
+            </div>
+        </div>
 
-        <div class="w-size7 p-t-30 p-l-15 p-r-15 respon4">
-				<h4 class="s-text12 p-b-30">
-					Categories
-				</h4>
+        <div class="col-md-4 p-t-30 p-l-15 p-r-15 respon4">
+            <h4 class="s-text12 p-b-30">
+                Links
+            </h4>
 
-				<ul>
-					<li class="p-b-9">
-						<a href="#" class="s-text7">
-							Men
-						</a>
-					</li>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/shop">Shopping</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/blog">Blogs</a>
+                </li>
+            </ul>
 
-					<li class="p-b-9">
-						<a href="#" class="s-text7">
-							Women
-						</a>
-					</li>
+        </div>
+        <div class="col-md-4 p-t-30 p-l-15 p-r-15 respon3">
+            <h4 class="s-text12 p-b-30">
+                Newsletter
+            </h4>
 
-					<li class="p-b-9">
-						<a href="#" class="s-text7">
-							Dresses
-						</a>
-					</li>
+            <!-- <form> -->
+            <div class="effect1 w-size9">
+                <input class="s-text7 bg6 w-full p-b-5" type="email" name="email" placeholder="email@example.com">
+                <span class="effect1-line"></span>
+            </div>
 
-					<li class="p-b-9">
-						<a href="#" class="s-text7">
-							Sunglasses
-						</a>
-					</li>
-				</ul>
-			</div>
-
-			<div class="w-size7 p-t-30 p-l-15 p-r-15 respon4">
-				<h4 class="s-text12 p-b-30">
-					Links
-				</h4>
-
-				<ul>
-					<li class="p-b-9">
-						<a href="/home" class="s-text7">
-							Home
-						</a>
-					</li>
-
-					<li class="p-b-9">
-						<a href="/shop" class="s-text7">
-							Shopping
-						</a>
-					</li>
-
-					<li class="p-b-9">
-						<a href="/about" class="s-text7">
-							Contact Us
-						</a>
-					</li>
-
-					<li class="p-b-9">
-						<a href="/blog" class="s-text7">
-							Blogs
-						</a>
-					</li>
-				</ul>
-			</div>
-
-			<div class="w-size7 p-t-30 p-l-15 p-r-15 respon4">
-				<h4 class="s-text12 p-b-30">
-					Help
-				</h4>
-
-				<ul>
-					<li class="p-b-9">
-						<a href="#" class="s-text7">
-							Track Order
-						</a>
-					</li>
-
-					<li class="p-b-9">
-						<a href="#" class="s-text7">
-							Returns
-						</a>
-					</li>
-
-					<li class="p-b-9">
-						<a href="#" class="s-text7">
-							Shipping
-						</a>
-					</li>
-
-					<li class="p-b-9">
-						<a href="#" class="s-text7">
-							FAQs
-						</a>
-					</li>
-				</ul>
-			</div>
-
-			<div class="w-size8 p-t-30 p-l-15 p-r-15 respon3">
-				<h4 class="s-text12 p-b-30">
-					Newsletter
-				</h4>
-
-				<!-- <form> -->
-					<div class="effect1 w-size9">
-						<input class="s-text7 bg6 w-full p-b-5" id="subscribe-email" type="email" name="email" placeholder="email@example.com">
-						<span class="effect1-line"></span>
-					</div>
-
-					<div class="w-size2 p-t-20">
-						<!-- Button -->
-						<button id="subscribe-btn" class="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">
-							Subscribe
-						</button>
-					</div>
-				<!-- </form> -->
-		</div>
+            <div class="w-size2 p-t-20">
+                <!-- Button -->
+                <button type="submit" class="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">
+                    Subscribe
+                </button>
+            </div>
+            <!-- </form> -->
+        </div>
     </div>
 
     <div class="t-center p-l-15 p-r-15">
@@ -185,4 +109,3 @@
         <div class="close-mo-video-01 trans-0-4" data-dismiss="modal" aria-label="Close">&times;</div>
     </div>
 </div>
-
