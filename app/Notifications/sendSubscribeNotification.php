@@ -49,7 +49,7 @@ class sendSubscribeNotification extends Notification
         return (new MailMessage)
             ->line(Lang::getFromJson('New Blog : '.$this->title))
             ->line(Lang::getFromJson('Description: '.$this->description))
-            ->action(Lang::getFromJson('Go to Blog'), route('user.blog', ['blogSlug' => $this->blogSlug]));
+            ->action(Lang::getFromJson('Go to Blog'), route('user.blogDetail', ['blogSlug' => $this->blogSlug]));
     }
 
 }
