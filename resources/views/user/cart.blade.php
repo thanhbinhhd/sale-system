@@ -424,7 +424,7 @@
                   console.log(quantity);
                   let payload = {
                     product_id: item.id,
-                    quantity: (item.quantity) + parseInt(quantity)
+                    quantity: parseInt(item.quantity) + parseInt(quantity)
                   }
                   axios.put(url, payload).then(function(success) {
                     if(success.data.success) {
