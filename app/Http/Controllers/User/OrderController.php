@@ -52,7 +52,7 @@ class OrderController extends Controller
 					'product_id' => $cart->id,
 					'quantity' => $cart->quantity,
 					'order_id' => $newOrder->id,
-					'total_price' => $cart->price,
+					'total_price' => $cart->price * $cart->quantity,
 				]);
 			}
 			\Cart::session($currentUserId)->clear();
