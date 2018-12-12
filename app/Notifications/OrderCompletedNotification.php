@@ -20,7 +20,7 @@ class OrderCompletedNotification extends Notification
      *
      * @return void
      */
-    public function __construct($order, $user, $orderDetail)
+    public function __construct($user, $order, $orderDetail)
     {
         //
 	    $this->order = $order;
