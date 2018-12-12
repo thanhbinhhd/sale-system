@@ -159,7 +159,7 @@
                             <div class="block2">
 
                                 <div class="block2-img  of-hidden pos-relative block2-labelnew  fixed-height">
-                                    <img src="{{$product->image_path}}" alt="IMG-PRODUCT">
+                                    <img src="{{$product->image_path}}" style="width: 270px"  alt="IMG-PRODUCT">
 
                                     <div class="block2-overlay trans-0-4">
                                         <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
